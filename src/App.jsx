@@ -43,7 +43,7 @@ const App = () => {
       <Navbar />
       <Search handleInput={handleInput} value={input} />
       <div className="flex justify-center mt-8 py-10 bg-slate-100">
-        <div className="grid grid-cols-6 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
           <Pokemons data={result} />
         </div>
       </div>
