@@ -1,4 +1,10 @@
+import Navbar from "./sections/Navbar";
+
 const App = () => {
-  return <div>App</div>;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 };
 export default App;
