@@ -4,8 +4,8 @@ const Navbar = () => {
   return (
     <div className="bg-red-700 w-full flex justify-between p-4 items-center">
       <div className="ml-4 md:ml-8 xl:ml-32 flex flex-row gap-4 items-center w-fit">
-        <img className="h-14" src="../src/assets/images/pokeballimage.png" />
-        <img src="../src/assets/images/pokemon writingd.png" className="h-14" />
+        <img className="h-14" src="/assets/images/pokeballimage.png" />
+        <img className="h-14" src="/assets/images/pokemon%20writingd.png" />
       </div>
       <div className="text-white menu mr-5 flex md:mr-11 xl:mr-32">
         <div className="space-x-10 hidden sm:block">
