@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+@layer utilities {
+  .menu a:hover {
+    text-decoration: underline;
+  }
+
+  .pokeImg {
+    transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+  .pokecard:hover .pokeImg {
+    transform: scale(1.1);
+  }
+
+  .pokecard:hover {
+    background-color: rgb(215, 236, 255);
+  }
+
+  .pokecard {
+    transition: 0.2s background-color ease-in-out;
+  }
+}
