@@ -8,7 +8,7 @@ const Search = ({ handleInput, value }) => {
             value={value}
             onChange={handleInput}
             type="text"
-            className="rounded-full px-4 outline-none py-2 ml-3"
+            className="rounded-full px-4 outline-none bg-white py-2 ml-3"
           />
         </div>
         <div>
