@@ -1,6 +1,7 @@
 # 🎮 Pokédex — Gotta catch 'em all!
 
-> A modern, aesthetic Pokédex built with React and powered by the PokéAPI
+> A modern, aesthetic Pokédex built with React.  
+> Crafted as a school project to explore dynamic UI and clean component-based design.  
 > Explore your favorite creatures with a modern twist.
 
 ---
