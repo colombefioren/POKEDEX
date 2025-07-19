@@ -14,7 +14,7 @@ const Pokemons = ({ data }) => {
             <Pokecard
               id={pokemon.id}
               image={pokemon.image}
-              Pokename={pokemon.Pokename}
+              Pokename={pokemon.name}
             />
           </div>
         ))}
