@@ -3,7 +3,7 @@ import Pokemons from "./components/Pokemons";
 import Search from "./components/Search";
 import Navbar from "./sections/Navbar";
 import { usePokemonData } from "./hooks/usePokemonData";
-import LoadingSpinner from "./components/LoadingSpinner"; 
+import LoadingSpinner from "./components/LoadingSpinner";
 
 const App = () => {
   const [input, setInput] = useState("");
@@ -22,15 +22,15 @@ const App = () => {
   if (error) return <div className="error-message">Error: {error}</div>;
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <Navbar />
       <Search handleInput={handleInput} value={input} />
-      <div className="flex justify-center mt-8 py-10 bg-slate-100">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           <Pokemons data={filteredPokemon} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -12,11 +12,7 @@ export const getPokemonList = async (limit = null) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    return data.map(({ pokedexId, name, image }) => ({
-      id: pokedexId,
-      name,
-      image,
-    }));
+    return data;
   } catch (error) {
     console.error("Error fetching pokemon data:", error);
     throw error;
