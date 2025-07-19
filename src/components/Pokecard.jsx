@@ -1,4 +1,23 @@
 import { useEffect, useState } from "react";
+import {
+  Leaf, // Grass
+  Flame, // Fire
+  Droplets, // Water
+  Zap, // Electric
+  Bug, // Bug
+  Skull, // Poison
+  Mountain, // Rock/Ground
+  Bird, // Flying
+  Brain, // Psychic
+  Ghost, // Ghost
+  Sword, // Fighting
+  Moon, // Dark
+  Snowflake, // Ice
+  Gem, // Fairy
+  Shield, // Steel
+  CircleDot, // Normal
+  Sparkles, // Dragon
+} from "lucide-react";
 
 const TYPE_TRANSLATION = {
   plante: "grass",
@@ -23,6 +42,28 @@ const TYPE_TRANSLATION = {
   ténèbres: "dark",
   tenebres: "dark",
   ombre: "dark",
+};
+
+const TYPE_ICONS = {
+  normal: <CircleDot className="w-3 h-3" />,
+  fire: <Flame className="w-3 h-3" />,
+  water: <Droplets className="w-3 h-3" />,
+  electric: <Zap className="w-3 h-3" />,
+  grass: <Leaf className="w-3 h-3" />,
+  ice: <Snowflake className="w-3 h-3" />,
+  fighting: <Sword className="w-3 h-3" />,
+  poison: <Skull className="w-3 h-3" />,
+  ground: <Mountain className="w-3 h-3" />,
+  flying: <Bird className="w-3 h-3" />,
+  psychic: <Brain className="w-3 h-3" />,
+  bug: <Bug className="w-3 h-3" />,
+  rock: <Mountain className="w-3 h-3" />,
+  ghost: <Ghost className="w-3 h-3" />,
+  dragon: <Sparkles className="w-3 h-3" />,
+  dark: <Moon className="w-3 h-3" />,
+  steel: <Shield className="w-3 h-3" />,
+  fairy: <Gem className="w-3 h-3" />,
+  default: <CircleDot className="w-3 h-3" />,
 };
 
 const TYPE_STYLES = {
@@ -188,14 +229,16 @@ const Pokecard = ({ id, name, image, apiTypes = [] }) => {
             const translatedType = TYPE_TRANSLATION[typeName] || "default";
             const buttonStyle =
               TYPE_STYLES[translatedType] || TYPE_STYLES.default;
+            const Icon = TYPE_ICONS[translatedType] || TYPE_ICONS.default;
 
             return (
               <span
                 key={typeName}
-                className={`text-xs font-bold px-3 py-1 rounded-full ${buttonStyle.bg} text-white 
+                className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-md ${buttonStyle.bg} text-white 
                             shadow-md hover:shadow-lg duration-200
                             transform hover:scale-105 transition-all`}
               >
+                {Icon}
                 {type?.name || "???"}
               </span>
             );
