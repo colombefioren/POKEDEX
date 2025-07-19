@@ -181,7 +181,7 @@ const Pokecard = ({ id, name, image, apiTypes = [] }) => {
   return (
     <div className="relative h-full bg-gray-900 rounded-xl border-2 border-gray-800 overflow-hidden group hover:border-gray-700 transition-all duration-300 hover:shadow-2xl hover:shadow-[rgba(0,0,0,0.3)]">
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-6 -left-6 w-32 h-32 rounded-full bg-white opacity-4 group-hover:opacity-5 transition-opacity duration-500"></div>
+        <div className="absolute -top-9 -left-9 w-32 h-32 rounded-full bg-white opacity-4 group-hover:opacity-5 transition-opacity duration-500"></div>
         <div className="absolute -bottom-6 -right-6 w-40 h-40 rounded-full bg-white opacity-4 group-hover:opacity-5 transition-opacity duration-700"></div>
       </div>
       <div
@@ -196,7 +196,7 @@ const Pokecard = ({ id, name, image, apiTypes = [] }) => {
         </div>
         <div className="relative mb-2">
           <h3
-            className={`text-center text-xl font-bold text-gray-200 mb-1 capitalize tracking-wide 
+            className={`text-center opacity-85 text-xl font-bold text-white mb-1 capitalize tracking-wide 
                          transform group-hover:scale-105 transition-transform duration-300`}
           >
             {name.toUpperCase() || "Unknown"}

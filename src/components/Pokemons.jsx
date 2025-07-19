@@ -5,17 +5,19 @@ const Pokemons = ({ data }) => {
   if (!data) {
     return (
       <div className="col-span-full text-center py-20">
-        <div className="text-white/70 text-lg">No Pokémon to display yet</div>
-        <div className="mt-2 text-white/40 text-sm">
-          Waiting for Pokédex data...
+        <div className="text-white/70 text-lg font-mono">NO POKéMON DATA</div>
+        <div className="mt-2 text-red-400/70 text-sm font-mono">
+          CHECK CONNECTION...
         </div>
       </div>
     );
   } else if (data.length === 0) {
     return (
       <div className="col-span-full text-center py-20">
-        <div className="text-white/70 text-lg">No Pokémon found</div>
-        <div className="mt-2 text-white/40 text-sm">Try a different search</div>
+        <div className="text-white/70 text-lg font-mono">NO POKéMON FOUND</div>
+        <div className="mt-2 text-red-400/70 text-sm font-mono">
+          TRY DIFFERENT SEARCH
+        </div>
       </div>
     );
   } else {
