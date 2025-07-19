@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { fetchPokemonData } from "../lib/api/pokemonApi";
-import { POKE_API } from "../config/api";
+import { useState, useEffect } from "react";
+import { getPokemonList } from "../api/pokemonApi";
 
 export const usePokemonData = () => {
   const [pokeData, setPokeData] = useState([]);
@@ -13,19 +12,13 @@ export const usePokemonData = () => {
       try {
         setLoading(true);
         const [initialData, allData] = await Promise.all([
-          fetchPokemonData(
-            `${POKE_API.BASE_URL}${POKE_API.ENDPOINTS.POKEMON_LIMIT(54)}`
-          ),
-          fetchPokemonData(
-            `${POKE_API.BASE_URL}${POKE_API.ENDPOINTS.POKEMON}`
-          ),
+          getPokemonList(54),
+          getPokemonList(),
         ]);
-
         setPokeData(initialData);
         setAllPokeData(allData);
       } catch (err) {
-        setError(err);
-        console.error("Failed to fetch pokemon data:", err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }
