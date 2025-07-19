@@ -1,18 +1,20 @@
-export default async function FetchData(url) {
+export const fetchPokemonData = async (url) => {
   try {
     const response = await fetch(url);
+
     if (!response.ok) {
-      throw new Error("An error occurred");
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
     const data = await response.json();
-    const Poke = data.map((element) => ({
-      id: element.pokedexId,
-      Pokename: element.name,
-      image: element.image,
+
+    return data.map(({ pokedexId, name, image }) => ({
+      id: pokedexId,
+      name,
+      image,
     }));
-    return Poke;
-  } catch (err) {
-    console.log(err.message);
-    return [];
+  } catch (error) {
+    console.error(`Error fetching pokemon data from ${url}:`, error);
+    throw error;
   }
-}
+};
