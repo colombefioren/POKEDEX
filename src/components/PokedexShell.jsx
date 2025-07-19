@@ -31,34 +31,23 @@ const PokedexShell = ({ children, loading }) => {
       <div className="absolute inset-0 z-10 pointer-events-none">
         {/* top  */}
         <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-gray-900 to-gray-800 border-b-2 border-gray-700">
-          <div className="flex justify-between items-center h-full px-6">
-            <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-              <div className="w-3 h-3 rounded-full bg-green-400"></div>
-            </div>
+          <div className="flex justify-between items-center h-full">
+            <img
+              src="/assets/images/pokeballimage.png"
+              alt="Loading Pokéball"
+              className="w-14 pl-1"
+            />
             <div className="text-white font-mono text-sm tracking-wider">
-              POKÉDEX v5.0
+              POKÉDEX
             </div>
-            <div className="w-8 h-4 bg-gray-700 rounded-full"></div>
+            <div className="w-8 h-4 mr-4 bg-gray-700 rounded-full"></div>
           </div>
         </div>
 
         {/* bottom  */}
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-900 to-gray-800 border-t-2 border-gray-700">
           <div className="flex justify-center items-center h-full px-6 space-x-8">
-            <div className="w-12 h-12 rounded-full bg-gray-700 border-2 border-gray-600"></div>
-            <div className="grid grid-cols-3 gap-1">
-              <div></div>
-              <div className="w-6 h-6 bg-gray-600 rounded-t-full"></div>
-              <div></div>
-              <div className="w-6 h-6 bg-gray-600 rounded-l-full"></div>
-              <div className="w-6 h-6 bg-gray-600 rounded-full border-2 border-gray-500"></div>
-              <div className="w-6 h-6 bg-gray-600 rounded-r-full"></div>
-              <div></div>
-              <div className="w-6 h-6 bg-gray-600 rounded-b-full"></div>
-              <div></div>
-            </div>
+           
             <div className="w-24 h-6 bg-gray-700 rounded-full"></div>
           </div>
         </div>
