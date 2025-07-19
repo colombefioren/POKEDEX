@@ -37,9 +37,11 @@ const PokedexShell = ({ children, loading }) => {
               alt="Loading Pokéball"
               className="w-14 pl-1"
             />
-            <div className="text-white font-mono text-sm tracking-wider">
-              POKÉDEX
-            </div>
+            <img
+                src="/assets/images/pokemon writingd.png"
+                alt="Loading Pokéball"
+                className="object-contain w-32 h-full"
+              />
             <div className="w-8 h-4 mr-4 bg-gray-700 rounded-full"></div>
           </div>
         </div>
