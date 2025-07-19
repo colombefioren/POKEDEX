@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import Pokemons from "./components/Pokemons";
 import Search from "./components/Search";
 import Navbar from "./sections/Navbar";
-import { fetchPokemonData } from "./lib/api/pokemonApi";
+import { fetchPokemonData } from "./lib/api/pokemonApi.js";
 
 const POKE_API = {
   initial: "https://pokebuildapi.fr/api/v1/pokemon/limit/54",
