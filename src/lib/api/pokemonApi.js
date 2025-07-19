@@ -1,4 +1,5 @@
-import { POKE_API } from "../config/api";
+import { POKE_API } from "../../config/api.js";
+
 
 export const getPokemonList = async (limit = null) => {
   const url = limit
