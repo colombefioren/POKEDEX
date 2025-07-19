@@ -120,7 +120,7 @@ const Pokecard = ({ id, name, image, apiTypes = [] }) => {
 
   return (
     <div className="relative h-full bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
-      <div className="p-4 flex flex-col h-full">
+      <div className="px-4 pb-8 pt-5 flex flex-col h-full">
         <div className="flex justify-between items-center mb-1">
           <span className="text-xs font-bold text-gray-400">
             #{id?.toString().padStart(3, "0") || "???"}
@@ -152,7 +152,7 @@ const Pokecard = ({ id, name, image, apiTypes = [] }) => {
           </div>
         </div>
 
-        <div className="flex justify-center gap-2 mt-3">
+        <div className="flex justify-center gap-3 mt-3">
           {apiTypes.map((type) => {
             const typeName = type?.name?.toLowerCase();
             const translatedType = TYPE_TRANSLATION[typeName] || "default";
@@ -162,7 +162,7 @@ const Pokecard = ({ id, name, image, apiTypes = [] }) => {
             return (
               <span
                 key={typeName}
-                className={`text-xs font-medium px-3 py-1 rounded-full ${buttonStyle.bg} text-white`}
+                className={`text-xs font-medium px-3 py-1 rounded-md ${buttonStyle.bg} text-white`}
               >
                 {type?.name || "???"}
               </span>
