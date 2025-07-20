@@ -44,7 +44,8 @@ const PokemonDetail = () => {
 
   return (
     <div className="min-h-full p-4 md:p-8 relative overflow-hidden">
-      <div className="absolute top-8 left-8 z-20">
+      {/* name and types */}
+      <div className="absolute top-10 left-10 z-20">
         <h1 className="text-4xl md:text-5xl font-bold tracking-wider text-white/90">
           {pokemon.name.toUpperCase()}
         </h1>
@@ -52,7 +53,7 @@ const PokemonDetail = () => {
           {pokemonTypes.map((type, index) => (
             <span
               key={index}
-              className={`text-xs flex items-center gap-1 px-3 py-1 rounded-full ${type.style.bg} ${type.style.text}`}
+              className={`text-xs flex items-center gap-2 px-3 py-1 rounded-full ${type.style.bg} ${type.style.text}`}
             >
               {type.icon} {type.name.toUpperCase()}
             </span>
@@ -60,7 +61,7 @@ const PokemonDetail = () => {
         </div>
       </div>
 
-      <div className="absolute inset-0 flex items-center justify-center z-10">
+      <div className="absolute inset-0 -translate-y-15 flex items-center justify-center z-10">
         <div className="absolute inset-0 flex items-center justify-center">
           <div
             className={`absolute w-64 h-64 md:w-80 md:h-80 rounded-full opacity-30 ${typeStyle.bg} blur-xl`}
@@ -70,6 +71,7 @@ const PokemonDetail = () => {
           ></div>
         </div>
 
+        {/* image */}
         <img
           src={pokemon.image}
           alt={pokemon.name}
@@ -77,13 +79,14 @@ const PokemonDetail = () => {
         />
       </div>
 
-      <div className={`absolute bottom-25 left-2 w-96 z-20`}>
+      {/* bottom left */}
+      <div className={`absolute bottom-35 left-3 w-96 z-20`}>
         <div className="space-y-1 flex flex-col">
           {Object.entries(pokemon.stats).map(([key, val]) => (
             <div key={key} className="flex items-center gap-2">
               <div className="w-96 text-white/90 px-2 py-1">
                 <div className="flex justify-end gap-3">
-                  <span className="capitalize">
+                  <span className="capitalize font-medium">
                     {key.replace("_", " ").toUpperCase()}:
                   </span>
                   <span>{val}</span>
@@ -100,78 +103,65 @@ const PokemonDetail = () => {
         </div>
       </div>
 
-      <div
-        className={`absolute bottom-6 right-6 rounded-2xl p-6 w-80 bg-gray-900/80 backdrop-blur-sm border-l-4 ${typeStyle.border} z-20 shadow-xl`}
-      >
-        <h3
-          className={`text-lg font-bold ${typeStyle.text} tracking-wider mb-4 flex items-center gap-2`}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
-              clipRule="evenodd"
-            />
-          </svg>
-          BATTLE INFO
-        </h3>
-        <div className="space-y-4">
+      {/* bottom right */}
+      <div className={`absolute bottom-6 right-15 rounded-xl p-5 w-72 z-20`}>
+        <div className="space-y-3">
           <div>
-            <h4 className="text-sm font-medium text-white/80 mb-1">
-              Strengths
+            <h4 className="text-xs font-medium text-white/90 mb-3 tracking-wider">
+              SPÉCIALITÉS
             </h4>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-2">
               {battleInfo.strengths.length > 0 ? (
                 battleInfo.strengths.map((strength, i) => (
                   <span
                     key={i}
-                    className="text-xs px-2 py-1 bg-green-900/30 text-green-300 rounded"
+                    className="text-xs px-2 py-1 bg-white/10 text-white/90 rounded-full border border-white/5"
                   >
                     {strength}
                   </span>
                 ))
               ) : (
-                <span className="text-xs text-white/50">None</span>
+                <span className="text-xs text-white/40 italic">—</span>
               )}
             </div>
           </div>
+
+          <div className="h-px bg-white/15"></div>
+
           <div>
-            <h4 className="text-sm font-medium text-white/80 mb-1">
-              Weaknesses
+            <h4 className="text-xs font-medium text-white/90 mb-3 tracking-wider">
+              FAIBLESSES
             </h4>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-2">
               {battleInfo.weaknesses.length > 0 ? (
                 battleInfo.weaknesses.map((weakness, i) => (
                   <span
                     key={i}
-                    className="text-xs px-2 py-1 bg-red-900/30 text-red-300 rounded"
+                    className="text-xs px-2 py-1 bg-white/10 text-white/90 rounded-full border border-white/5"
                   >
                     {weakness}
                   </span>
                 ))
               ) : (
-                <span className="text-xs text-white/50">None</span>
+                <span className="text-xs text-white/40 italic">—</span>
               )}
             </div>
           </div>
+
+          <div className="h-px bg-white/15"></div>
+
           <div>
-            <h4 className="text-sm font-medium text-white/80 mb-1">
-              Evolutions
+            <h4 className="text-xs font-medium text-white/90 mb-3 tracking-wider">
+              EVOLUTION
             </h4>
-            <p className="text-sm text-white/90">
+            <p className="text-sm text-white/90 font-light">
               {pokemon.apiEvolutions.length > 0
-                ? `${pokemon.apiEvolutions.length} available`
+                ? `${pokemon.apiEvolutions.length}`
                 : "None"}
             </p>
           </div>
         </div>
       </div>
-
       <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-20 flex gap-4">
         {pokemon.apiEvolutions.length > 0 && (
           <button
