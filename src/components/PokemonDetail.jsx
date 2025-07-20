@@ -43,7 +43,7 @@ const PokemonDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d0d14] text-white p-4 md:p-8 relative overflow-hidden">
+    <div className="min-h-full text-white p-4 md:p-8 relative overflow-hidden">
       {/* name */}
       <div className="absolute top-6 left-6 z-20">
         <h1 className="text-3xl md:text-4xl font-bold tracking-wider flex items-center gap-3">
