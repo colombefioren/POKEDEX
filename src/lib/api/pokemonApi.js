@@ -19,13 +19,6 @@ export const getPokemonList = async (limit = null) => {
   }
 };
 
-export const getPokemonById = async (id) => {
-  const response = await fetch(`${POKE_API.BASE_URL}/pokemon/${id}`);
-  if (!response.ok) {
-    throw new Error(`Pokemon with ID ${id} not found`);
-  }
-  return await response.json();
-};
 
 export const getPokemonByName = async (name) => {
   const response = await fetch(`${POKE_API.BASE_URL}/pokemon/${name}`);

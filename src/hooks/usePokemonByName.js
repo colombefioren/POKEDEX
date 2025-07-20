@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { getPokemonById } from "../lib/api/pokemonApi.js"; 
+import { getPokemonByName } from "../lib/api/pokemonApi.js"; 
 
-export const usePokemonById = (id) => {
+export const usePokemonByName = (name) => {
   const [pokemon, setPokemon] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ export const usePokemonById = (id) => {
     const fetchPokemon = async () => {
       try {
         setLoading(true);
-        const data = await getPokemonById(id);
+        const data = await getPokemonByName(name);
         setPokemon(data);
       } catch (err) {
         setError(err.message);
@@ -19,10 +19,10 @@ export const usePokemonById = (id) => {
       }
     };
 
-    if (id) {
+    if (name) {
       fetchPokemon();
     }
-  }, [id]);
+  }, [name]);
 
   return { pokemon, loading, error };
 };
