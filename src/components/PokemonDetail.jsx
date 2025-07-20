@@ -142,7 +142,7 @@ const PokemonDetail = () => {
         <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm rounded-full p-1 border border-white/10">
           <button
             onClick={() => setActiveTab("description")}
-            className={`px-4 py-2 text-sm rounded-full transition-all ${
+            className={`px-4 cursor-pointer py-2 text-sm rounded-full transition-all ${
               activeTab === "description"
                 ? `${typeStyle.bg} text-white font-medium`
                 : "text-white/70 hover:text-white/90"
@@ -152,7 +152,7 @@ const PokemonDetail = () => {
           </button>
           <button
             onClick={() => setActiveTab("evolution")}
-            className={`px-4 py-2 text-sm rounded-full transition-all ${
+            className={`px-4 cursor-pointer py-2 text-sm rounded-full transition-all ${
               activeTab === "evolution"
                 ? `${typeStyle.bg} text-white font-medium`
                 : "text-white/70 hover:text-white/90"
@@ -162,7 +162,6 @@ const PokemonDetail = () => {
           </button>
         </div>
       </div>
-
       {/* name and types */}
       <div className="absolute top-10 left-10 z-20">
         <h1 className="text-4xl md:text-5xl font-bold tracking-wider text-white/90">
@@ -179,7 +178,6 @@ const PokemonDetail = () => {
           ))}
         </div>
       </div>
-
       {/* content based on active tab */}
       {activeTab === "description" && (
         <>
@@ -273,22 +271,11 @@ const PokemonDetail = () => {
               </div>
 
               <div className="h-px bg-white/15"></div>
-
-              <div>
-                <h4 className="text-xs font-medium text-white/90 mb-3 tracking-wider">
-                  EVOLUTION
-                </h4>
-                <p className="text-sm text-white/90 font-light">
-                  {pokemon.apiEvolutions.length > 0
-                    ? `${pokemon.apiEvolutions.length} evolution(s)`
-                    : "None"}
-                </p>
-              </div>
             </div>
           </div>
           <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-20 flex gap-4">
             <button
-              className={`px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white font-medium shadow-lg transition flex items-center gap-2 ${typeStyle.text}`}
+              className={`px-6 py-3  cursor-pointer rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white font-medium shadow-lg transition flex items-center gap-2 ${typeStyle.text}`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -307,26 +294,14 @@ const PokemonDetail = () => {
           </div>
         </>
       )}
-
+      =
       {activeTab === "evolution" && (
-        <div className="absolute top-30 left-1/2 transform -translate-x-1/2 z-20">
-          (
+        <div className="absolute top-40 w-full left-1/2 transform -translate-x-1/2 z-20">
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
             {evolutionChain.map((pokemon, index) => (
-              <div key={index} className="flex flex-col items-center">
-                <div
-                className="w-56"
-                  onClick={() => setActiveTab("description")}
-                >
-                  <Pokecard
-                    id={pokemon.pokedexId}
-                    name={pokemon.name}
-                    image={pokemon.image}
-                    apiTypes={pokemon.apiTypes}
-                  />
-                </div>
-                {index < evolutionChain.length - 1 && (
-                  <div className="my-4 text-white/50">
+              <div key={index} className="flex items-center">
+                {index > 0 && (
+                  <div className="mr-5 text-white/50">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-8 w-8"
@@ -343,14 +318,23 @@ const PokemonDetail = () => {
                     </svg>
                   </div>
                 )}
+
+                <div
+                  className="w-56"
+                  onClick={() => setActiveTab("description")}
+                >
+                  <Pokecard
+                    id={pokemon.pokedexId}
+                    name={pokemon.name}
+                    image={pokemon.image}
+                    apiTypes={pokemon.apiTypes}
+                  />
+                </div>
               </div>
             ))}
           </div>
-          )
         </div>
       )}
-
-    
     </div>
   );
 };
