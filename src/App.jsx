@@ -26,7 +26,7 @@ const App = () => {
         <Route
           path="/"
           element={
-            <PokedexShell loading={loading}>
+            <PokedexShell active="search" loading={loading}>
               <div className="h-full flex flex-col">
                 <div className="px-4 py-5">
                   <Search handleInput={handleInput} value={input} />
@@ -43,11 +43,20 @@ const App = () => {
         <Route
           path="/pokemon/:name"
           element={
-            <PokedexShell loading={false}>
+            <PokedexShell active="pokemon" loading={false}>
               <PokemonDetail />
             </PokedexShell>
           }
         />
+          <Route
+          path="/team"
+          element={
+            <PokedexShell active="team" loading={false}>
+              <PokemonDetail />
+            </PokedexShell>
+          }
+        />
+     
       </Routes>
   );
 };
