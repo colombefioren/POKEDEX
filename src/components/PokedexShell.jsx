@@ -7,6 +7,25 @@ const PokedexShell = ({ children, loading }) => {
     bezelsOpen: false,
   });
 
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     if (loading) {
       setAnimationState({
@@ -26,6 +45,17 @@ const PokedexShell = ({ children, loading }) => {
     }
   }, [loading]);
 
+  const getBezelWidth = (isOpen) => {
+    if (isOpen) {
+      return windowSize.width < 1000 && windowSize.width > 640
+        ? "5%"
+        : windowSize.width < 640
+        ? "9%"
+        : "3%";
+    }
+    return "50%";
+  };
+
   return (
     <div className="relative w-full h-screen bg-black overflow-hidden">
       <div className="absolute inset-0 z-10 pointer-events-none">
@@ -38,10 +68,10 @@ const PokedexShell = ({ children, loading }) => {
               className="w-14 pl-1"
             />
             <img
-                src="/assets/images/pokemon writingd.png"
-                alt="Loading Pokéball"
-                className="object-contain w-32 h-full"
-              />
+              src="/assets/images/pokemon writingd.png"
+              alt="Loading Pokéball"
+              className="object-contain w-32 h-full"
+            />
             <div className="w-8 h-4 mr-4 bg-gray-700 rounded-full"></div>
           </div>
         </div>
@@ -49,7 +79,6 @@ const PokedexShell = ({ children, loading }) => {
         {/* bottom  */}
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-900 to-gray-800 border-t-2 border-gray-700">
           <div className="flex justify-center items-center h-full px-6 space-x-8">
-           
             <div className="w-24 h-6 bg-gray-700 rounded-full"></div>
           </div>
         </div>
@@ -77,7 +106,7 @@ const PokedexShell = ({ children, loading }) => {
           key="left-bezel"
           initial={{ width: "50%" }}
           animate={{
-            width: animationState.bezelsOpen ? "3%" : "50%",
+            width: getBezelWidth(animationState.bezelsOpen),
           }}
           exit={{ width: "50%" }}
           transition={{
@@ -96,7 +125,7 @@ const PokedexShell = ({ children, loading }) => {
           key="right-bezel"
           initial={{ width: "50%" }}
           animate={{
-            width: animationState.bezelsOpen ? "3%" : "50%",
+            width: getBezelWidth(animationState.bezelsOpen),
           }}
           exit={{ width: "50%" }}
           transition={{
@@ -139,5 +168,4 @@ const PokedexShell = ({ children, loading }) => {
   );
 };
 motion;
-
 export default PokedexShell;
