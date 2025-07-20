@@ -1,28 +1,21 @@
 import Pokecard from "./Pokecard";
 
-const Pokemons = ({ data }) => {
-  if (!data) {
+const PokemonTeam = ({ pokemonList }) => {
+  if (pokemonList.length === 0) {
     return (
       <div className="col-span-full text-center py-20">
-        <div className="text-white/70 text-lg font-mono">NO POKéMON DATA</div>
-        <div className="mt-2 text-red-400/70 text-sm font-mono">
-          CHECK CONNECTION...
+        <div className="text-white/70 text-lg font-mono">
+          YOUR TEAM IS EMPTY
         </div>
-      </div>
-    );
-  } else if (data.length === 0) {
-    return (
-      <div className="col-span-full text-center py-20">
-        <div className="text-white/70 text-lg font-mono">NO POKéMON FOUND</div>
         <div className="mt-2 text-red-400/70 text-sm font-mono">
-          TRY DIFFERENT SEARCH
+          BROWSE POKEMONS AND ADD THEM TO YOUR TEAM
         </div>
       </div>
     );
   } else {
     return (
       <>
-        {data.map((pokemon) => (
+        {pokemonList.map((pokemon) => (
           <div key={pokemon.name} className="h-full">
             <Pokecard
               id={pokemon.pokedexId}
@@ -40,4 +33,4 @@ const Pokemons = ({ data }) => {
   }
 };
 
-export default Pokemons;
+export default PokemonTeam;
