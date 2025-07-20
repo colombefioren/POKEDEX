@@ -86,7 +86,7 @@ const PokemonDetail = () => {
 
       {/* info */}
       <div
-        className={`absolute bottom-6 right-6 bg-[#1a1a23] rounded-xl p-6 w-full max-w-md border-l-4 ${typeStyle.bg} z-20`}
+        className={`absolute bottom-6 right-6 rounded-xl p-6 w-full max-w-md border-l-4 z-20`}
       >
         <div className="grid grid-cols-2 gap-4">
           {/* stat */}
