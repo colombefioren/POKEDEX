@@ -10,7 +10,7 @@ const PokemonDetail = () => {
   const { pokemon, loading, error } = usePokemonByName(name);
   const [activeTab, setActiveTab] = useState(state?.activeTab || "description");
   const [evolutionChain, setEvolutionChain] = useState([]);
-
+ 
   useEffect(() => {
     const fetchCompleteEvolutionChain = async () => {
       if (!pokemon) return;

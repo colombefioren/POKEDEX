@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-const PokedexShell = ({ children, loading }) => {
+const PokedexShell = ({ children, loading, active }) => {
   const [animationState, setAnimationState] = useState({
     showContent: false,
     bezelsOpen: false,
@@ -12,7 +13,10 @@ const PokedexShell = ({ children, loading }) => {
     height: typeof window !== "undefined" ? window.innerHeight : 0,
   });
 
+  const [activeTab, setActiveTab] = useState("search");
+
   useEffect(() => {
+    setActiveTab(active);
     if (typeof window === "undefined") return;
 
     const handleResize = () => {
@@ -24,7 +28,7 @@ const PokedexShell = ({ children, loading }) => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [active]);
 
   useEffect(() => {
     if (loading) {
@@ -58,8 +62,8 @@ const PokedexShell = ({ children, loading }) => {
 
   return (
     <div className="relative w-full h-screen bg-black overflow-hidden">
+      {/*top*/}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        {/* top  */}
         <div className="absolute top-0 left-0 right-0 h-16 bg-gray-900 border-b-2 border-gray-700">
           <div className="flex justify-between items-center h-full">
             <img
@@ -75,16 +79,97 @@ const PokedexShell = ({ children, loading }) => {
             <div className="w-8 h-4 mr-4 bg-gray-700 rounded-full"></div>
           </div>
         </div>
+      </div>
 
-        {/* bottom  */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gray-900 border-t-2 border-gray-700">
-          <div className="flex justify-center items-center h-full px-6 space-x-8">
-            <div className="w-24 h-6 bg-gray-700 rounded-full"></div>
-          </div>
+      {/* nav */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 h-14 bg-gray-900 border-t-2 border-gray-700">
+        <div className="flex justify-center gap-10 items-center h-full px-4">
+          {/* search tab */}
+          <Link to="/">
+            <button
+              className={`flex flex-col items-center justify-center h-full px-4 cursor-pointer transition-colors ${
+                activeTab === "search"
+                  ? "text-yellow-400"
+                  : "text-gray-400 hover:text-gray-300"
+              }`}
+              onClick={() => setActiveTab("search")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <span className="text-xs mt-1">Search</span>
+            </button>
+          </Link>
+
+          {/* pokemon tab */}
+          <Link to="/pokemon/bulbizarre">
+            <button
+              className={`flex flex-col items-center justify-center h-full px-4 cursor-pointer transition-colors ${
+                activeTab === "pokemon"
+                  ? "text-yellow-400"
+                  : "text-gray-400 hover:text-gray-300"
+              }`}
+              onClick={() => setActiveTab("pokemon")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                />
+              </svg>
+              <span className="text-xs mt-1">Pokemon</span>
+            </button>
+          </Link>
+
+          {/* team tab */}
+          <button
+            className={`flex flex-col items-center justify-center h-full px-4 cursor-pointer transition-colors ${
+              activeTab === "team"
+                ? "text-yellow-400"
+                : "text-gray-400 hover:text-gray-300"
+            }`}
+            onClick={() => setActiveTab("team")}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            <span className="text-xs mt-1">Team</span>
+          </button>
         </div>
       </div>
 
-      <div className="absolute inset-0 z-0 pt-16 pb-20 flex flex-col">
+      {/* content area */}
+      <div className="absolute inset-0 z-0 pt-16 pb-14 flex flex-col">
         <AnimatePresence>
           {animationState.showContent && (
             <motion.div
@@ -100,8 +185,8 @@ const PokedexShell = ({ children, loading }) => {
         </AnimatePresence>
       </div>
 
+      {/* side */}
       <AnimatePresence>
-        {/* left */}
         <motion.div
           key="left-bezel"
           initial={{ width: "50%" }}
@@ -113,7 +198,7 @@ const PokedexShell = ({ children, loading }) => {
             duration: 1.5,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="absolute left-0 top-16 bottom-16 bg-gray-900 border-r-2 border-gray-700"
+          className="absolute left-0 top-16 bottom-14 bg-gray-900 border-r-2 border-gray-700"
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
           }}
@@ -132,7 +217,7 @@ const PokedexShell = ({ children, loading }) => {
             duration: 1.5,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="absolute right-0 top-16 bottom-16 bg-gray-900 border-l-2 border-gray-700"
+          className="absolute right-0 top-16 bottom-14 bg-gray-900 border-l-2 border-gray-700"
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
           }}
@@ -141,7 +226,7 @@ const PokedexShell = ({ children, loading }) => {
         </motion.div>
       </AnimatePresence>
 
-      {/* pokeball load */}
+      {/* loading */}
       <AnimatePresence>
         {loading && (
           <motion.div
