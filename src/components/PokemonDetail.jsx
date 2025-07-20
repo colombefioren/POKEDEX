@@ -45,7 +45,7 @@ const PokemonDetail = () => {
   return (
     <div className="min-h-full text-white p-4 md:p-8 relative overflow-hidden">
       {/* name */}
-      <div className="absolute top-6 left-6 z-20">
+      <div className="absolute top-6 left-10 z-20">
         <h1 className="text-3xl md:text-4xl font-bold tracking-wider flex items-center gap-3">
           {pokemon.name.toUpperCase()}
           <div className="flex items-center gap-2">
@@ -62,10 +62,7 @@ const PokemonDetail = () => {
       {/* image*/}
       <div className="absolute inset-0 flex items-center justify-center z-10">
         <div
-          className={`absolute w-64 h-64 md:w-80 md:h-80 rounded-full ${typeStyle.bg} opacity-20 blur-xl`}
-        ></div>
-        <div
-          className={`absolute w-64 h-64 md:w-80 md:h-80 rounded-full border-4 ${typeStyle.bg} border-opacity-30`}
+          className={`absolute w-64 h-64 md:w-80 md:h-80 rounded-full border-4 border-opacity-30`}
         ></div>
         <div className="absolute w-72 h-72 md:w-88 md:h-88 rounded-full border-2 border-white border-opacity-10"></div>
         <img
