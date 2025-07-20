@@ -60,15 +60,27 @@ const PokemonDetail = () => {
       </div>
 
       {/* image*/}
-      <div className="absolute inset-0 flex items-center justify-center z-10">
+      <div className="absolute inset-0 flex items-center justify-center -translate-y-15 z-10">
         <div
-          className={`absolute w-64 h-64 md:w-80 md:h-80 rounded-full border-4 border-opacity-30`}
+          className={`absolute w-[450px] h-[4px] -rotate-45 ${typeStyle.bg} `}
+          style={{ top: "47%", left: "34%" }}
         ></div>
-        <div className="absolute w-72 h-72 md:w-88 md:h-88 rounded-full border-2 border-white border-opacity-10"></div>
+        <div
+          className={`absolute w-[450px] h-[4px] -rotate-45 ${typeStyle.bg} `}
+          style={{ top: "55%", left: "35%" }}
+        ></div>
+
+        <div
+          className={`absolute w-64 h-64 md:w-80 md:h-80 rounded-full border-4 ${typeStyle.border}`}
+        ></div>
+        <div
+          className={`absolute w-72 h-72 md:w-96 md:h-96 rounded-full border-3 ${typeStyle.border}`}
+        ></div>
+
         <img
           src={pokemon.image}
           alt={pokemon.name}
-          className="relative z-30 w-56 h-56 md:w-72 md:h-72 object-contain"
+          className="relative z-30 w-56 h-56 md:w-[400px] md:h-[400px] object-contain"
         />
       </div>
 
