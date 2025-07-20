@@ -1,7 +1,6 @@
 import Pokecard from "./Pokecard";
 
 const Pokemons = ({ data }) => {
-  console.log("Full API data:", data);
   if (!data) {
     return (
       <div className="col-span-full text-center py-20">
