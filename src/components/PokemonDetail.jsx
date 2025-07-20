@@ -1,12 +1,103 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import { usePokemonByName } from "../hooks/usePokemonByName";
 import { TYPE_TRANSLATION, TYPE_ICONS, TYPE_STYLES } from "../constants/types";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import Pokecard from "./Pokecard";
+import { getPokemonByName } from "../lib/api/pokemonApi";
 const PokemonDetail = () => {
   const { name } = useParams();
+  const { state } = useLocation();
   const { pokemon, loading, error } = usePokemonByName(name);
-  const [activeTab, setActiveTab] = useState("description");
+  const [activeTab, setActiveTab] = useState(state?.activeTab || "description");
+  const [evolutionChain, setEvolutionChain] = useState([]);
+
+  useEffect(() => {
+    const fetchCompleteEvolutionChain = async () => {
+      if (!pokemon) return;
+
+      try {
+        const fetchPreEvolutions = async (currentPokemon, chain = []) => {
+          if (
+            currentPokemon.apiPreEvolution &&
+            currentPokemon.apiPreEvolution !== "none"
+          ) {
+            try {
+              const preEvo = await getPokemonByName(
+                currentPokemon.apiPreEvolution.name
+              );
+              if (preEvo) {
+                chain.unshift({
+                  name: preEvo.name,
+                  pokedexId: preEvo.pokedexId,
+                  image: preEvo.image,
+                  apiTypes: preEvo.apiTypes || [],
+                });
+                return fetchPreEvolutions(preEvo, chain);
+              }
+            } catch (error) {
+              console.error("Failed to fetch pre-evolution:", error);
+            }
+          }
+          return chain;
+        };
+
+        const fetchEvolutions = async (currentPokemon, chain = []) => {
+          if (
+            currentPokemon.apiEvolutions &&
+            currentPokemon.apiEvolutions.length > 0
+          ) {
+            for (const evo of currentPokemon.apiEvolutions) {
+              try {
+                const evolution = await getPokemonByName(evo.name);
+                if (evolution) {
+                  chain.push({
+                    name: evolution.name,
+                    pokedexId: evolution.pokedexId,
+                    image: evolution.image,
+                    apiTypes: evolution.apiTypes || [],
+                  });
+                  await fetchEvolutions(evolution, chain);
+                }
+              } catch (error) {
+                console.error("Failed to fetch evolution:", error);
+              }
+            }
+          }
+          return chain;
+        };
+
+        let chain = [
+          {
+            name: pokemon.name,
+            pokedexId: pokemon.pokedexId,
+            image: pokemon.image,
+            apiTypes: pokemon.apiTypes,
+          },
+        ];
+
+        const preEvolutions = await fetchPreEvolutions(pokemon);
+        chain = [...preEvolutions, ...chain];
+
+        const evolutions = await fetchEvolutions(pokemon);
+        chain = [...chain, ...evolutions];
+
+        const uniqueChain = chain.reduce((acc, current) => {
+          const x = acc.find((item) => item.pokedexId === current.pokedexId);
+          if (!x) {
+            return acc.concat([current]);
+          } else {
+            return acc;
+          }
+        }, []);
+
+        setEvolutionChain(uniqueChain);
+      } catch (error) {
+        console.error("Error building evolution chain:", error);
+      }
+    };
+
+    fetchCompleteEvolutionChain();
+  }, [pokemon]);
 
   if (loading)
     return (
@@ -68,16 +159,6 @@ const PokemonDetail = () => {
             }`}
           >
             Evolution
-          </button>
-          <button
-            onClick={() => setActiveTab("moves")}
-            className={`px-4 py-2 text-sm rounded-full transition-all ${
-              activeTab === "moves"
-                ? `${typeStyle.bg} text-white font-medium`
-                : "text-white/70 hover:text-white/90"
-            }`}
-          >
-            Capable Moves
           </button>
         </div>
       </div>
@@ -199,7 +280,7 @@ const PokemonDetail = () => {
                 </h4>
                 <p className="text-sm text-white/90 font-light">
                   {pokemon.apiEvolutions.length > 0
-                    ? `${pokemon.apiEvolutions.length}`
+                    ? `${pokemon.apiEvolutions.length} evolution(s)`
                     : "None"}
                 </p>
               </div>
@@ -228,85 +309,48 @@ const PokemonDetail = () => {
       )}
 
       {activeTab === "evolution" && (
-        <div className="absolute top-40 left-1/2 transform -translate-x-1/2 z-20 w-full max-w-2xl p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
-          <h2 className="text-2xl font-bold text-white/90 mb-6">
-            Evolution Chain
-          </h2>
-          {pokemon.apiEvolutions.length > 0 ? (
-            <div className="flex flex-col gap-4">
-              {pokemon.apiEvolutions.map((evolution, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <div className="flex-1 bg-white/5 p-4 rounded-lg border border-white/10">
-                    <div className="flex items-center gap-4">
-                      <img
-                        src={evolution.image}
-                        alt={evolution.name}
-                        className="w-16 h-16 object-contain"
-                      />
-                      <div>
-                        <h3 className="text-lg font-medium text-white/90">
-                          {evolution.name}
-                        </h3>
-                        <p className="text-sm text-white/70">
-                          Level: {evolution.level || "Unknown"}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  {index < pokemon.apiEvolutions.length - 1 && (
-                    <div className="text-white/50">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                        />
-                      </svg>
-                    </div>
-                  )}
+        <div className="absolute top-30 left-1/2 transform -translate-x-1/2 z-20">
+          (
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+            {evolutionChain.map((pokemon, index) => (
+              <div key={index} className="flex flex-col items-center">
+                <div
+                className="w-56"
+                  onClick={() => setActiveTab("description")}
+                >
+                  <Pokecard
+                    id={pokemon.pokedexId}
+                    name={pokemon.name}
+                    image={pokemon.image}
+                    apiTypes={pokemon.apiTypes}
+                  />
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-white/70">This Pokémon does not evolve.</p>
-          )}
+                {index < evolutionChain.length - 1 && (
+                  <div className="my-4 text-white/50">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-8 w-8"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          )
         </div>
       )}
 
-      {activeTab === "moves" && (
-        <div className="absolute top-40 left-1/2 transform -translate-x-1/2 z-20 w-full max-w-2xl p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
-          <h2 className="text-2xl font-bold text-white/90 mb-6">
-            Capable Moves
-          </h2>
-          {pokemon.apiMoves && pokemon.apiMoves.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {pokemon.apiMoves.map((move, index) => (
-                <div
-                  key={index}
-                  className="bg-white/5 p-3 rounded-lg border border-white/10"
-                >
-                  <h3 className="text-white/90 font-medium">{move.name}</h3>
-                  <p className="text-xs text-white/60">
-                    {move.type && `Type: ${move.type}`}
-                    {move.power && ` | Power: ${move.power}`}
-                  </p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-white/70">
-              No moves data available for this Pokémon.
-            </p>
-          )}
-        </div>
-      )}
+    
     </div>
   );
 };

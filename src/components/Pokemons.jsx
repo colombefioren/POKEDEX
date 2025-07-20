@@ -24,11 +24,7 @@ const Pokemons = ({ data }) => {
     return (
       <>
         {data.map((pokemon) => (
-          <Link
-            to={`/pokemon/${pokemon.name.toLowerCase()}`}
-            key={pokemon.name} 
-            className="h-full"
-          >
+          <div key={pokemon.name} className="h-full">
             <Pokecard
               id={pokemon.pokedexId}
               name={pokemon.name}
@@ -38,7 +34,7 @@ const Pokemons = ({ data }) => {
               apiResistances={pokemon.apiResistances}
               apiEvolutions={pokemon.apiEvolutions}
             />
-          </Link>
+          </div>
         ))}
       </>
     );
