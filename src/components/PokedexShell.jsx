@@ -7,6 +7,7 @@ const PokedexShell = ({ children, loading, active }) => {
     showContent: false,
     bezelsOpen: false,
   });
+  
 
   const [windowSize, setWindowSize] = useState({
     width: typeof window !== "undefined" ? window.innerWidth : 0,

@@ -4,13 +4,14 @@ import { TYPE_TRANSLATION, TYPE_ICONS, TYPE_STYLES } from "../constants/types";
 import { useState, useEffect } from "react";
 import Pokecard from "./Pokecard";
 import { getPokemonByName } from "../lib/api/pokemonApi";
+import useTeamStore from "../store/teamStore";
 const PokemonDetail = () => {
   const { name } = useParams();
   const { state } = useLocation();
   const { pokemon, loading, error } = usePokemonByName(name);
   const [activeTab, setActiveTab] = useState(state?.activeTab || "description");
   const [evolutionChain, setEvolutionChain] = useState([]);
- 
+  const { addToTeam } = useTeamStore();
   useEffect(() => {
     const fetchCompleteEvolutionChain = async () => {
       if (!pokemon) return;
@@ -101,8 +102,8 @@ const PokemonDetail = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+      <div className="flex justify-center items-center h-full">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
       </div>
     );
   if (error)
@@ -137,6 +138,7 @@ const PokemonDetail = () => {
 
   return (
     <div className="min-h-full p-4 md:p-8 relative overflow-hidden">
+  
       {/* tab navigation */}
       <div className="absolute top-10 right-10 z-20">
         <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm rounded-full p-1 border border-white/10">
@@ -275,7 +277,11 @@ const PokemonDetail = () => {
           </div>
           <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-20 flex gap-4">
             <button
-              className={`px-6 py-3  cursor-pointer rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white font-medium shadow-lg transition flex items-center gap-2 ${typeStyle.text}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                addToTeam(pokemon);
+              }}
+              className={`px-6 py-3 cursor-pointer rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white font-medium shadow-lg transition flex items-center gap-2 ${typeStyle.text}`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
