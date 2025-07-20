@@ -8,189 +8,145 @@ const PokemonDetail = () => {
 
   if (loading)
     return (
-      <div className="flex items-center justify-center h-full">
-        className=
-        {`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 ${
-          pokemon
-            ? TYPE_STYLES[
-                TYPE_TRANSLATION[pokemon.apiTypes[0]?.name?.toLowerCase()]
-              ]?.border || "border-orange-500"
-            : "border-orange-500"
-        }`}
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
       </div>
     );
-
   if (error)
-    return (
-      <div className="text-red-500 text-center py-10">Erreur: {error}</div>
-    );
+    return <div className="text-red-500 text-center py-10">Error: {error}</div>;
   if (!pokemon)
     return (
-      <div className="text-gray-400 text-center py-10">
-        Aucun Pokémon sélectionné
-      </div>
+      <div className="text-gray-400 text-center py-10">No Pokémon selected</div>
     );
 
-  const primaryType = pokemon.apiTypes[0]?.name?.toLowerCase();
-  const translatedType = TYPE_TRANSLATION[primaryType] || "default";
-  const typeStyle = TYPE_STYLES[translatedType] || TYPE_STYLES.default;
+  const pokemonTypes = pokemon.apiTypes.map((type) => {
+    const typeName = type.name.toLowerCase();
+    const translatedType = TYPE_TRANSLATION[typeName] || "default";
+    return {
+      name: type.name,
+      translatedType,
+      style: TYPE_STYLES[translatedType] || TYPE_STYLES.default,
+      icon: TYPE_ICONS[translatedType] || TYPE_ICONS.default,
+    };
+  });
 
-  const resistances = pokemon.apiResistances.filter((r) =>
-    r.damage_relation.includes("resistant")
-  );
-  const faiblesses = pokemon.apiResistances.filter(
-    (r) => r.damage_relation === "vulnerable"
-  );
+  const primaryType = pokemonTypes[0]?.translatedType || "default";
+  const typeStyle = TYPE_STYLES[primaryType] || TYPE_STYLES.default;
+
+  const battleInfo = {
+    strengths: pokemon.apiResistances
+      .filter((r) => r.damage_relation.includes("resistant"))
+      .map((r) => r.name),
+    weaknesses: pokemon.apiResistances
+      .filter((r) => r.damage_relation === "vulnerable")
+      .map((r) => r.name),
+  };
 
   return (
-    <div className="h-full p-6 bg-[#0d0d14] text-white font-sans overflow-y-auto">
-      <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-start">
-        {/* LEFT SIDE - STATS */}
-        <div className="w-full lg:w-1/3 space-y-6">
-          <div className={`border-l-4 ${typeStyle.border} pl-4`}>
-            <h1 className="text-4xl font-bold tracking-wide">{pokemon.name}</h1>
-            <div className="flex items-center gap-2 mt-2">
-              {pokemon.apiTypes.map((type, index) => {
-                const typeKey =
-                  TYPE_TRANSLATION[type.name.toLowerCase()] || "default";
-                const icon = TYPE_ICONS[typeKey];
-                return (
-                  <span
-                    key={index}
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${TYPE_STYLES[typeKey]?.bg} bg-opacity-20`}
-                  >
-                    {icon}
-                    <span className="ml-1">{type.name}</span>
-                  </span>
-                );
-              })}
-            </div>
+    <div className="min-h-screen bg-[#0d0d14] text-white p-4 md:p-8 relative overflow-hidden">
+      {/* name */}
+      <div className="absolute top-6 left-6 z-20">
+        <h1 className="text-3xl md:text-4xl font-bold tracking-wider flex items-center gap-3">
+          {pokemon.name.toUpperCase()}
+          <div className="flex items-center gap-2">
+            {pokemonTypes.map((type, index) => (
+              <span key={index} className="text-sm flex items-center gap-1">
+                <span className={`${type.style.text}`}>{type.icon}</span>
+                {type.name.toUpperCase()}
+              </span>
+            ))}
           </div>
+        </h1>
+      </div>
 
-          {/* STATS */}
+      {/* image*/}
+      <div className="absolute inset-0 flex items-center justify-center z-10">
+        <div
+          className={`absolute w-64 h-64 md:w-80 md:h-80 rounded-full ${typeStyle.bg} opacity-20 blur-xl`}
+        ></div>
+        <div
+          className={`absolute w-64 h-64 md:w-80 md:h-80 rounded-full border-4 ${typeStyle.bg} border-opacity-30`}
+        ></div>
+        <div className="absolute w-72 h-72 md:w-88 md:h-88 rounded-full border-2 border-white border-opacity-10"></div>
+        <img
+          src={pokemon.image}
+          alt={pokemon.name}
+          className="relative z-30 w-56 h-56 md:w-72 md:h-72 object-contain"
+        />
+      </div>
+
+      {/* info */}
+      <div
+        className={`absolute bottom-6 right-6 bg-[#1a1a23] rounded-xl p-6 w-full max-w-md border-l-4 ${typeStyle.bg} z-20`}
+      >
+        <div className="grid grid-cols-2 gap-4">
+          {/* stat */}
           <div className="space-y-3">
-            <h3 className={`text-lg font-semibold ${typeStyle.text}`}>
-              Statistiques
+            <h3
+              className={`text-sm font-semibold ${typeStyle.text} tracking-wider`}
+            >
+              STATS
             </h3>
             {Object.entries(pokemon.stats).map(([key, val]) => (
-              <div key={key} className="grid grid-cols-12 gap-2 items-center">
-                <span className="col-span-4 text-sm capitalize text-gray-300">
+              <div key={key} className="flex items-center gap-2">
+                <span className="w-20 text-xs capitalize text-white/70">
                   {key.replace("_", " ")}
                 </span>
-                <div className="col-span-6 h-2 bg-gray-800 rounded-full overflow-hidden">
+                <div className="flex-1 h-1 bg-gray-800 rounded-full overflow-hidden">
                   <div
-                    className={`h-full rounded-full ${typeStyle.bg}`}
-                    style={{ width: `${val <= 100 ? val : 100}%` }}
+                    className={`h-full ${typeStyle.bg}`}
+                    style={{ width: `${Math.min(val, 100)}%` }}
                   ></div>
                 </div>
-                <span className="col-span-2 text-right text-sm font-mono">
-                  {val}
-                </span>
               </div>
             ))}
           </div>
 
-          {/* EVOLUTION */}
+          {/* battle info */}
+          <div className="space-y-3">
+            <h3
+              className={`text-sm font-semibold ${typeStyle.text} tracking-wider`}
+            >
+              BATTLE
+            </h3>
+            <div className="space-y-2">
+              <div>
+                <h4 className="text-xs text-white/70">Strengths</h4>
+                <p className="text-xs text-white/90">
+                  {battleInfo.strengths.join(", ") || "None"}
+                </p>
+              </div>
+              <div>
+                <h4 className="text-xs text-white/70">Weaknesses</h4>
+                <p className="text-xs text-white/90">
+                  {battleInfo.weaknesses.join(", ") || "None"}
+                </p>
+              </div>
+              <div>
+                <h4 className="text-xs text-white/70">Evolutions</h4>
+                <p className="text-xs text-white/90">
+                  {pokemon.apiEvolutions.length > 0
+                    ? `${pokemon.apiEvolutions.length} available`
+                    : "None"}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex gap-3 pt-6">
           {pokemon.apiEvolutions.length > 0 && (
-            <div>
-              <h3 className={`text-lg font-semibold ${typeStyle.text} mb-2`}>
-                Évolution
-              </h3>
-              <div className="flex items-center gap-2">
-                {pokemon.apiEvolutions.map((evo, index) => (
-                  <div key={index} className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center">
-                      <span className="text-xs text-gray-400">
-                        #{evo.pokedexId}
-                      </span>
-                    </div>
-                    <span className="text-sm mt-1">{evo.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <button
+              className={`flex-1 ${typeStyle.bg} hover:opacity-90 text-white px-4 py-2 rounded-lg text-sm transition`}
+            >
+              View Evolution
+            </button>
           )}
-        </div>
-
-        {/* CENTER - POKEMON IMAGE */}
-        <div className="relative flex-shrink-0 w-64 h-64 lg:w-96 lg:h-96">
-          <div className="absolute inset-0 rounded-full border-2 border-white/10 animate-pulse"></div>
-          <div className="absolute inset-4 rounded-full border border-white/5"></div>
-          <img
-            src={pokemon.image}
-            alt={pokemon.name}
-            className="relative z-10 w-full h-full object-contain animate-float"
-          />
-        </div>
-
-        {/* RIGHT SIDE - BATTLE INFO */}
-        <div className="w-full lg:w-1/3 space-y-6">
-          {/* RESISTANCES */}
-          <div>
-            <h3 className={`text-lg font-semibold ${typeStyle.text} mb-2`}>
-              Résistances
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {resistances.map((res, index) => {
-                const typeKey =
-                  TYPE_TRANSLATION[res.name.toLowerCase()] || "default";
-                return (
-                  <span
-                    key={index}
-                    className={`inline-flex items-center px-2 py-1 rounded text-xs ${TYPE_STYLES[typeKey]?.text} bg-gray-800 bg-opacity-50`}
-                  >
-                    {TYPE_ICONS[typeKey]}
-                    <span className="ml-1">
-                      {res.name} ({res.damage_multiplier}x)
-                    </span>
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* FAIBLESSES */}
-          <div>
-            <h3 className={`text-lg font-semibold ${typeStyle.text} mb-2`}>
-              Faiblesses
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {faiblesses.map((weak, index) => {
-                const typeKey =
-                  TYPE_TRANSLATION[weak.name.toLowerCase()] || "default";
-                return (
-                  <span
-                    key={index}
-                    className={`inline-flex items-center px-2 py-1 rounded text-xs ${TYPE_STYLES[typeKey]?.text} bg-gray-800 bg-opacity-50`}
-                  >
-                    {TYPE_ICONS[typeKey]}
-                    <span className="ml-1">
-                      {weak.name} ({weak.damage_multiplier}x)
-                    </span>
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* TALENTS */}
-          {pokemon.apiResistancesWithAbilities?.length > 0 && (
-            <div>
-              <h3 className={`text-lg font-semibold ${typeStyle.text} mb-2`}>
-                Talents
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {pokemon.apiResistancesWithAbilities.map((ability, index) => (
-                  <span
-                    key={index}
-                    className="inline-block px-2 py-1 rounded text-xs bg-gray-800 bg-opacity-50 text-gray-300"
-                  >
-                    {ability}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
+          <button
+            className={`flex-1 bg-white/10 hover:bg-white/20 border ${typeStyle.text} border-white/10 px-4 py-2 rounded-lg text-sm transition`}
+          >
+            Add to Team
+          </button>
         </div>
       </div>
     </div>
