@@ -12,7 +12,7 @@ export const usePokemonData = () => {
       try {
         setLoading(true);
         const [initialData, allData] = await Promise.all([
-          getPokemonList(54),
+          getPokemonList(15),
           getPokemonList(),
         ]);
         setPokeData(initialData);
