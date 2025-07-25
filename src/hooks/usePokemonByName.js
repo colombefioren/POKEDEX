@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getPokemonByName } from "../lib/api/pokemonApi.js"; 
+import { getCompletePokemonData } from "../lib/api/pokemonApi.js";
 
 export const usePokemonByName = (name) => {
   const [pokemon, setPokemon] = useState(null);
@@ -10,7 +10,8 @@ export const usePokemonByName = (name) => {
     const fetchPokemon = async () => {
       try {
         setLoading(true);
-        const data = await getPokemonByName(name);
+        setError(null);
+        const data = await getCompletePokemonData(name.toLowerCase());
         setPokemon(data);
       } catch (err) {
         setError(err.message);

@@ -4,20 +4,19 @@ import Pokemons from "./components/Pokemons";
 import Search from "./components/Search";
 import { usePokemonData } from "./hooks/usePokemonData";
 import PokedexShell from "./components/PokedexShell";
-import PokemonDetail from "./components/PokemonDetail";
 import PokemonTeam from "./components/PokemonTeam";
 import Notification from "./components/Notification";
 
 const App = () => {
   const [input, setInput] = useState("");
-  const { pokeData, allPokeData, loading, error } = usePokemonData();
+  const { pokeData, allPokemon, loading, error } = usePokemonData();
 
   const filteredPokemon = useMemo(() => {
     if (!input) return pokeData;
-    return allPokeData.filter((poke) =>
+    return allPokemon.filter((poke) =>
       poke.name.toLowerCase().includes(input.toLowerCase())
     );
-  }, [input, pokeData, allPokeData]);
+  }, [input, pokeData, allPokemon]);
 
   const handleInput = (e) => setInput(e.target.value);
 
@@ -48,7 +47,7 @@ const App = () => {
           path="/pokemon/:name"
           element={
             <PokedexShell active="pokemon" loading={false}>
-              <PokemonDetail />
+              {/* <PokemonDetail /> */}
             </PokedexShell>
           }
         />

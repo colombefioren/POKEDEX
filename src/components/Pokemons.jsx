@@ -10,7 +10,9 @@ const Pokemons = ({ data }) => {
         </div>
       </div>
     );
-  } else if (data.length === 0) {
+  }
+
+  if (Array.isArray(data) && data.length === 0) {
     return (
       <div className="col-span-full text-center py-20">
         <div className="text-white/70 text-lg font-mono">NO POKéMON FOUND</div>
@@ -19,25 +21,32 @@ const Pokemons = ({ data }) => {
         </div>
       </div>
     );
-  } else {
+  }
+
+  if (!Array.isArray(data)) {
     return (
-      <>
-        {data.map((pokemon) => (
-          <div key={pokemon.name} className="h-full">
-            <Pokecard
-              id={pokemon.pokedexId}
-              name={pokemon.name}
-              image={pokemon.image}
-              apiTypes={pokemon.apiTypes}
-              stats={pokemon.stats}
-              apiResistances={pokemon.apiResistances}
-              apiEvolutions={pokemon.apiEvolutions}
-            />
-          </div>
-        ))}
-      </>
+      <div className="col-span-full text-center py-20">
+        <div className="text-white/70 text-lg font-mono">
+          INVALID DATA FORMAT
+        </div>
+      </div>
     );
   }
+console.log(data)
+  return (
+    <>
+      {data.map((pokemon) => (
+        <div key={`${pokemon.id}-${pokemon.name}`} className="h-full">
+          <Pokecard
+            id={pokemon.id}
+            name={pokemon.name}
+            image={pokemon.image}
+            types={pokemon.types}
+          />
+        </div>
+      ))}
+    </>
+  );
 };
 
 export default Pokemons;
