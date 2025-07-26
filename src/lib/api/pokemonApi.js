@@ -60,7 +60,6 @@ export const getCompletePokemonData = async (identifier) => {
         other: {
           "official-artwork":
             pokemonData.sprites.other["official-artwork"]?.front_default,
-          dream_world: pokemonData.sprites.other?.dream_world?.front_default,
         },
       },
       stats: pokemonData.stats.map((stat) => ({
@@ -114,7 +113,7 @@ export const getPokemonList = async (limit = 20, offset = 0) => {
           id: pokemonData.id,
           name: pokemonData.name,
           image: pokemonData.sprites.other["official-artwork"].front_default,
-          types: pokemonData.types.map((type) => type.type.name)
+          types: pokemonData.types.map((type) => type.type.name),
         };
       })
     );

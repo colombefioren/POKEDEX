@@ -6,7 +6,7 @@ const useTeamStore = create((set) => ({
   addToTeam: (pokemon) =>
     set((state) => {
       // Check if pokemon is already in team
-      if (state.team.some((p) => p.pokedexId === pokemon.pokedexId)) {
+      if (state.team.some((p) => p.id === pokemon.id)) {
         return {
           notification: {
             message: `${pokemon.name} is already in your team!`,

@@ -22,20 +22,19 @@ const PokemonTeam = () => {
       </div>
     );
   }
-
   return (
     <div className="flex-1 overflow-y-auto px-10 py-8 sm:px-20 sm:pb-8 h-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
         {team.map((pokemon) => (
-          <div key={pokemon.pokedexId} className="relative group">
+          <div key={pokemon.id} className="relative group">
             <Pokecard
-              id={pokemon.pokedexId}
+              id={pokemon.id}
               name={pokemon.name}
-              image={pokemon.image}
-              apiTypes={pokemon.apiTypes}
+              image={pokemon.sprites.other["official-artwork"]}
+              types={pokemon.types}
             />
             <button
-              onClick={(e) => handleRemove(e, pokemon.pokedexId)}
+              onClick={(e) => handleRemove(e, pokemon.id)}
               className="absolute z-10 top-2 right-2 cursor-pointer bg-red-500/80 hover:bg-red-600/90 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
             >
               <svg
