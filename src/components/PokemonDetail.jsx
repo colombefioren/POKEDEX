@@ -230,7 +230,7 @@ const PokemonDetail = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-2/3 bg-gray-800/30 rounded-2xl border border-gray-700/50 backdrop-blur-sm overflow-hidden">
+        <div className="w-full md:w-2/3 bg-gray-800/30 rounded-2xl h-[70vh] border border-gray-700/50 backdrop-blur-sm overflow-hidden">
           <div className="flex border-b border-gray-700/50">
             {tabs.map((tab) => (
               <button

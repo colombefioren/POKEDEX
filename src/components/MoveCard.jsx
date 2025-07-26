@@ -1,3 +1,4 @@
+import { FiSearch } from "react-icons/fi";
 import { TYPE_STYLES } from "../constants/types";
 
 const MoveCard = ({ move = {}, onClick = () => {} }) => {
@@ -21,15 +22,17 @@ const MoveCard = ({ move = {}, onClick = () => {} }) => {
       aria-label={`View ${safeMove.name} details`}
     >
       <div className="flex items-center justify-between">
-        <div>
+        <div className="flex gap-3 items-center justify-center">
           <h4 className="text-lg font-bold text-white capitalize group-hover:text-blue-300 transition-colors">
             {safeMove.name.replace(/-/g, " ")}
           </h4>
-          <div className="text-xs text-gray-400 mt-1">
-            Lv. {safeMove.level_learned_at} •{" "}
-            {safeMove.learn_method.replace("-", " ")}
+
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 relative">
+            <div className="animate-ping absolute left-1 top-1 inline-flex h-3 w-3 rounded-full bg-blue-400 opacity-75"></div>
+            <FiSearch className="w-5 h-5 text-blue-300 relative z-10" />
           </div>
         </div>
+
         <span
           className={`px-2 py-1 rounded text-xs font-medium ${moveTypeStyle.bg} text-white`}
         >
