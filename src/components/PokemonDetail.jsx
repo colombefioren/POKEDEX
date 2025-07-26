@@ -16,7 +16,9 @@ import evolutionChain from "../helpers/evolutionChain";
 import { fetchAbilityDetails } from "../helpers/abilityDetails";
 import AbilityCard from "./AbilityCard";
 import AbilityModal from "./AbilityModal";
-
+import MoveCard from "../components/MoveCard";
+import MoveModal from "../components/MoveModal";
+import { fetchMoveDetails } from "../helpers/moveDetails";
 const PokemonDetail = () => {
   const { name } = useParams();
   const { pokemon, loading, error } = usePokemonByName(name);
@@ -30,8 +32,56 @@ const PokemonDetail = () => {
     isLoading: false,
     isHidden: false,
   });
+  const [moveModal, setMoveModal] = useState({
+    isOpen: false,
+    move: null,
+    details: null,
+    isLoading: false,
+  });
 
-  // Add these handler functions
+  const handleOpenMoveModal = async (move) => {
+    setMoveModal({
+      isOpen: true,
+      move: move.name || "unknown",
+      details: null,
+      isLoading: true,
+    });
+
+    try {
+      const details = await fetchMoveDetails(move.url);
+      setMoveModal((prev) => ({
+        ...prev,
+        details,
+        isLoading: false,
+      }));
+    } catch (error) {
+      console.error(error);
+      setMoveModal((prev) => ({
+        ...prev,
+        details: {
+          name: move.name || "unknown",
+          effect: "Error loading details",
+          type: move.type || "unknown",
+          power: "—",
+          accuracy: "—",
+          pp: "—",
+          damageClass: "—",
+          generation: "—",
+        },
+        isLoading: false,
+      }));
+    }
+  };
+
+  const handleCloseMoveModal = () => {
+    setMoveModal({
+      isOpen: false,
+      move: null,
+      details: null,
+      isLoading: false,
+    });
+  };
+
   const handleOpenAbilityModal = async (ability) => {
     setAbilityModal({
       isOpen: true,
@@ -321,50 +371,33 @@ const PokemonDetail = () => {
 
             {/* Moves tab */}
             {activeTab === "moves" && (
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-4">
-                  Moves ({pokemon.moves.length})
+              <div className="relative">
+                <h3 className="text-2xl font-bold text-white mb-6 text-center bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                  Pokémon Moves
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
-                  {pokemon.moves.map((move) => (
-                    <div
-                      key={move.name}
-                      className="bg-gray-800/50 rounded-lg p-4"
-                    >
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h4 className="text-white font-medium capitalize">
-                            {move.name.replace("-", " ")}
-                          </h4>
-                          <div className="text-xs text-gray-400 mt-1">
-                            Lv. {move.level_learned_at} •{" "}
-                            {move.learn_method.replace("-", " ")}
-                          </div>
-                        </div>
-                        <span
-                          className={`px-2 py-1 rounded text-xs font-medium ${
-                            TYPE_STYLES[move.type.toLowerCase()]?.bg ||
-                            "bg-gray-600"
-                          } text-white`}
-                        >
-                          {move.type}
-                        </span>
-                      </div>
-                      <div className="mt-2 flex justify-between text-xs text-gray-400">
-                        <span>Power: {move.power || "—"}</span>
-                        <span>Accuracy: {move.accuracy || "—"}</span>
-                        <span>PP: {move.pp || "—"}</span>
-                      </div>
-                      {move.effect_entries?.length > 0 && (
-                        <p className="text-xs text-gray-300 mt-2">
-                          {move.effect_entries[0].effect}
-                        </p>
-                      )}
-                    </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[500px] overflow-y-auto p-2">
+                  {pokemon.moves.map((move, index) => (
+                    <MoveCard
+                      key={`${move.name}-${index}`}
+                      move={move}
+                      typeStyle={typeStyle}
+                      onClick={() => handleOpenMoveModal(move)}
+                    />
                   ))}
                 </div>
+
+                {moveModal.isOpen && (
+                  <MoveModal
+                    moveDetails={moveModal.details}
+                    isLoading={moveModal.isLoading}
+                    onClose={handleCloseMoveModal}
+                    typeStyle={typeStyle}
+                  />
+                )}
               </div>
             )}
+
             {/* Ability tab */}
 
             {activeTab === "abilities" && (

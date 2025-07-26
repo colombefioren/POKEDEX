@@ -28,6 +28,7 @@ export const getCompletePokemonData = async (identifier) => {
         const moveData = await fetchApiData(move.move.url);
         return {
           name: move.move.name,
+          url: move.move.url,
           level_learned_at: move.version_group_details[0].level_learned_at,
           learn_method: move.version_group_details[0].move_learn_method.name,
           accuracy: moveData.accuracy,
@@ -71,7 +72,7 @@ export const getCompletePokemonData = async (identifier) => {
       abilities: pokemonData.abilities.map((ability) => ({
         name: ability.ability.name,
         is_hidden: ability.is_hidden,
-        url : ability.ability.url
+        url: ability.ability.url,
       })),
       moves: moveDetails,
       species: {

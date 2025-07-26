@@ -32,7 +32,6 @@ const Pokemons = ({ data }) => {
       </div>
     );
   }
-console.log(data)
   return (
     <>
       {data.map((pokemon) => (
