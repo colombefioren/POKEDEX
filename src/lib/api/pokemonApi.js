@@ -71,6 +71,7 @@ export const getCompletePokemonData = async (identifier) => {
       abilities: pokemonData.abilities.map((ability) => ({
         name: ability.ability.name,
         is_hidden: ability.is_hidden,
+        url : ability.ability.url
       })),
       moves: moveDetails,
       species: {
