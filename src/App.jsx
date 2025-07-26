@@ -6,6 +6,7 @@ import { usePokemonData } from "./hooks/usePokemonData";
 import PokedexShell from "./components/PokedexShell";
 import PokemonTeam from "./components/PokemonTeam";
 import Notification from "./components/Notification";
+import PokemonDetail from "./components/PokemonDetail";
 
 const App = () => {
   const [input, setInput] = useState("");
@@ -47,7 +48,7 @@ const App = () => {
           path="/pokemon/:name"
           element={
             <PokedexShell active="pokemon" loading={false}>
-              {/* <PokemonDetail /> */}
+              <PokemonDetail />
             </PokedexShell>
           }
         />

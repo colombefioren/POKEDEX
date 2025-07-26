@@ -114,7 +114,7 @@ const PokedexShell = ({ children, loading, active }) => {
           </Link>
 
           {/* pokemon tab */}
-          <Link to="/pokemon/bulbizarre">
+          <Link to="/pokemon/bulbasaur">
             <button
               className={`flex flex-col items-center justify-center h-full px-4 cursor-pointer transition-colors ${
                 activeTab === "pokemon"
