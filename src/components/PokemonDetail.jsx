@@ -54,13 +54,13 @@ const PokemonDetail = () => {
   ];
 
   return (
-    <div className="min-h-full p-4 md:p-8 relative overflow-hidden bg-gray-950">
+    <div className="min-h-full p-4 md:p-8 relative overflow-hidden">
       <div className="relative z-10 flex flex-col md:flex-row gap-8">
         {/* Left panel */}
      <PokemonDetailLeftPanel pokemon={pokemon} typeStyle={typeStyle} addToTeam={addToTeam} />
 
         {/* Right panel */}
-        <div className="w-full md:w-2/3 bg-gray-800/30 rounded-2xl h-[75vh] border border-gray-700/50 backdrop-blur-sm overflow-hidden">
+        <div className="w-full md:w-2/3 bg-gray-800/50 rounded-2xl h-[75vh] border border-gray-700/50 backdrop-blur-sm overflow-hidden">
           {/* Animated tab navigation */}
           <div className="flex border-b border-gray-700/50 relative">
             {tabs.map((tab) => (
