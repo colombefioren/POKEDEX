@@ -62,15 +62,23 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="relative h-full w-full flex flex-col items-center justify-center px-4 py-8 overflow-y-auto"
+      className="relative h-full w-full flex flex-col items-center justify-center px-4 py-8"
     >
       {evolutions.length > 0 ? (
-        <div className={`w-full ${evolutions.length > 3 ? "mb-15" : "mb-30"} max-w-4xl`}>
+        <div
+          className={`w-full ${
+            evolutions.length > 8
+              ? "mb-15 overflow-y-auto"
+              : evolutions.length > 3
+              ? "mb-15"
+              : "mb-30"
+          } max-w-4xl`}
+        >
           {evolutionGroups.map((group, groupIndex) => (
             <motion.div
               key={`group-${groupIndex}`}
               variants={rowVariants}
-              className="flex justify-center mb-8 last:mb-0"
+              className="flex justify-center mb-15 last:mb-0"
             >
               {group.map((evolution, index) => (
                 <div key={evolution.name} className="flex items-center">
@@ -84,7 +92,7 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
                           typeStyle.glow || "bg-blue-500"
                         } bg-opacity-20 group-hover:bg-opacity-40 transition-all duration-300`}
                       >
-                        <div className="absolute inset-0 rounded-full bg-gray-900/80 backdrop-blur-lg"></div>
+                        <div className="absolute inset-0 rounded-full bg-gray-800/50 backdrop-blur-lg"></div>
 
                         <div className="relative w-full h-full flex items-center justify-center">
                           <motion.img

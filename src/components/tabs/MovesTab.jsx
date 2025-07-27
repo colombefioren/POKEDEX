@@ -128,7 +128,7 @@ const MovesTab = ({ pokemon, typeStyle }) => {
 
       <motion.div
         variants={containerVariants}
-        className="grid px-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 max-h-[70vh] py-1"
+        className="grid px-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 max-h-[70vh] py-1"
       >
         {filteredMoves.length > 0 ? (
           filteredMoves.map((move, index) => (
