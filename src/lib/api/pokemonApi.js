@@ -14,8 +14,10 @@ export const getCompletePokemonData = async (identifier) => {
       `${POKE_API.BASE_URL}/pokemon/${identifier}`
     );
 
+    const speciesIdentifier = pokemonData.species.name;
+
     const speciesData = await fetchApiData(
-      `${POKE_API.BASE_URL}/pokemon-species/${identifier}`
+      `${POKE_API.BASE_URL}/pokemon-species/${speciesIdentifier}`
     );
 
     let evolutionChainData = null;
