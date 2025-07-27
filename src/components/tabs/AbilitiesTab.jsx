@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { fetchAbilityDetails } from "../../helpers/abilityDetails";
-import AbilityCard from "../AbilityCard";
 import AbilityModal from "../AbilityModal";
-const AbilitiesTab = ({ pokemon, typeStyle }) => {
+import AbilityCard from "../AbilityCard";
 
+const AbilitiesTab = ({ pokemon, typeStyle }) => {
   const [abilityModal, setAbilityModal] = useState({
     isOpen: false,
     ability: null,
@@ -11,6 +12,7 @@ const AbilitiesTab = ({ pokemon, typeStyle }) => {
     isLoading: false,
     isHidden: false,
   });
+
   const handleOpenAbilityModal = async (ability) => {
     setAbilityModal({
       isOpen: true,
@@ -19,6 +21,7 @@ const AbilitiesTab = ({ pokemon, typeStyle }) => {
       isLoading: true,
       isHidden: ability.is_hidden || false,
     });
+
     try {
       const details = await fetchAbilityDetails(ability.url);
       setAbilityModal((prev) => ({
@@ -52,9 +55,13 @@ const AbilitiesTab = ({ pokemon, typeStyle }) => {
   };
 
   return (
-    <div className="relative p-4">
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="relative px-4 pb-4 pt-8 ">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="grid grid-cols-1 px-3 md:grid-cols-2 gap-5"
+      >
         {pokemon.abilities.map((ability, index) => (
           <AbilityCard
             key={`${ability.name}-${index}`}
@@ -63,7 +70,7 @@ const AbilitiesTab = ({ pokemon, typeStyle }) => {
             onClick={() => handleOpenAbilityModal(ability)}
           />
         ))}
-      </div>
+      </motion.div>
 
       {abilityModal.isOpen && (
         <AbilityModal
@@ -77,5 +84,5 @@ const AbilitiesTab = ({ pokemon, typeStyle }) => {
     </div>
   );
 };
-
+motion;
 export default AbilitiesTab;
