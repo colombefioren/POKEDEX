@@ -110,7 +110,7 @@ const MovesTab = ({ pokemon, typeStyle }) => {
           <input
             type="text"
             placeholder="Search moves..."
-            className="block w-full pl-9 pr-8 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-transparent transition-all"
+            className="block w-full pl-9 pr-8 py-2 text-sm bg-white/5 border border-white/10 rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-transparent transition-all"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
