@@ -2,7 +2,7 @@ import { IoSearch } from "react-icons/io5";
 
 const Search = ({ handleInput, value }) => {
   return (
-    <div className="relative max-w-xl mx-auto">
+    <div className="relative w-[25vw]">
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
         <IoSearch className="h-5 w-5" />
       </div>
