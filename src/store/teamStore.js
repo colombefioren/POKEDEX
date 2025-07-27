@@ -31,17 +31,17 @@ const useTeamStore = create((set) => ({
         },
       };
     }),
-  removeFromTeam: (pokedexId) =>
+  removeFromTeam: (id) =>
     set((state) => ({
-      team: state.team.filter((p) => p.pokedexId !== pokedexId),
+      team: state.team.filter((p) => p.id !== id),
       notification: {
         message: "Pokémon removed from team",
         type: "success",
       },
     })),
-clearNotification: () => {
-  setTimeout(() => set({ notification: null }), 100);
-},
+  clearNotification: () => {
+    setTimeout(() => set({ notification: null }), 100);
+  },
   clearTeam: () => set({ team: [] }),
 }));
 
