@@ -73,7 +73,10 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
                 <div className="relative w-full h-full overflow-hidden rounded-2xl">
                   <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent z-10"></div>
                   <img
-                    src={image.url}
+                    src={
+                      image.url ||
+                      "https://www.svgrepo.com/show/374881/fallback.svg"
+                    }
                     alt={pokemon.name}
                     className="w-full h-full object-contain p-4"
                   />
