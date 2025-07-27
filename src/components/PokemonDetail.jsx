@@ -136,7 +136,7 @@ const PokemonDetail = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 py-3 flex items-center justify-center gap-2 font-medium transition-colors ${
+                className={`flex-1 py-3 cursor-pointer flex items-center justify-center gap-2 font-medium transition-colors ${
                   activeTab === tab.id
                     ? `${typeStyle.bg} text-white`
                     : "text-gray-400 hover:text-white"
