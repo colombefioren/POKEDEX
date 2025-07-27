@@ -27,7 +27,11 @@ const AboutTab = ({ pokemon }) => {
     visible: { y: 0, opacity: 1 },
   };
 
-  const gameIndices = [...pokemon.game_indices, ...pokemon.game_indices];
+  const gameIndices = [
+    ...pokemon.game_indices,
+    ...pokemon.game_indices,
+    ...pokemon.game_indices,
+  ];
 
   return (
     <div>
@@ -128,7 +132,6 @@ const AboutTab = ({ pokemon }) => {
             <FaMountain className="text-orange-400 text-lg" />
             <h3 className="text-lg font-bold text-white">Traits</h3>
           </div>
-
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {[
               {
@@ -137,8 +140,11 @@ const AboutTab = ({ pokemon }) => {
                 ),
                 label: "Growth",
                 value:
-                  pokemon.species.growth_rate?.charAt(0).toUpperCase() +
-                    pokemon.species.growth_rate?.slice(1, 5) || "—",
+                  pokemon.species.growth_rate
+                    ?.split("-")[0]
+                    .charAt(0)
+                    .toUpperCase() + pokemon.species.growth_rate?.slice(1) ||
+                  "—",
                 color: "from-green-500/20 to-blue-500/20",
               },
               {
@@ -180,8 +186,8 @@ const AboutTab = ({ pokemon }) => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="bg-gradient-to-br from-gray-900/70 to-gray-800/60 rounded-xl border border-gray-700/40 backdrop-blur-sm p-4"
+        transition={{ delay: 0.7 }}
+        className="bg-gradient-to-br from-gray-900/70 to-gray-800/60 rounded-xl border border-gray-700/40 backdrop-blur-sm p-3"
       >
         <div className="flex items-center gap-3 mb-3">
           <FaGamepad className="text-blue-400 text-lg flex-shrink-0" />
@@ -189,19 +195,16 @@ const AboutTab = ({ pokemon }) => {
             Game Appearances
           </h3>
 
-          {/* Decorative divider */}
           <div className="hidden sm:block h-px bg-gradient-to-r from-blue-400/30 to-transparent flex-1 ml-2"></div>
         </div>
 
         {pokemon.game_indices.length > 0 ? (
           <div className="relative overflow-hidden py-2">
-            {/* Gradient overlays */}
             <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-gray-900/90 to-transparent z-10 pointer-events-none"></div>
             <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-gray-900/90 to-transparent z-10 pointer-events-none"></div>
 
-            {/* Infinite scrolling container */}
             <motion.div
-              className="flex gap-3 w-max"
+              className="flex gap-5 w-max"
               animate={{
                 x: [
                   "0%",
@@ -222,7 +225,7 @@ const AboutTab = ({ pokemon }) => {
                   className="flex-shrink-0"
                 >
                   <span
-                    className="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-medium capitalize
+                    className="inline-flex items-center justify-center px-4 py-1 rounded-xl text-sm font-medium capitalize
                       bg-gradient-to-br from-white/10 to-white/20 text-white/90
                       border border-white/20 shadow-sm backdrop-blur-sm h-[40px]
                       whitespace-nowrap overflow-hidden"

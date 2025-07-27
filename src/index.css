@@ -69,4 +69,12 @@
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
+  @keyframes fillWidth {
+    from {
+      width: 0%;
+    }
+    to {
+      width: var(--width);
+    }
+  }
 }

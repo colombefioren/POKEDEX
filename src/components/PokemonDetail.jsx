@@ -147,24 +147,30 @@ const PokemonDetail = () => {
             ))}
           </div>
 
-          <div className="flex h-[66vh] items-center justify-center">
-            <div className="px-4 py-1 w-full overflow-y-scroll">
-              {activeTab === "about" && (
+          {activeTab === "about" && (
+            <div className="flex h-[66vh] items-center justify-center">
+              <div className="px-4 py-1 w-full overflow-y-scroll">
                 <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
-              )}
-              {activeTab === "stats" && (
-                <StatsTab pokemon={pokemon} typeStyle={typeStyle} />
-              )}
-              {activeTab === "moves" && (
-                <MovesTab pokemon={pokemon} typeStyle={typeStyle} />
-              )}
-              {activeTab === "abilities" && (
-                <AbilitiesTab pokemon={pokemon} typeStyle={typeStyle} />
-              )}
-              {activeTab === "evolution" && (
-                <EvolutionTab pokemon={pokemon} typeStyle={typeStyle} />
-              )}
+              </div>
             </div>
+          )}
+          <div className="p-4 w-full h-full">
+            {activeTab === "stats" && (
+              <StatsTab
+                pokemon={pokemon}
+                typeStyle={typeStyle}
+                isActive={activeTab === "stats"}
+              />
+            )}
+            {activeTab === "moves" && (
+              <MovesTab pokemon={pokemon} typeStyle={typeStyle} />
+            )}
+            {activeTab === "abilities" && (
+              <AbilitiesTab pokemon={pokemon} typeStyle={typeStyle} />
+            )}
+            {activeTab === "evolution" && (
+              <EvolutionTab pokemon={pokemon} typeStyle={typeStyle} />
+            )}
           </div>
         </div>
       </div>

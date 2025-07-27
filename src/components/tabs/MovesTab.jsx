@@ -58,7 +58,7 @@ const MovesTab = ({ pokemon, typeStyle }) => {
         Pokémon Moves
       </h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[500px] overflow-y-auto p-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[56vh] overflow-y-auto p-2">
         {pokemon.moves.map((move, index) => (
           <MoveCard
             key={`${move.name}-${index}`}
