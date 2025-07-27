@@ -142,7 +142,7 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
               ? "mb-15 overflow-y-auto"
               : evolutions.length > 3
               ? "mb-15"
-              : "mb-30"
+              : "mb-10"
           } max-w-4xl`}
         >
           {evolutionGroups.map((group, groupIndex) => (

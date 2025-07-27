@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { usePokemonByName } from "../hooks/usePokemonByName";
 import { TYPE_ICONS, TYPE_STYLES } from "../constants/types";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import useTeamStore from "../store/teamStore";
 import {
   FaVolumeUp,
@@ -12,6 +12,7 @@ import {
   FaRunning,
   FaShieldAlt,
 } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 import AboutTab from "./tabs/AboutTab";
 import StatsTab from "./tabs/StatsTab";
 import MovesTab from "./tabs/MovesTab";
@@ -24,6 +25,7 @@ const PokemonDetail = () => {
   const [activeTab, setActiveTab] = useState("about");
   const [playingCry, setPlayingCry] = useState(false);
   const { addToTeam } = useTeamStore();
+  const tabContentRef = useRef(null);
 
   const playCry = () => {
     if (pokemon?.cries?.latest) {
@@ -61,10 +63,8 @@ const PokemonDetail = () => {
 
   return (
     <div className="min-h-full p-4 md:p-8 relative overflow-hidden bg-gray-950">
-      <div className="absolute inset-0 opacity-20"></div>
-
       <div className="relative z-10 flex flex-col md:flex-row gap-8">
-        {/* left */}
+        {/* Left panel */}
         <div className="w-full md:w-1/3 flex flex-col items-center">
           <div className="relative w-full aspect-square max-w-xs bg-gray-800/50 rounded-2xl border border-gray-700/50 p-4">
             <div
@@ -129,38 +129,49 @@ const PokemonDetail = () => {
           </div>
         </div>
 
-        {/*ritht */}
+        {/* Right panel */}
         <div className="w-full md:w-2/3 bg-gray-800/30 rounded-2xl h-[75vh] border border-gray-700/50 backdrop-blur-sm overflow-hidden">
-          <div className="flex border-b border-gray-700/50">
+          {/* Animated tab navigation */}
+          <div className="flex border-b border-gray-700/50 relative">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 py-3 cursor-pointer flex items-center justify-center gap-2 font-medium transition-colors ${
+                onClick={() => {
+                  setActiveTab(tab.id);
+                  if (tabContentRef.current) {
+                    tabContentRef.current.scrollTop = 0;
+                  }
+                }}
+                className={`flex-1 py-3 cursor-pointer flex items-center justify-center gap-2 font-medium transition-colors relative z-10 ${
                   activeTab === tab.id
-                    ? `${typeStyle.bg} text-white`
+                    ? "text-white"
                     : "text-gray-400 hover:text-white"
                 }`}
               >
                 {tab.icon} {tab.name}
               </button>
             ))}
+            <motion.div
+              layoutId="activeTabIndicator"
+              className={`absolute bottom-0 h-1 ${typeStyle.bg}`}
+              style={{
+                width: `${100 / tabs.length}%`,
+                left: `${
+                  tabs.findIndex((tab) => tab.id === activeTab) *
+                  (100 / tabs.length)
+                }%`,
+              }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            />
           </div>
 
-          {activeTab === "about" && (
-            <div className="flex h-[66vh] items-center justify-center">
-              <div className="px-4 py-1 w-full overflow-y-scroll">
-                <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
-              </div>
-            </div>
-          )}
-          <div className="w-full h-full">
+          {/* Static tab content */}
+          <div ref={tabContentRef} className="h-[66vh] overflow-y-auto">
+            {activeTab === "about" && (
+              <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
+            )}
             {activeTab === "stats" && (
-              <StatsTab
-                pokemon={pokemon}
-                typeStyle={typeStyle}
-                isActive={activeTab === "stats"}
-              />
+              <StatsTab pokemon={pokemon} typeStyle={typeStyle} />
             )}
             {activeTab === "moves" && (
               <MovesTab pokemon={pokemon} typeStyle={typeStyle} />
@@ -168,16 +179,14 @@ const PokemonDetail = () => {
             {activeTab === "abilities" && (
               <AbilitiesTab pokemon={pokemon} typeStyle={typeStyle} />
             )}
-            <div className="w-full h-full">
-              {activeTab === "evolution" && (
-                <EvolutionTab pokemon={pokemon} typeStyle={typeStyle} />
-              )}
-            </div>
+            {activeTab === "evolution" && (
+              <EvolutionTab pokemon={pokemon} typeStyle={typeStyle} />
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 };
-
+motion;
 export default PokemonDetail;
