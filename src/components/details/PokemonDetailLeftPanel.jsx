@@ -102,7 +102,7 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
               onClick={() => playCry(pokemon)}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className={`p-3 rounded-full bg-white/5 shadow-xl backdrop-blur-sm bg-opacity-90 ${
+              className={`p-3 rounded-full bg-white/8 cursor-pointer shadow-xl backdrop-blur-sm bg-opacity-90 ${
                 playingCry ? "animate-pulse ring-2 ring-white" : ""
               }`}
               title="Play cry"

@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useThemeStore } from "../store/themeStore";
+import ThemeToggle from "./ThemeToggle";
 
 const PokedexShell = ({ children, loading, active }) => {
   const [animationState, setAnimationState] = useState({
     showContent: false,
     bezelsOpen: false,
   });
-  
 
+  const { isDarkMode } = useThemeStore();
   const [windowSize, setWindowSize] = useState({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
     height: typeof window !== "undefined" ? window.innerHeight : 0,
@@ -62,10 +64,21 @@ const PokedexShell = ({ children, loading, active }) => {
   };
 
   return (
-    <div className="relative w-full h-screen bg-black overflow-hidden">
+    <div
+      className={`relative w-full h-screen ${
+        isDarkMode ? "bg-black" : "bg-slate-200"
+      } bg-black overflow-hidden`}
+    >
+      <ThemeToggle />
       {/*top*/}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        <div className="absolute top-0 left-0 right-0 h-16 bg-gray-900 border-b-2 border-gray-700">
+        <div
+          className={`absolute top-0 left-0 right-0 h-16 ${
+            isDarkMode
+              ? "bg-gray-900 border-gray-700"
+              : "bg-red-800 border-red-900"
+          } border-b-2 `}
+        >
           <div className="flex justify-between items-center h-full">
             <img
               src="/assets/images/pokeballimage.png"
@@ -77,13 +90,18 @@ const PokedexShell = ({ children, loading, active }) => {
               alt="Loading Pokéball"
               className="object-contain w-32 h-full"
             />
-            <div className="w-8 h-4 mr-4 bg-gray-700 rounded-full"></div>
           </div>
         </div>
       </div>
 
       {/* nav */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 h-14 bg-gray-900 border-t-2 border-gray-700">
+      <div
+        className={`absolute bottom-0 left-0 right-0 z-20 h-14 ${
+          isDarkMode
+            ? "bg-gray-900 border-gray-700"
+            : "bg-red-800 border-red-900"
+        } border-t-2`}
+      >
         <div className="flex justify-center gap-10 items-center h-full px-4">
           {/* search tab */}
           <Link to="/">
@@ -171,7 +189,7 @@ const PokedexShell = ({ children, loading, active }) => {
         </div>
       </div>
 
-      {/* content area */}
+      {/* Content Area */}
       <div className="absolute inset-0 z-0 pt-16 pb-14 flex flex-col">
         <AnimatePresence>
           {animationState.showContent && (
@@ -180,7 +198,7 @@ const PokedexShell = ({ children, loading, active }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex-1 overflow-hidden px-12"
+              className="flex-1 overflow-y-auto px-12"
             >
               {children}
             </motion.div>
@@ -201,7 +219,11 @@ const PokedexShell = ({ children, loading, active }) => {
             duration: 1.5,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="absolute left-0 top-16 bottom-14 bg-gray-900 border-r-2 border-gray-700"
+          className={`absolute left-0 ${
+            isDarkMode
+              ? "bg-gray-900 border-gray-700"
+              : "bg-red-800 border-red-900"
+          } top-16 bottom-14 border-r-2`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
           }}
@@ -220,7 +242,11 @@ const PokedexShell = ({ children, loading, active }) => {
             duration: 1.5,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="absolute right-0 top-16 bottom-14 bg-gray-900 border-l-2 border-gray-700"
+          className={`absolute right-0 ${
+            isDarkMode
+              ? "bg-gray-900 border-gray-700"
+              : "bg-red-800 border-red-900"
+          } top-16 bottom-14 border-l-2`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
           }}
