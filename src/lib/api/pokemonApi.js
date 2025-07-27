@@ -56,11 +56,15 @@ export const getCompletePokemonData = async (identifier) => {
       weight: pokemonData.weight,
       base_experience: pokemonData.base_experience,
       sprites: {
-        front_default: pokemonData.sprites.front_default,
-        front_shiny: pokemonData.sprites.front_shiny,
+        home: {
+          home: pokemonData.sprites.other["home"]?.front_default,
+        },
         other: {
           "official-artwork":
             pokemonData.sprites.other["official-artwork"]?.front_default,
+        },
+        dream: {
+          dream: pokemonData.sprites.other["dream_world"]?.front_default,
         },
       },
       stats: pokemonData.stats.map((stat) => ({

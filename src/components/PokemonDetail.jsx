@@ -18,23 +18,15 @@ import StatsTab from "./tabs/StatsTab";
 import MovesTab from "./tabs/MovesTab";
 import AbilitiesTab from "./tabs/AbilitiesTab";
 import EvolutionTab from "./tabs/EvolutionTab";
+import PokemonDetailLeftPanel from "./details/PokemonDetailLeftPanel";
 
 const PokemonDetail = () => {
   const { name } = useParams();
   const { pokemon, loading, error } = usePokemonByName(name);
   const [activeTab, setActiveTab] = useState("about");
-  const [playingCry, setPlayingCry] = useState(false);
   const { addToTeam } = useTeamStore();
   const tabContentRef = useRef(null);
 
-  const playCry = () => {
-    if (pokemon?.cries?.latest) {
-      const audio = new Audio(pokemon.cries.latest);
-      audio.play();
-      setPlayingCry(true);
-      audio.onended = () => setPlayingCry(false);
-    }
-  };
 
   if (loading)
     return (
@@ -65,69 +57,7 @@ const PokemonDetail = () => {
     <div className="min-h-full p-4 md:p-8 relative overflow-hidden bg-gray-950">
       <div className="relative z-10 flex flex-col md:flex-row gap-8">
         {/* Left panel */}
-        <div className="w-full md:w-1/3 flex flex-col items-center">
-          <div className="relative w-full aspect-square max-w-xs bg-gray-800/50 rounded-2xl border border-gray-700/50 p-4">
-            <div
-              className={`absolute inset-0 rounded-2xl ${typeStyle.bg} opacity-10`}
-            ></div>
-            <img
-              src={
-                pokemon.sprites.other["official-artwork"] ||
-                pokemon.sprites.front_default
-              }
-              alt={pokemon.name}
-              className="w-full h-full object-contain drop-shadow-2xl"
-            />
-
-            {pokemon.cries?.latest && (
-              <button
-                onClick={playCry}
-                className={`absolute bottom-4 right-4 p-3 rounded-full ${
-                  typeStyle.bg
-                } hover:opacity-90 transition-opacity ${
-                  playingCry ? "animate-pulse" : ""
-                }`}
-                title="Play Pokémon cry"
-              >
-                <FaVolumeUp className="text-white" />
-              </button>
-            )}
-          </div>
-
-          <div className="mt-6 text-center">
-            <h1 className="text-4xl font-bold text-white capitalize">
-              {pokemon.name}
-            </h1>
-            <div className="text-2xl font-mono text-gray-400 mt-1">
-              #{pokemon.id.toString().padStart(3, "0")}
-            </div>
-
-            <div className="flex justify-center gap-3 mt-4">
-              {pokemon.types.map((type, index) => {
-                const typeName = type.toLowerCase();
-                const buttonStyle =
-                  TYPE_STYLES[typeName] || TYPE_STYLES.default;
-                const Icon = TYPE_ICONS[typeName] || TYPE_ICONS.default;
-
-                return (
-                  <span
-                    key={index}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full ${buttonStyle.bg} text-white font-medium text-sm`}
-                  >
-                    {Icon} {type.toUpperCase()}
-                  </span>
-                );
-              })}
-            </div>
-
-            <button
-              onClick={() => addToTeam(pokemon)}
-              className={`mt-6 px-6 py-3 rounded-full ${typeStyle.bg} hover:opacity-90 text-white font-medium flex items-center gap-2 transition-opacity`}
-            >
-              <FaPlus /> Add to Team
-            </button>
-          </div>
-        </div>
+     <PokemonDetailLeftPanel pokemon={pokemon} typeStyle={typeStyle} addToTeam={addToTeam} />
 
         {/* Right panel */}
         <div className="w-full md:w-2/3 bg-gray-800/30 rounded-2xl h-[75vh] border border-gray-700/50 backdrop-blur-sm overflow-hidden">
