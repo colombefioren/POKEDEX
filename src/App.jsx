@@ -81,7 +81,7 @@ const App = () => {
                     <div className="text-center mt-8">
                       <motion.button
                         onClick={() => setDisplayCount((prev) => prev + 10)}
-                        className="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                        className="px-6 py-2 bg-red-500 hover:bg-red-600  text-white rounded-full cursor-pointer transition-colors"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
