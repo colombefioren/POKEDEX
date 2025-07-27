@@ -29,7 +29,7 @@ const StatsTab = ({ pokemon, typeStyle, isActive }) => {
   }, [isActive]);
 
   return (
-    <div className="p-6 h-[60vh] flex flex-col justify-between">
+    <div className="py-6 px-10 h-[60vh] flex flex-col justify-between">
       <div className="flex items-center mb-6">
         <div className={`w-3 h-8 ${typeStyle.bg} rounded-full mr-3`}></div>
         <h3 className="text-2xl font-bold text-white tracking-wide">

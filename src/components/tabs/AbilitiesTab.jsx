@@ -52,10 +52,7 @@ const AbilitiesTab = ({ pokemon, typeStyle }) => {
   };
 
   return (
-    <div className="relative">
-      <h3 className="text-2xl font-bold text-white mb-6 text-center bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-        Pokémon Abilities
-      </h3>
+    <div className="relative p-4">
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {pokemon.abilities.map((ability, index) => (
