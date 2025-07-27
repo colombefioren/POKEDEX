@@ -53,7 +53,11 @@ const MoveModal = ({
             <FaTimes className="w-5 h-5" />
           </motion.button>
 
-          <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600/80 scrollbar-track-transparent scrollbar-thumb-rounded-full flex-1">
+          <div
+            className={`overflow-y-auto ${
+              isLoading && "flex justify-center items-center"
+            } scrollbar-thin scrollbar-thumb-gray-600/80 scrollbar-track-transparent scrollbar-thumb-rounded-full flex-1`}
+          >
             <div className="p-6">
               {isLoading ? (
                 <div className="flex justify-center items-center h-full py-12">

@@ -49,10 +49,14 @@ const AbilityModal = ({
             } to-transparent`}
           ></div>
 
-          <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800/50 scrollbar-thumb-rounded-full flex-1">
+          <div
+            className={`overflow-y-auto h-full ${
+              isLoading && "flex justify-center items-center"
+            } scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800/50 scrollbar-thumb-rounded-full flex-1`}
+          >
             <div className="p-6">
               {isLoading ? (
-                <div className="flex justify-center items-center py-12">
+                <div className="flex  justify-center items-center">
                   <motion.div
                     animate={{ rotate: 360 }}
                     transition={{

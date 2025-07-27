@@ -28,7 +28,6 @@ const MoveCard = ({ move = {}, onClick = () => {} }) => {
           </h4>
 
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 relative">
-            <div className="animate-ping absolute left-1 top-1 inline-flex h-3 w-3 rounded-full bg-blue-400 opacity-75"></div>
             <FiSearch className="w-5 h-5 text-blue-300 relative z-10" />
           </div>
         </div>
