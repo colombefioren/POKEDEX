@@ -170,7 +170,7 @@ const PokemonDetail = () => {
               <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
             )}
             {activeTab === "stats" && (
-              <StatsTab pokemon={pokemon} typeStyle={typeStyle} />
+              <StatsTab pokemon={pokemon} isActive={true} typeStyle={typeStyle} />
             )}
             {activeTab === "moves" && (
               <MovesTab pokemon={pokemon} typeStyle={typeStyle} />
