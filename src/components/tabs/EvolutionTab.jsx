@@ -2,11 +2,15 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import evolutionChain from "../../helpers/evolutionChain";
 import { FaArrowRight, FaQuestionCircle } from "react-icons/fa";
+import { GiSpinningBlades } from "react-icons/gi";
+import { RiSwordFill } from "react-icons/ri";
+import { useState } from "react";
 
 const EvolutionTab = ({ pokemon, typeStyle }) => {
   const evolutions = pokemon.species.evolution_chain
     ? evolutionChain(pokemon.species.evolution_chain)
     : [];
+  const [loading, setLoading] = useState(true);
 
   const groupEvolutions = (evolutions) => {
     const groups = [];
@@ -30,9 +34,10 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
   };
 
   const rowVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
+      y: 0,
       transition: {
         staggerChildren: 0.1,
       },
@@ -40,11 +45,20 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0, scale: 0.8 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: "spring", stiffness: 100, damping: 10 },
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 120,
+        damping: 12,
+      },
+    },
+    hover: {
+      y: -10,
+      transition: { duration: 0.3 },
     },
   };
 
@@ -53,8 +67,65 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
     visible: {
       scaleX: 1,
       opacity: 1,
-      transition: { duration: 0.5, ease: "circOut" },
+      transition: { duration: 0.6, ease: "backOut" },
     },
+  };
+
+  const LoadingPlaceholder = () => (
+    <motion.div
+      className="absolute inset-0 flex items-center justify-center"
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: 1,
+        transition: { delay: 0.3 },
+      }}
+    >
+      <motion.div
+        animate={{
+          rotate: 360,
+          transition: {
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "linear",
+          },
+        }}
+      >
+        <GiSpinningBlades
+          className={`text-3xl ${typeStyle.text || "text-blue-400"} opacity-60`}
+        />
+      </motion.div>
+    </motion.div>
+  );
+
+  const renderPokemonId = (id) => {
+    const digits = id.toString().padStart(3, "0").split("");
+    return (
+      <motion.div
+        className="flex items-center space-x-0.5"
+        whileHover={{ scale: 1.1 }}
+      >
+        {digits.map((digit, i) => (
+          <motion.span
+            key={i}
+            className={`inline-block px-1 py-0.5 rounded-md text-xs font-bold ${
+              typeStyle.bg || "bg-blue-600"
+            } text-white`}
+            initial={{ y: 0 }}
+            animate={{
+              y: [0, -5, 0],
+              transition: {
+                delay: i * 0.1,
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: "mirror",
+              },
+            }}
+          >
+            {digit}
+          </motion.span>
+        ))}
+      </motion.div>
+    );
   };
 
   return (
@@ -82,47 +153,96 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
             >
               {group.map((evolution, index) => (
                 <div key={evolution.name} className="flex items-center">
-                  <motion.div variants={itemVariants}>
+                  <motion.div variants={itemVariants} whileHover="hover">
                     <Link
                       to={`/pokemon/${evolution.name}`}
                       className="group relative flex flex-col items-center"
                     >
                       <div
-                        className={`relative w-28 h-28 md:w-36 md:h-36 rounded-full p-1 ${
+                        className={`relative  w-32 h-32 md:w-40 md:h-40 rounded-3xl p-1.5 ${
                           typeStyle.glow || "bg-blue-500"
-                        } bg-opacity-20 group-hover:bg-opacity-40 transition-all duration-300`}
+                        } bg-opacity-20 group-hover:bg-opacity-40 transition-all duration-300 shadow-lg`}
+                        style={{
+                          background: `radial-gradient(circle at center, ${
+                            typeStyle.glow || "#3B82F6"
+                          } 0%, transparent 70%)`,
+                        }}
                       >
-                        <div className="absolute inset-0 rounded-full bg-gray-800/50 backdrop-blur-lg"></div>
-
-                        <div className="relative w-full h-full flex items-center justify-center">
-                          <motion.img
-                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evolution.id}.png`}
-                            alt={evolution.name}
-                            className="w-full h-full object-contain drop-shadow-2xl"
-                            whileHover={{ scale: 1.05 }}
-                            onError={(e) => {
-                              e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evolution.id}.png`;
-                            }}
-                          />
-                        </div>
+                        <div className="absolute inset-0 rounded-full bg-gray-800/10 backdrop-blur-md"></div>
 
                         <motion.div
-                          whileHover={{ scale: 1.05 }}
-                          className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-1.5 rounded-full border border-gray-700 shadow-lg"
+                          className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
+                          style={{
+                            background: `radial-gradient(circle at center, ${
+                              typeStyle.glow || "#3B82F6"
+                            } 0%, transparent 70%)`,
+                          }}
+                          initial={{ opacity: 0 }}
+                          animate={{
+                            opacity: [0, 0.3, 0],
+                            transition: { duration: 3, repeat: Infinity },
+                          }}
+                        />
+
+                        {(() => {
+                          return (
+                            <div className="relative w-full h-full flex items-center justify-center">
+                              <motion.img
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evolution.id}.png`}
+                                alt={evolution.name}
+                                className="w-full h-full object-contain drop-shadow-xl"
+                                initial={{ opacity: 0 }}
+                                animate={{
+                                  opacity: 1,
+                                  transition: { delay: 0.4 + index * 0.1 },
+                                }}
+                                whileHover={{ scale: 1.08 }}
+                                onLoad={() => setLoading(false)}
+                                onError={(e) => {
+                                  e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evolution.id}.png`;
+                                  setLoading(false);
+                                }}
+                              />
+                              {loading && <LoadingPlaceholder />}
+                            </div>
+                          );
+                        })()}
+
+                        <motion.div
+                          className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-2 rounded-full border border-gray-700 shadow-xl"
+                          style={{
+                            boxShadow: `0 4px 15px ${
+                              typeStyle.glow || "#3B82F6"
+                            }40`,
+                          }}
                         >
-                          <span className="text-white font-medium capitalize text-sm whitespace-nowrap">
+                          <span className="text-white font-bold capitalize text-sm whitespace-nowrap tracking-wide">
                             {evolution.name}
                           </span>
                         </motion.div>
 
                         <motion.div
-                          whileHover={{ rotate: 15 }}
-                          className="absolute -top-2 -right-2 bg-gray-900 border border-gray-700 rounded-full w-8 h-8 flex items-center justify-center shadow-md"
+                          className="absolute -top-1 -right-1 bg-gray-900 border border-gray-700 rounded-full w-10 h-10 flex items-center justify-center shadow-lg"
+                          style={{
+                            boxShadow: `0 0 10px ${
+                              typeStyle.glow || "#3B82F6"
+                            }`,
+                          }}
                         >
-                          <span className="text-xs text-gray-300 font-mono">
-                            #{evolution.id.toString().padStart(3, "0")}
-                          </span>
+                          {renderPokemonId(evolution.id)}
                         </motion.div>
+
+                        {evolution.min_level && (
+                          <motion.div
+                            className="absolute -top-3 -left-3 bg-gray-800 border border-gray-600 rounded-xl px-2 py-1 flex items-center shadow-md"
+                            whileHover={{ scale: 1.1 }}
+                          >
+                            <RiSwordFill className="text-yellow-400 mr-1" />
+                            <span className="text-xs font-bold text-white">
+                              Lv.{evolution.min_level}
+                            </span>
+                          </motion.div>
+                        )}
                       </div>
                     </Link>
                   </motion.div>
@@ -130,28 +250,42 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
                   {index < group.length - 1 && (
                     <motion.div
                       variants={connectorVariants}
-                      className="relative mx-2 md:mx-4"
+                      className="relative mx-2 md:mx-6"
                     >
                       <div className="flex items-center">
-                        <div
-                          className={`w-12 md:w-16 h-1 bg-gradient-to-r ${
-                            typeStyle.glow || "from-blue-400 to-blue-500"
-                          } rounded-full`}
-                        ></div>
+                    
                         <motion.div
+                          className="mx-5 relative"
                           animate={{
-                            x: [-5, 5, -5],
+                            x: [-3, 3, -3],
                             transition: {
-                              duration: 2,
+                              duration: 1.5,
                               repeat: Infinity,
                               ease: "easeInOut",
                             },
                           }}
                         >
                           <FaArrowRight
-                            className={`ml-1 text-lg ${
+                            className={`text-xl ${
                               typeStyle.text || "text-blue-400"
-                            }`}
+                            } drop-shadow-md`}
+                          />
+                          <motion.div
+                            className="absolute inset-0 rounded-full"
+                            style={{
+                              boxShadow: `0 0 10px ${
+                                typeStyle.glow || "#3B82F6"
+                              }`,
+                            }}
+                            animate={{
+                              scale: [1, 1.5, 1],
+                              opacity: [0.8, 0, 0.8],
+                              transition: {
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeOut",
+                              },
+                            }}
                           />
                         </motion.div>
                       </div>
@@ -163,28 +297,59 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
           ))}
         </div>
       ) : (
-        <motion.div variants={itemVariants} className="text-center py-8">
+        <motion.div
+          variants={itemVariants}
+          className="text-center py-8"
+          whileHover={{ scale: 1.02 }}
+        >
           <motion.div
-            whileHover={{ scale: 1.03 }}
-            className="inline-block bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl p-8 border border-gray-700/50 shadow-lg backdrop-blur-sm"
+            className="inline-block bg-gradient-to-br from-gray-800/70 to-gray-900/70 rounded-3xl p-10 border-2 border-gray-700/60 shadow-2xl backdrop-blur-lg"
+            style={{
+              boxShadow: `0 10px 30px ${typeStyle.glow || "#3B82F6"}20`,
+            }}
           >
             <motion.div
               animate={{
-                rotate: [0, 5, -5, 0],
-                transition: { duration: 4, repeat: Infinity },
+                rotate: [0, 10, -10, 0],
+                y: [0, -5, 0],
+                transition: {
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
               }}
             >
-              <FaQuestionCircle className="w-16 h-16 mx-auto text-gray-500/70" />
+              <FaQuestionCircle className="w-20 h-20 mx-auto text-gray-400/80 drop-shadow-md" />
             </motion.div>
             <motion.p
-              className="mt-4 text-gray-400 text-lg font-medium"
+              className="mt-6 text-gray-300 text-xl font-bold tracking-wide"
               animate={{
-                opacity: [0.8, 1, 0.8],
-                transition: { duration: 3, repeat: Infinity },
+                opacity: [0.9, 1, 0.9],
+                textShadow: [
+                  `0 0 0 ${typeStyle.glow || "#3B82F6"}`,
+                  `0 0 10px ${typeStyle.glow || "#3B82F6"}`,
+                  `0 0 0 ${typeStyle.glow || "#3B82F6"}`,
+                ],
+                transition: {
+                  duration: 4,
+                  repeat: Infinity,
+                },
               }}
             >
               This Pokémon does not evolve
             </motion.p>
+            <motion.div
+              className="mt-4 h-1 w-20 mx-auto rounded-full"
+              style={{
+                background: `linear-gradient(90deg, transparent, ${
+                  typeStyle.glow || "#3B82F6"
+                }, transparent)`,
+              }}
+              animate={{
+                opacity: [0.5, 1, 0.5],
+                transition: { duration: 3, repeat: Infinity },
+              }}
+            />
           </motion.div>
         </motion.div>
       )}
