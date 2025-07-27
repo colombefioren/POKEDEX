@@ -154,7 +154,7 @@ const PokemonDetail = () => {
               </div>
             </div>
           )}
-          <div className="p-4 w-full h-full">
+          <div className="w-full h-full">
             {activeTab === "stats" && (
               <StatsTab
                 pokemon={pokemon}

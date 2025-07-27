@@ -1,51 +1,43 @@
-import { FiSearch } from "react-icons/fi";
 import { TYPE_STYLES } from "../constants/types";
+import { motion } from "framer-motion";
 
-const MoveCard = ({ move = {}, onClick = () => {} }) => {
+const MoveCard = ({ move = {}, onClick = () => {}, searchQuery = "" }) => {
   const safeMove = {
     name: move.name || "unknown",
     type: move.type || "unknown",
     url: move.url || "",
-    level_learned_at: move.level_learned_at || 0,
-    learn_method: move.learn_method || "unknown",
   };
 
   const moveTypeStyle =
     TYPE_STYLES[safeMove.type.toLowerCase()] || TYPE_STYLES.default;
+  const isHighlighted =
+    searchQuery && safeMove.name.includes(searchQuery.toLowerCase());
 
   return (
-    <div
+    <motion.div
+      whileHover={{ y: -2 }}
       onClick={onClick}
-      className={`relative group cursor-pointer rounded-xl p-4 border-2 border-gray-700/50 hover:border-${
-        moveTypeStyle.text || "blue-400"
-      } transition-all duration-300 hover:shadow-lg bg-gray-800/50`}
+      className={`
+        relative cursor-pointer rounded-xl p-4 transition-all duration-300
+        bg-white/5 backdrop-blur-sm border border-white/10 
+        hover:border-${moveTypeStyle.text}/30
+        ${isHighlighted ? `ring-1 ring-${moveTypeStyle.text}` : ""}
+      `}
       aria-label={`View ${safeMove.name} details`}
     >
       <div className="flex items-center justify-between">
-        <div className="flex gap-3 items-center justify-center">
-          <h4 className="text-lg font-bold text-white capitalize group-hover:text-blue-300 transition-colors">
-            {safeMove.name.replace(/-/g, " ")}
-          </h4>
-
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 relative">
-            <FiSearch className="w-5 h-5 text-blue-300 relative z-10" />
-          </div>
-        </div>
+        <h4 className="text-sm font-medium text-white/90 tracking-tight capitalize">
+          {safeMove.name.replace(/-/g, " ")}
+        </h4>
 
         <span
-          className={`px-2 py-1 rounded text-xs font-medium ${moveTypeStyle.bg} text-white`}
+          className={`px-2 py-0.5 rounded-full text-[0.65rem] font-medium ${moveTypeStyle.bg} text-white/90`}
         >
-          {safeMove.type.toUpperCase()}
+          {safeMove.type}
         </span>
       </div>
-
-      <div
-        className={`absolute inset-0 rounded-xl ${
-          moveTypeStyle.glow || "bg-blue-500"
-        } opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10`}
-      ></div>
-    </div>
+    </motion.div>
   );
 };
-
+motion;
 export default MoveCard;
