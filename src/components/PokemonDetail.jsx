@@ -64,7 +64,7 @@ const PokemonDetail = () => {
       <div className="absolute inset-0 opacity-20"></div>
 
       <div className="relative z-10 flex flex-col md:flex-row gap-8">
-        {/* Left side - Pokemon image and basic info */}
+        {/* left */}
         <div className="w-full md:w-1/3 flex flex-col items-center">
           <div className="relative w-full aspect-square max-w-xs bg-gray-800/50 rounded-2xl border border-gray-700/50 p-4">
             <div
@@ -129,14 +129,14 @@ const PokemonDetail = () => {
           </div>
         </div>
 
-        {/* Right side - Tabs content */}
-        <div className="w-full md:w-2/3 bg-gray-800/30 rounded-2xl h-[70vh] border border-gray-700/50 backdrop-blur-sm overflow-hidden">
+        {/*ritht */}
+        <div className="w-full md:w-2/3 bg-gray-800/30 rounded-2xl h-[75vh] border border-gray-700/50 backdrop-blur-sm overflow-hidden">
           <div className="flex border-b border-gray-700/50">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 py-4 flex items-center justify-center gap-2 font-medium transition-colors ${
+                className={`flex-1 py-3 flex items-center justify-center gap-2 font-medium transition-colors ${
                   activeTab === tab.id
                     ? `${typeStyle.bg} text-white`
                     : "text-gray-400 hover:text-white"
@@ -147,27 +147,27 @@ const PokemonDetail = () => {
             ))}
           </div>
 
-          <div className="p-6 h-full overflow-scroll">
-            {activeTab === "about" && (
-              <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
-            )}
-            {activeTab === "stats" && (
-              <StatsTab pokemon={pokemon} typeStyle={typeStyle} />
-            )}
-            {activeTab === "moves" && (
-              <MovesTab pokemon={pokemon} typeStyle={typeStyle} />
-            )}
-            {activeTab === "abilities" && (
-              <AbilitiesTab pokemon={pokemon} typeStyle={typeStyle} />
-            )}
-            {activeTab === "evolution" && (
-              <EvolutionTab pokemon={pokemon} typeStyle={typeStyle} />
-            )}
+          <div className="flex h-[66vh] items-center justify-center">
+            <div className="px-4 py-1 w-full overflow-y-scroll">
+              {activeTab === "about" && (
+                <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
+              )}
+              {activeTab === "stats" && (
+                <StatsTab pokemon={pokemon} typeStyle={typeStyle} />
+              )}
+              {activeTab === "moves" && (
+                <MovesTab pokemon={pokemon} typeStyle={typeStyle} />
+              )}
+              {activeTab === "abilities" && (
+                <AbilitiesTab pokemon={pokemon} typeStyle={typeStyle} />
+              )}
+              {activeTab === "evolution" && (
+                <EvolutionTab pokemon={pokemon} typeStyle={typeStyle} />
+              )}
+            </div>
           </div>
         </div>
       </div>
-
-    
     </div>
   );
 };

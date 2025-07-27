@@ -9,7 +9,6 @@ import {
   FaHeart,
   FaGamepad,
 } from "react-icons/fa";
-import { TYPE_STYLES } from "../../constants/types";
 
 const AboutTab = ({ pokemon }) => {
   const heightInMeters = pokemon.height / 10;
@@ -27,6 +26,8 @@ const AboutTab = ({ pokemon }) => {
     hidden: { y: 8, opacity: 0 },
     visible: { y: 0, opacity: 1 },
   };
+
+  const gameIndices = [...pokemon.game_indices, ...pokemon.game_indices];
 
   return (
     <div>
@@ -176,52 +177,70 @@ const AboutTab = ({ pokemon }) => {
           </div>
         </motion.div>
       </motion.div>
-
-<motion.div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 0.3 }}
-  className="relative bg-gradient-to-br from-gray-900/70 to-gray-800/60 rounded-xl border border-gray-700/40 backdrop-blur-sm p-4"
->
-  <div className="flex items-center gap-4 w-full">
-    <div className="flex items-center gap-2 min-w-max">
-      <FaGamepad className="text-blue-400 text-lg" />
-      <h3 className="text-lg font-bold text-white">Game Appearances</h3>
-    </div>
-
-    <div className="relative flex-1 overflow-hidden h-9">
-      <motion.div 
-        className="flex items-center gap-2 absolute top-0 left-0"
-        animate={{ 
-          x: ['0%', '-100%'],
-        }}
-        transition={{ 
-          duration: pokemon.game_indices.length * 3,
-          ease: "linear",
-          repeat: Infinity
-        }}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="bg-gradient-to-br from-gray-900/70 to-gray-800/60 rounded-xl border border-gray-700/40 backdrop-blur-sm p-4"
       >
+        <div className="flex items-center gap-3 mb-3">
+          <FaGamepad className="text-blue-400 text-lg flex-shrink-0" />
+          <h3 className="text-lg font-bold text-white flex-shrink-0">
+            Game Appearances
+          </h3>
+
+          {/* Decorative divider */}
+          <div className="hidden sm:block h-px bg-gradient-to-r from-blue-400/30 to-transparent flex-1 ml-2"></div>
+        </div>
+
         {pokemon.game_indices.length > 0 ? (
-          [...pokemon.game_indices, ...pokemon.game_indices].map((game, index) => (
-          <span
-  key={`${game.version.name}-${index}`}
-  className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium capitalize
-            bg-gradient-to-br from-white/10 to-white/20 text-white/90
-            border border-white/20 shadow-sm backdrop-blur-sm"
->
-  {game.version.name.replace("-", " ")}
-</span>
-          ))
+          <div className="relative overflow-hidden py-2">
+            {/* Gradient overlays */}
+            <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-gray-900/90 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-gray-900/90 to-transparent z-10 pointer-events-none"></div>
+
+            {/* Infinite scrolling container */}
+            <motion.div
+              className="flex gap-3 w-max"
+              animate={{
+                x: [
+                  "0%",
+                  `-${100 * (gameIndices.length / (gameIndices.length + 5))}%`,
+                ],
+              }}
+              transition={{
+                duration: gameIndices.length * 2.5,
+                ease: "linear",
+                repeat: Infinity,
+                repeatType: "loop",
+              }}
+            >
+              {gameIndices.map((game, index) => (
+                <motion.div
+                  key={`${game.version.name}-${index}`}
+                  whileHover={{ y: -2, scale: 1.03 }}
+                  className="flex-shrink-0"
+                >
+                  <span
+                    className="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-medium capitalize
+                      bg-gradient-to-br from-white/10 to-white/20 text-white/90
+                      border border-white/20 shadow-sm backdrop-blur-sm h-[40px]
+                      whitespace-nowrap overflow-hidden"
+                  >
+                    {game.version.name.replace(/-/g, " ")}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         ) : (
-          <span className="text-gray-400 text-sm">No game data available</span>
+          <div className="text-center py-4">
+            <span className="text-gray-400 text-sm">
+              No game data available
+            </span>
+          </div>
         )}
       </motion.div>
-      
-      <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-gray-900/70 to-transparent pointer-events-none"></div>
-      <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-gray-900/70 to-transparent pointer-events-none"></div>
-    </div>
-  </div>
-</motion.div>
     </div>
   );
 };
