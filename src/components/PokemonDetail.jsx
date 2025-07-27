@@ -168,9 +168,11 @@ const PokemonDetail = () => {
             {activeTab === "abilities" && (
               <AbilitiesTab pokemon={pokemon} typeStyle={typeStyle} />
             )}
-            {activeTab === "evolution" && (
-              <EvolutionTab pokemon={pokemon} typeStyle={typeStyle} />
-            )}
+            <div className="w-full h-full">
+              {activeTab === "evolution" && (
+                <EvolutionTab pokemon={pokemon} typeStyle={typeStyle} />
+              )}
+            </div>
           </div>
         </div>
       </div>

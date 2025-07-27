@@ -16,6 +16,26 @@ const MovesTab = ({ pokemon, typeStyle }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredMoves, setFilteredMoves] = useState(pokemon.moves);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.03,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 10, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100 },
+    },
+  };
+
   useEffect(() => {
     if (searchQuery.trim() === "") {
       setFilteredMoves(pokemon.moves);
@@ -72,9 +92,17 @@ const MovesTab = ({ pokemon, typeStyle }) => {
   };
 
   return (
-    <div className="relative h-[66vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-      <div className="sticky top-0 z-10 py-4 bg-gray-950/90">
-        <div className="relative max-w-md mx-auto ">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="relative h-[66vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
+    >
+      <motion.div
+        variants={itemVariants}
+        className="sticky top-0 z-10 py-4 bg-gray-950/90 backdrop-blur-sm"
+      >
+        <div className="relative max-w-md mx-auto">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <FiSearch className="h-4 w-4 text-gray-400" />
           </div>
@@ -82,7 +110,7 @@ const MovesTab = ({ pokemon, typeStyle }) => {
           <input
             type="text"
             placeholder="Search moves..."
-            className="block w-full pl-9 pr-8 py-2 text-sm  bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-transparent transition-all"
+            className="block w-full pl-9 pr-8 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-transparent transition-all"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -96,26 +124,36 @@ const MovesTab = ({ pokemon, typeStyle }) => {
             </button>
           )}
         </div>
-      </div>
+      </motion.div>
 
-      {/*  grid */}
-      <div className="grid px-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 max-h-[70vh] py-1">
+      <motion.div
+        variants={containerVariants}
+        className="grid px-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 max-h-[70vh] py-1"
+      >
         {filteredMoves.length > 0 ? (
           filteredMoves.map((move, index) => (
-            <MoveCard
+            <motion.div
               key={`${move.name}-${index}`}
-              move={move}
-              onClick={() => handleOpenMoveModal(move)}
-              searchQuery={searchQuery}
-            />
+              variants={itemVariants}
+              whileHover={{ y: -3 }}
+            >
+              <MoveCard
+                move={move}
+                onClick={() => handleOpenMoveModal(move)}
+                searchQuery={searchQuery}
+              />
+            </motion.div>
           ))
         ) : (
-          <div className="col-span-full flex flex-col items-center justify-center py-12 text-gray-400">
+          <motion.div
+            variants={itemVariants}
+            className="col-span-full flex flex-col items-center justify-center py-12 text-gray-400"
+          >
             <FiSearch className="h-8 w-8 mb-3" />
             <p className="text-sm">No moves found</p>
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
 
       {moveModal.isOpen && (
         <MoveModal
@@ -125,7 +163,7 @@ const MovesTab = ({ pokemon, typeStyle }) => {
           typeStyle={typeStyle}
         />
       )}
-    </div>
+    </motion.div>
   );
 };
 motion;
