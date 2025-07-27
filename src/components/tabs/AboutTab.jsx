@@ -34,12 +34,12 @@ const AboutTab = ({ pokemon }) => {
   ];
 
   return (
-    <div>
+    <div className="px-8 pt-2">
       <motion.div
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4 p-3"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 py-3"
       >
         <motion.div
           variants={itemVariants}

@@ -165,7 +165,6 @@ const PokemonDetail = () => {
             />
           </div>
 
-          {/* Static tab content */}
           <div ref={tabContentRef} className="h-[66vh] overflow-y-auto">
             {activeTab === "about" && (
               <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
