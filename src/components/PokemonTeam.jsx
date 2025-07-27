@@ -1,8 +1,11 @@
 import useTeamStore from "../store/teamStore";
 import Pokecard from "./Pokecard";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const PokemonTeam = () => {
   const { team, removeFromTeam } = useTeamStore();
+  const navigate = useNavigate();
 
   const handleRemove = (e, pokedexId) => {
     e.stopPropagation();
@@ -12,16 +15,38 @@ const PokemonTeam = () => {
 
   if (team.length === 0) {
     return (
-      <div className="col-span-full text-center py-20">
-        <div className="text-white/70 text-lg font-mono">
-          YOUR TEAM IS EMPTY
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="col-span-full flex flex-col items-center justify-center py-20 px-4"
+      >
+        <div className="relative max-w-md w-full">
+          <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full bg-red-500/10 blur-xl"></div>
+          <div className="absolute -bottom-10 -right-10 w-32 h-32 rounded-full bg-blue-500/10 blur-xl"></div>
+
+          <div className="relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 text-center">
+            <h3 className="text-2xl font-bold text-white/90 mb-2">
+              Your Team is Empty
+            </h3>
+            <p className="text-gray-400 mb-6">
+              Build your dream Pokémon team by adding your favorites
+            </p>
+
+            <motion.button
+              onClick={() => navigate("/")}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r cursor-pointer from-red-500 to-orange-500 text-white px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-red-500/20 transition-all"
+            >
+              Browse Pokémon Now
+            </motion.button>
+          </div>
         </div>
-        <div className="mt-2 text-red-400/70 text-sm font-mono">
-          BROWSE POKEMONS AND ADD THEM TO YOUR TEAM
-        </div>
-      </div>
+      </motion.div>
     );
   }
+
   return (
     <div className="flex-1 overflow-y-auto px-10 py-8 sm:px-20 sm:pb-8 h-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
@@ -58,5 +83,5 @@ const PokemonTeam = () => {
     </div>
   );
 };
-
+motion;
 export default PokemonTeam;
