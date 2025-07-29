@@ -113,7 +113,7 @@ const PokedexShell = ({ children, loading, active }) => {
                     : "text-yellow-500"
                   : isDarkMode
                   ? "text-gray-400 hover:text-gray-300"
-                  : "text-gray-300 hover:text-white"
+                  : "text-white hover:text-yellow-500"
               }`}
               onClick={() => setActiveTab("search")}
             >
@@ -145,7 +145,7 @@ const PokedexShell = ({ children, loading, active }) => {
                     : "text-yellow-500"
                   : isDarkMode
                   ? "text-gray-400 hover:text-gray-300"
-                  : "text-gray-300 hover:text-white"
+                  : "text-white hover:text-yellow-500"
               }`}
               onClick={() => setActiveTab("pokemon")}
             >
@@ -177,7 +177,7 @@ const PokedexShell = ({ children, loading, active }) => {
                     : "text-yellow-500"
                   : isDarkMode
                   ? "text-gray-400 hover:text-gray-300"
-                  : "text-gray-300 hover:text-white"
+                  : "text-white hover:text-yellow-500"
               }`}
               onClick={() => setActiveTab("team")}
             >

@@ -8,7 +8,6 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const { isDarkMode } = useThemeStore();
-
   useEffect(() => {
     if (types.length > 0) {
       const firstType =
@@ -28,8 +27,61 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
 
   const typeStyle = TYPE_STYLES[primaryType] || TYPE_STYLES.default;
 
+
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const renderId = () => {
+    const paddedId = id.toString().padStart(3, "0");
+    return (
+      <div className="relative group/id">
+        {/* Pokéball base */}
+        <div className="relative z-0 w-14 h-14 flex items-center justify-center">
+          {/* Pokéball outline */}
+          <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
+            <circle
+              cx="50"
+              cy="50"
+              r="48"
+              fill="none"
+              stroke={isDarkMode ? "#6b7280" : "#d1d5db"}
+              strokeWidth="3"
+            />
+            <line
+              x1="2"
+              y1="50"
+              x2="98"
+              y2="50"
+              stroke={isDarkMode ? "#6b7280" : "#d1d5db"}
+              strokeWidth="3"
+            />
+            <circle
+              cx="50"
+              cy="50"
+              r="15"
+              fill={isDarkMode ? "#6b7280" : "#d1d5db"}
+            />
+          </svg>
+
+          <div
+            className={`absolute z-10 w-8 h-8 rounded-full ${typeStyle.bg} 
+            flex items-center justify-center transition-all duration-300
+            ${isHovered ? "scale-110 shadow-lg" : "shadow-md"}`}
+          >
+            <span className="text-xs font-bold text-white">{paddedId}</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <Link to={`/pokemon/${name.toLowerCase()}`} className="h-full block">
+   <Link 
+      to={`/pokemon/${name.toLowerCase()}`} 
+      className="h-full block group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div
         className={`relative cursor-pointer h-full ${
           isDarkMode
@@ -39,7 +91,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
       >
         <div className="absolute inset-0 overflow-hidden">
           <div
-            className={`absolute -top-9 -left-9 w-32 h-32 rounded-full ${
+            className={`absolute -top-8 -left-5 w-32 h-32 rounded-full ${
               isDarkMode ? "bg-white opacity-4" : "bg-stone-200 opacity-40"
             } group-hover:opacity-10 transition-opacity duration-500`}
           ></div>
@@ -59,13 +111,14 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
         ></div>
 
         <div className="px-4 pb-8 pt-5 flex flex-col h-full relative z-10">
+       <div className="flex justify-between items-center">
           <div className="flex justify-between items-center mb-1">
             <span
               className={`text-xs font-medium ${
                 isDarkMode ? "text-gray-400" : "text-stone-500"
               }`}
             >
-              #{id.toString().padStart(3, "0")}
+              {renderId()}
             </span>
           </div>
 
@@ -78,6 +131,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
               {name.toUpperCase()}
             </h3>
           </div>
+       </div>
 
           <div className="relative flex-1 flex items-center justify-center my-1">
             <div
