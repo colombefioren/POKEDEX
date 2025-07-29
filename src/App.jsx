@@ -65,7 +65,7 @@ const App = () => {
                   <Search handleInput={handleInput} value={input} />
                   <motion.button
                     onClick={shufflePokemon}
-                    className="flex items-center gap-2 px-4 py-2 cursor-pointer rounded-full bg-red-500 hover:bg-red-600 text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 cursor-pointer rounded-full bg-gradient-to-r from-red-500 to-red-800 text-white transition-colors"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -81,7 +81,7 @@ const App = () => {
                     <div className="text-center mt-8">
                       <motion.button
                         onClick={() => setDisplayCount((prev) => prev + 10)}
-                        className="px-6 py-2 bg-red-500 hover:bg-red-600  text-white rounded-full cursor-pointer transition-colors"
+                        className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-800  text-white rounded-3xl cursor-pointer transition-colors"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >

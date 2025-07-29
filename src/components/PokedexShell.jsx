@@ -66,8 +66,8 @@ const PokedexShell = ({ children, loading, active }) => {
   return (
     <div
       className={`relative w-full h-screen ${
-        isDarkMode ? "bg-black" : "bg-slate-200"
-      } bg-black overflow-hidden`}
+        isDarkMode ? "bg-black" : "bg-stone-100"
+      } overflow-hidden`}
     >
       <ThemeToggle />
       {/*top*/}
@@ -76,8 +76,8 @@ const PokedexShell = ({ children, loading, active }) => {
           className={`absolute top-0 left-0 right-0 h-16 ${
             isDarkMode
               ? "bg-gray-900 border-gray-700"
-              : "bg-red-800 border-red-900"
-          } border-b-2 `}
+              : "bg-red-700 border-red-800"
+          } border-b-2`}
         >
           <div className="flex justify-between items-center h-full">
             <img
@@ -86,8 +86,8 @@ const PokedexShell = ({ children, loading, active }) => {
               className="w-14 pl-1"
             />
             <img
-              src="/assets/images/pokemon writingd.png"
-              alt="Loading Pokéball"
+              src={`/assets/images/pokemon writingd.png`}
+              alt="Pokemon Logo"
               className="object-contain w-32 h-full"
             />
           </div>
@@ -99,7 +99,7 @@ const PokedexShell = ({ children, loading, active }) => {
         className={`absolute bottom-0 left-0 right-0 z-20 h-14 ${
           isDarkMode
             ? "bg-gray-900 border-gray-700"
-            : "bg-red-800 border-red-900"
+            : "bg-red-700 border-red-800"
         } border-t-2`}
       >
         <div className="flex justify-center gap-10 items-center h-full px-4">
@@ -108,8 +108,12 @@ const PokedexShell = ({ children, loading, active }) => {
             <button
               className={`flex flex-col items-center justify-center h-full px-4 cursor-pointer transition-colors ${
                 activeTab === "search"
-                  ? "text-yellow-400"
-                  : "text-gray-400 hover:text-gray-300"
+                  ? isDarkMode
+                    ? "text-yellow-400"
+                    : "text-yellow-500"
+                  : isDarkMode
+                  ? "text-gray-400 hover:text-gray-300"
+                  : "text-gray-300 hover:text-white"
               }`}
               onClick={() => setActiveTab("search")}
             >
@@ -136,8 +140,12 @@ const PokedexShell = ({ children, loading, active }) => {
             <button
               className={`flex flex-col items-center justify-center h-full px-4 cursor-pointer transition-colors ${
                 activeTab === "pokemon"
-                  ? "text-yellow-400"
-                  : "text-gray-400 hover:text-gray-300"
+                  ? isDarkMode
+                    ? "text-yellow-400"
+                    : "text-yellow-500"
+                  : isDarkMode
+                  ? "text-gray-400 hover:text-gray-300"
+                  : "text-gray-300 hover:text-white"
               }`}
               onClick={() => setActiveTab("pokemon")}
             >
@@ -164,8 +172,12 @@ const PokedexShell = ({ children, loading, active }) => {
             <button
               className={`flex flex-col items-center justify-center h-full px-4 cursor-pointer transition-colors ${
                 activeTab === "team"
-                  ? "text-yellow-400"
-                  : "text-gray-400 hover:text-gray-300"
+                  ? isDarkMode
+                    ? "text-yellow-400"
+                    : "text-yellow-500"
+                  : isDarkMode
+                  ? "text-gray-400 hover:text-gray-300"
+                  : "text-gray-300 hover:text-white"
               }`}
               onClick={() => setActiveTab("team")}
             >
@@ -222,13 +234,17 @@ const PokedexShell = ({ children, loading, active }) => {
           className={`absolute left-0 ${
             isDarkMode
               ? "bg-gray-900 border-gray-700"
-              : "bg-red-800 border-red-900"
+              : "bg-red-700 border-red-800"
           } top-16 bottom-14 border-r-2`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
           }}
         >
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 w-1 h-32 bg-gray-700 rounded-full"></div>
+          <div
+            className={`absolute right-4 top-1/2 -translate-y-1/2 w-1 h-32 ${
+              isDarkMode ? "bg-gray-700" : "bg-stone-300"
+            } rounded-full`}
+          ></div>
         </motion.div>
 
         <motion.div
@@ -245,13 +261,17 @@ const PokedexShell = ({ children, loading, active }) => {
           className={`absolute right-0 ${
             isDarkMode
               ? "bg-gray-900 border-gray-700"
-              : "bg-red-800 border-red-900"
+              : "bg-red-700 border-red-800"
           } top-16 bottom-14 border-l-2`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
           }}
         >
-          <div className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-gray-700"></div>
+          <div
+            className={`absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full ${
+              isDarkMode ? "bg-gray-700" : "bg-stone-300"
+            }`}
+          ></div>
         </motion.div>
       </AnimatePresence>
 
@@ -262,7 +282,9 @@ const PokedexShell = ({ children, loading, active }) => {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="absolute inset-0 z-30 flex items-center justify-center bg-gray-900"
+            className={`absolute inset-0 z-30 flex items-center justify-center ${
+              isDarkMode ? "bg-gray-900" : "bg-stone-100"
+            }`}
           >
             <motion.div
               animate={{ rotate: 360 }}
