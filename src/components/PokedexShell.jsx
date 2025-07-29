@@ -106,7 +106,7 @@ const PokedexShell = ({ children, loading, active }) => {
 
           {/* taller right rec */}
           <div
-            className={`absolute top-0 border-b-2 ${
+            className={`absolute -top-[2px] border-b-2 ${
               isDarkMode
                 ? "border-gray-700 bg-gray-900"
                 : "border-red-900 bg-red-800"
