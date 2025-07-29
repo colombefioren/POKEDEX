@@ -79,18 +79,6 @@ const PokedexShell = ({ children, loading, active }) => {
               : "bg-red-700 border-red-800"
           } border-b-2`}
         >
-          <div className="flex justify-between items-center h-full">
-            <img
-              src="/assets/images/pokeballimage.png"
-              alt="Loading Pokéball"
-              className="w-14 pl-1"
-            />
-            <img
-              src={`/assets/images/pokemon writingd.png`}
-              alt="Pokemon Logo"
-              className="object-contain w-32 h-full"
-            />
-          </div>
         </div>
       </div>
 

@@ -13,7 +13,7 @@ import { useThemeStore } from "./store/themeStore";
 
 const App = () => {
   const [input, setInput] = useState("");
-  const [displayCount, setDisplayCount] = useState(10);
+  const [displayCount, setDisplayCount] = useState(15);
   const [shuffledData, setShuffledData] = useState([]);
   const { pokeData, allPokemon, loading, error } = usePokemonData();
   const { isDarkMode } = useThemeStore();
@@ -61,7 +61,7 @@ const App = () => {
           element={
             <PokedexShell active="search" loading={loading}>
               <div className="h-full flex flex-col">
-                <div className="px-4 py-5 flex justify-center gap-3 items-center">
+                <div className="pt-6 pb-8 flex justify-center gap-3 items-center">
                   <Search handleInput={handleInput} value={input} />
 
                   <motion.button

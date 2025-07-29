@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getPokemonList } from "../lib/api/pokemonApi";
 
-export const usePokemonData = (limit = 20, offset = 0) => {
+export const usePokemonData = (limit = 800, offset = 0) => {
   const [pokeData, setPokeData] = useState([]);
   const [allPokemon, setAllPokemon] = useState([]); 
   const [allPokeCount, setAllPokeCount] = useState(0);
