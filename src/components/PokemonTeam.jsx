@@ -16,7 +16,6 @@ const PokemonTeam = () => {
     return (
       <div className="col-span-full flex flex-col items-center justify-center py-20 px-4">
         <div className="relative max-w-md w-full">
-          <div className="absolute -bottom-10 -right-10 w-32 h-32 rounded-full bg-blue-500/10 blur-xl" />
           <div className="relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 text-center">
             <h3 className="text-2xl font-bold text-white/90 mb-2">
               Your Team is Empty
