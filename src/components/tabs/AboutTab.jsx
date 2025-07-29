@@ -42,7 +42,7 @@ const AboutTab = ({ pokemon }) => {
   const secondaryTextClass = isDarkMode ? "text-gray-300" : "text-slate-600";
 
   return (
-    <div className="px-8">
+    <div className="px-8 w-full">
       <motion.div
         initial="hidden"
         animate="visible"

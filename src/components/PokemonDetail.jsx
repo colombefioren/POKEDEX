@@ -31,9 +31,7 @@ const PokemonDetail = () => {
 
   if (loading)
     return (
-      <div
-        className={`flex justify-center items-center h-full`}
-      >
+      <div className={`flex justify-center items-center h-full`}>
         <div
           className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2`}
         ></div>
@@ -73,9 +71,7 @@ const PokemonDetail = () => {
   ];
 
   return (
-    <div
-      className={`min-h-full px-4 pb-10 md:p-8 relative overflow-hidden`}
-    >
+    <div className={`min-h-full px-4 pb-10 md:p-8 relative overflow-hidden`}>
       <div className="relative sm:mt-6 mt-10 z-10 flex flex-col md:flex-row gap-8">
         {/* Left panel */}
         <PokemonDetailLeftPanel
@@ -137,10 +133,12 @@ const PokemonDetail = () => {
             />
           </div>
 
-          <div ref={tabContentRef} className="h-[66vh] overflow-y-auto">
-            {activeTab === "about" && (
+          {activeTab === "about" && (
+            <div ref={tabContentRef} className="h-[66vh] overflow-y-auto my-auto flex items-center">
               <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
-            )}
+            </div>
+          )}
+          <div ref={tabContentRef} className="h-[66vh] overflow-y-auto">
             {activeTab === "stats" && (
               <StatsTab
                 pokemon={pokemon}
