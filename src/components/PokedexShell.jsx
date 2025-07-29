@@ -66,7 +66,7 @@ const PokedexShell = ({ children, loading, active }) => {
   return (
     <div
       className={`relative w-full h-screen ${
-        isDarkMode ? "bg-black" : "bg-stone-100"
+        isDarkMode ? "bg-black" : "bg-blue-100/60"
       } overflow-hidden`}
     >
       <ThemeToggle />
@@ -82,7 +82,7 @@ const PokedexShell = ({ children, loading, active }) => {
             className={`absolute top-0 left-0 border-b-2 ${
               isDarkMode
                 ? "border-gray-700 bg-gray-900"
-                : "border-red-800 bg-red-700"
+                : "border-red-900 bg-red-800"
             }`}
             style={{
               width: "80%",
@@ -93,7 +93,7 @@ const PokedexShell = ({ children, loading, active }) => {
           {/* diagonal slope*/}
           <div
             className={`absolute bottom-3 ${
-              isDarkMode ? "bg-gray-900" : "bg-red-700"
+              isDarkMode ? "bg-gray-900" : "bg-red-800"
             }`}
             style={{
               left: "33%",
@@ -109,7 +109,7 @@ const PokedexShell = ({ children, loading, active }) => {
             className={`absolute top-0 border-b-2 ${
               isDarkMode
                 ? "border-gray-700 bg-gray-900"
-                : "border-red-800 bg-red-700"
+                : "border-red-900 bg-red-800"
             }`}
             style={{
               left: "73%",
@@ -125,7 +125,7 @@ const PokedexShell = ({ children, loading, active }) => {
         className={`absolute bottom-0 left-0 right-0 z-20 h-14 ${
           isDarkMode
             ? "bg-gray-900 border-gray-700"
-            : "bg-red-700 border-red-800"
+            : "bg-red-800 border-red-900"
         } border-t-2`}
       >
         <div className="flex justify-center gap-10 items-center h-full px-4">
@@ -260,7 +260,7 @@ const PokedexShell = ({ children, loading, active }) => {
           className={`absolute left-0 ${
             isDarkMode
               ? "bg-gray-900 border-gray-700"
-              : "bg-red-700 border-red-800"
+              : "bg-red-800 border-red-900"
           } top-7 bottom-14 border-r-2`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
@@ -287,7 +287,7 @@ const PokedexShell = ({ children, loading, active }) => {
           className={`absolute right-0 ${
             isDarkMode
               ? "bg-gray-900 border-gray-700"
-              : "bg-red-700 border-red-800"
+              : "bg-red-800 border-red-900"
           } top-7 bottom-14 border-l-2`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",

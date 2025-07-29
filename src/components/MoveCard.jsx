@@ -1,7 +1,9 @@
 import { TYPE_STYLES } from "../constants/types";
 import { motion } from "framer-motion";
+import { useThemeStore } from "../store/themeStore";
 
 const MoveCard = ({ move = {}, onClick = () => {}, searchQuery = "" }) => {
+  const { isDarkMode } = useThemeStore();
   const safeMove = {
     name: move.name || "unknown",
     type: move.type || "unknown",
@@ -19,19 +21,29 @@ const MoveCard = ({ move = {}, onClick = () => {}, searchQuery = "" }) => {
       onClick={onClick}
       className={`
         relative cursor-pointer rounded-xl p-4 transition-all duration-300
-        bg-white/5 backdrop-blur-sm border border-white/10 
+        ${
+          isDarkMode ? "bg-white/5" : "bg-gray-800/5"
+        } backdrop-blur-sm border ${
+        isDarkMode ? "border-white/10" : "border-gray-400/20"
+      } 
         hover:border-${moveTypeStyle.text}/30
         ${isHighlighted ? `ring-1 ring-${moveTypeStyle.text}` : ""}
       `}
       aria-label={`View ${safeMove.name} details`}
     >
       <div className="flex items-center justify-between">
-        <h4 className="text-sm font-medium text-white/90 tracking-tight capitalize">
+        <h4
+          className={`text-sm font-medium ${
+            isDarkMode ? "text-white/90" : "text-gray-800"
+          } tracking-tight capitalize`}
+        >
           {safeMove.name.replace(/-/g, " ")}
         </h4>
 
         <span
-          className={`px-2 py-0.5 rounded-full text-[0.65rem] font-medium ${moveTypeStyle.bg} text-white/90`}
+          className={`px-2 py-0.5 rounded-full text-[0.65rem] font-medium ${
+            moveTypeStyle.bg
+          } ${isDarkMode ? "text-white/90" : "text-white"}`}
         >
           {safeMove.type}
         </span>

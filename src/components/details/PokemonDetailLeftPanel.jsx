@@ -5,12 +5,14 @@ import { TYPE_ICONS, TYPE_STYLES } from "../../constants/types";
 import { getAllPokemonImages } from "../../helpers/pokemonImages";
 import { getCardStyle, handleDragEnd } from "../../helpers/cardStack";
 import { usePokemonCry } from "../../hooks/usePokemonCry";
+import { useThemeStore } from "../../store/themeStore";
 
 const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const { playingCry, playCry } = usePokemonCry();
   const allImages = getAllPokemonImages(pokemon);
   const constraintsRef = useRef(null);
+  const { isDarkMode } = useThemeStore();
 
   return (
     <div className="w-full md:w-1/3 flex flex-col items-center relative">
@@ -20,7 +22,7 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
-          className={`${typeStyle.bg}  w-12 h-12 items-center justify-center cursor-pointer hover:scale-105 rounded-full backdrop-blur-md bg-opacity-80 shadow-lg flex`}
+          className={`${typeStyle.bg} w-12 h-12 items-center justify-center cursor-pointer hover:scale-105 rounded-full shadow-lg flex`}
         >
           <FaPlus className="text-white transition-transform transform group-hover:rotate-90" />
         </motion.div>
@@ -68,10 +70,18 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
               dragElastic={0.1}
             >
               <div
-                className={`w-full h-full bg-gray-900 border-3 ${typeStyle.border} rounded-3xl overflow-hidden shadow-2xl p-1`}
+                className={`w-full h-full ${
+                  isDarkMode ? "bg-gray-900" : "bg-white"
+                } border-3 ${
+                  typeStyle.border
+                } rounded-3xl overflow-hidden shadow-2xl p-1`}
               >
                 <div className="relative w-full h-full overflow-hidden rounded-2xl">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent z-10"></div>
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${
+                      isDarkMode ? "from-white/5" : "from-white/20"
+                    } to-transparent z-10`}
+                  ></div>
                   <img
                     src={
                       image.url ||
@@ -93,7 +103,11 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-5xl font-bold text-white capitalize text-center pb-2 bg-gradient-to-r from-transparent via-white/30 to-transparent bg-no-repeat bg-bottom bg-[length:80%_2px]"
+            className={`text-5xl font-bold capitalize text-center pb-2 bg-gradient-to-r from-transparent ${
+              isDarkMode ? "via-white/30" : "via-slate-300"
+            } to-transparent bg-no-repeat bg-bottom bg-[length:80%_2px] ${
+              isDarkMode ? "text-white" : "text-slate-800"
+            }`}
           >
             {pokemon.name.split("-").join(" ")}
           </motion.h1>
@@ -102,12 +116,22 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
               onClick={() => playCry(pokemon)}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className={`p-3 rounded-full bg-white/8 cursor-pointer shadow-xl backdrop-blur-sm bg-opacity-90 ${
-                playingCry ? "animate-pulse ring-2 ring-white" : ""
+              className={`p-3 rounded-full ${
+                isDarkMode ? "bg-white/8" : "bg-white/80"
+              } cursor-pointer shadow-xl backdrop-blur-sm ${
+                playingCry
+                  ? `animate-pulse ring-2 ${
+                      isDarkMode ? "ring-white" : "ring-slate-300"
+                    }`
+                  : ""
               }`}
               title="Play cry"
             >
-              <FaVolumeUp className="text-white text-xl" />
+              <FaVolumeUp
+                className={`${
+                  isDarkMode ? "text-white" : typeStyle.text
+                } text-xl`}
+              />
             </motion.button>
           )}
         </div>
@@ -123,7 +147,7 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: index * 0.1 + 0.3 }}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg ${buttonStyle.bg} text-white font-medium text-[12px] shadow-lg backdrop-blur-sm bg-opacity-80`}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg ${buttonStyle.bg} text-white font-medium text-[12px] shadow-lg`}
               >
                 <span className="text-base">{Icon}</span>
                 {type.toUpperCase()}

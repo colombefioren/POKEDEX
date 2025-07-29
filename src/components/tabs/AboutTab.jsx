@@ -9,8 +9,10 @@ import {
   FaHeart,
   FaGamepad,
 } from "react-icons/fa";
+import { useThemeStore } from "../../store/themeStore";
 
 const AboutTab = ({ pokemon }) => {
+  const { isDarkMode } = useThemeStore();
   const heightInMeters = pokemon.height / 10;
   const weightInKg = pokemon.weight / 10;
 
@@ -33,8 +35,14 @@ const AboutTab = ({ pokemon }) => {
     ...pokemon.game_indices,
   ];
 
+  const bgClass = isDarkMode
+    ? "bg-gradient-to-br from-gray-900/70 to-gray-800/60 border-gray-700/40"
+    : "bg-white/90 border-slate-200/80";
+  const textClass = isDarkMode ? "text-white" : "text-slate-800";
+  const secondaryTextClass = isDarkMode ? "text-gray-300" : "text-slate-600";
+
   return (
-    <div className="px-8 pt-2">
+    <div className="px-8">
       <motion.div
         initial="hidden"
         animate="visible"
@@ -43,68 +51,97 @@ const AboutTab = ({ pokemon }) => {
       >
         <motion.div
           variants={itemVariants}
-          className="relative bg-gradient-to-br from-gray-900/70 to-gray-800/60 rounded-xl p-4 border border-gray-700/40 backdrop-blur-sm"
+          className={`relative rounded-xl p-4 border ${bgClass} shadow-sm`}
         >
           <div className="flex items-center gap-2 mb-2">
-            <FaMagic className="text-blue-400 text-lg" />
-            <h3 className="text-lg font-bold text-white">Pokédex</h3>
+            <FaMagic
+              className={`${
+                isDarkMode ? "text-blue-400" : "text-blue-500"
+              } text-lg`}
+            />
+            <h3 className={`text-lg font-bold ${textClass}`}>Pokédex</h3>
           </div>
-          <p className="text-gray-300 text-sm italic leading-tight min-h-[60px]">
+          <p
+            className={`text-sm italic leading-tight min-h-[60px] ${secondaryTextClass}`}
+          >
             {pokemon.species.flavor_text || "No description available"}
           </p>
-
-          <div className="absolute -z-10 inset-0 overflow-hidden">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-0.5 h-0.5 rounded-full bg-blue-400/20"
-                style={{
-                  top: `${10 + Math.random() * 80}%`,
-                  left: `${Math.random() * 100}%`,
-                }}
-              />
-            ))}
-          </div>
         </motion.div>
 
         <motion.div
           variants={itemVariants}
-          className="bg-gradient-to-br from-gray-900/70 to-gray-800/60 rounded-xl p-4 border border-gray-700/40 backdrop-blur-sm"
+          className={`rounded-xl p-4 border ${bgClass} shadow-sm`}
         >
           <div className="flex items-center gap-2 mb-2">
-            <FaRuler className="text-purple-400 text-lg" />
-            <h3 className="text-lg font-bold text-white">Details</h3>
+            <FaRuler
+              className={`${
+                isDarkMode ? "text-purple-400" : "text-purple-500"
+              } text-lg`}
+            />
+            <h3 className={`text-lg font-bold ${textClass}`}>Details</h3>
           </div>
 
           <div className="grid grid-cols-2 gap-2 text-xs">
             {[
               {
-                icon: <FaRuler className="text-blue-400" />,
+                icon: (
+                  <FaRuler
+                    className={isDarkMode ? "text-blue-400" : "text-blue-500"}
+                  />
+                ),
                 label: "Height",
                 value: `${heightInMeters}m`,
               },
               {
-                icon: <FaWeight className="text-yellow-400" />,
+                icon: (
+                  <FaWeight
+                    className={
+                      isDarkMode ? "text-yellow-400" : "text-amber-500"
+                    }
+                  />
+                ),
                 label: "Weight",
                 value: `${weightInKg}kg`,
               },
               {
-                icon: <FaStar className="text-green-400" />,
+                icon: (
+                  <FaStar
+                    className={
+                      isDarkMode ? "text-green-400" : "text-emerald-500"
+                    }
+                  />
+                ),
                 label: "XP",
                 value: pokemon.base_experience || "—",
               },
               {
-                icon: <FaLeaf className="text-emerald-400" />,
+                icon: (
+                  <FaLeaf
+                    className={
+                      isDarkMode ? "text-emerald-400" : "text-green-500"
+                    }
+                  />
+                ),
                 label: "Habitat",
                 value: pokemon.species.habitat?.slice(0, 9) || "?",
               },
               {
-                icon: <FaHeart className="text-pink-400" />,
+                icon: (
+                  <FaHeart
+                    className={isDarkMode ? "text-pink-400" : "text-rose-500"}
+                  />
+                ),
                 label: "Capture",
                 value: pokemon.species.capture_rate || "—",
               },
               {
-                icon: <div className="w-3 h-3 bg-gray-400 rounded-full" />,
+                icon: (
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      isDarkMode ? "bg-gray-400" : "bg-slate-400"
+                    }`}
+                  />
+                ),
                 label: "Shape",
                 value: pokemon.species.shape?.slice(0, 7) || "—",
               },
@@ -112,13 +149,17 @@ const AboutTab = ({ pokemon }) => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="flex items-center justify-between py-1 px-2 rounded bg-gray-800/30"
+                className={`flex items-center justify-between py-1 px-2 rounded ${
+                  isDarkMode ? "bg-gray-800/30" : "bg-slate-100/50"
+                }`}
               >
-                <span className="text-gray-400 flex items-center gap-1">
+                <span
+                  className={`flex items-center gap-1 ${secondaryTextClass}`}
+                >
                   <span className="text-[0.9em]">{item.icon}</span>
                   {item.label}
                 </span>
-                <span className="text-white font-medium">{item.value}</span>
+                <span className={`font-medium ${textClass}`}>{item.value}</span>
               </motion.div>
             ))}
           </div>
@@ -126,11 +167,15 @@ const AboutTab = ({ pokemon }) => {
 
         <motion.div
           variants={itemVariants}
-          className="md:col-span-2 bg-gradient-to-br from-gray-900/70 to-gray-800/60 rounded-xl p-4 border border-gray-700/40 backdrop-blur-sm"
+          className={`md:col-span-2 rounded-xl p-4 border ${bgClass} shadow-sm`}
         >
           <div className="flex items-center gap-2 mb-2">
-            <FaMountain className="text-orange-400 text-lg" />
-            <h3 className="text-lg font-bold text-white">Traits</h3>
+            <FaMountain
+              className={`${
+                isDarkMode ? "text-orange-400" : "text-orange-500"
+              } text-lg`}
+            />
+            <h3 className={`text-lg font-bold ${textClass}`}>Traits</h3>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {[
@@ -145,39 +190,71 @@ const AboutTab = ({ pokemon }) => {
                     .charAt(0)
                     .toUpperCase() + pokemon.species.growth_rate?.slice(1) ||
                   "—",
-                color: "from-green-500/20 to-blue-500/20",
+                color: isDarkMode
+                  ? "from-green-500/20 to-blue-500/20"
+                  : "from-green-100 to-blue-100",
               },
               {
-                icon: <FaHeart className="text-pink-400" />,
+                icon: (
+                  <FaHeart
+                    className={isDarkMode ? "text-pink-400" : "text-rose-500"}
+                  />
+                ),
                 label: "Happy",
                 value: pokemon.species.base_happiness || "—",
-                color: "from-pink-500/20 to-purple-500/20",
+                color: isDarkMode
+                  ? "from-pink-500/20 to-purple-500/20"
+                  : "from-rose-100 to-purple-100",
               },
               {
-                icon: <FaStar className="text-yellow-400" />,
+                icon: (
+                  <FaStar
+                    className={
+                      isDarkMode ? "text-yellow-400" : "text-amber-400"
+                    }
+                  />
+                ),
                 label: "Legend",
                 value: pokemon.species.is_legendary ? "★" : "✗",
-                color: "from-yellow-500/20 to-amber-500/20",
+                color: isDarkMode
+                  ? "from-yellow-500/20 to-amber-500/20"
+                  : "from-amber-100 to-yellow-100",
               },
               {
-                icon: <FaMagic className="text-purple-400" />,
+                icon: (
+                  <FaMagic
+                    className={
+                      isDarkMode ? "text-purple-400" : "text-purple-500"
+                    }
+                  />
+                ),
                 label: "Myth",
                 value: pokemon.species.is_mythical ? "✨" : "✗",
-                color: "from-purple-500/20 to-indigo-500/20",
+                color: isDarkMode
+                  ? "from-purple-500/20 to-indigo-500/20"
+                  : "from-purple-100 to-indigo-100",
               },
             ].map((item, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className={`bg-gradient-to-br ${item.color} to-gray-800/40 rounded-lg p-2 text-center border border-gray-700/30`}
+                className={`bg-gradient-to-br ${
+                  item.color
+                } rounded-lg p-2 text-center border ${
+                  isDarkMode ? "border-gray-700/30" : "border-slate-200/80"
+                }`}
               >
                 <div className="flex justify-center text-lg mb-1">
                   {item.icon}
                 </div>
-                <div className="text-gray-400 text-[0.65rem] uppercase tracking-wider">
+                <div
+                  className={`text-[0.65rem] uppercase tracking-wider ${secondaryTextClass}`}
+                >
                   {item.label}
                 </div>
-                <div className="text-white font-bold text-sm">{item.value}</div>
+                <div className={`font-bold text-sm ${textClass}`}>
+                  {item.value}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -187,21 +264,37 @@ const AboutTab = ({ pokemon }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7 }}
-        className="bg-gradient-to-br from-gray-900/70 to-gray-800/60 rounded-xl border border-gray-700/40 backdrop-blur-sm p-3"
+        className={`rounded-xl border p-3 mt-4 ${bgClass} shadow-sm`}
       >
         <div className="flex items-center gap-3 mb-3">
-          <FaGamepad className="text-blue-400 text-lg flex-shrink-0" />
-          <h3 className="text-lg font-bold text-white flex-shrink-0">
+          <FaGamepad
+            className={`${
+              isDarkMode ? "text-blue-400" : "text-blue-500"
+            } text-lg flex-shrink-0`}
+          />
+          <h3 className={`text-lg font-bold flex-shrink-0 ${textClass}`}>
             Game Appearances
           </h3>
 
-          <div className="hidden sm:block h-px bg-gradient-to-r from-blue-400/30 to-transparent flex-1 ml-2"></div>
+          <div
+            className={`hidden sm:block h-px bg-gradient-to-r ${
+              isDarkMode ? "from-blue-400/30" : "from-slate-300/80"
+            } to-transparent flex-1 ml-2`}
+          ></div>
         </div>
 
         {pokemon.game_indices.length > 0 ? (
           <div className="relative overflow-hidden py-2">
-            <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-gray-900/90 to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-gray-900/90 to-transparent z-10 pointer-events-none"></div>
+            <div
+              className={`absolute inset-y-0 left-0 w-12 bg-gradient-to-r ${
+                isDarkMode ? "from-gray-900/90" : "from-white"
+              } to-transparent z-10 pointer-events-none`}
+            ></div>
+            <div
+              className={`absolute inset-y-0 right-0 w-12 bg-gradient-to-l ${
+                isDarkMode ? "from-gray-900/90" : "from-white"
+              } to-transparent z-10 pointer-events-none`}
+            ></div>
 
             <motion.div
               className="flex gap-5 w-max"
@@ -225,10 +318,11 @@ const AboutTab = ({ pokemon }) => {
                   className="flex-shrink-0"
                 >
                   <span
-                    className="inline-flex items-center justify-center px-4 py-1 rounded-xl text-sm font-medium capitalize
-                      bg-gradient-to-br from-white/10 to-white/20 text-white/90
-                      border border-white/20 shadow-sm backdrop-blur-sm h-[40px]
-                      whitespace-nowrap overflow-hidden"
+                    className={`inline-flex items-center justify-center px-4 py-1 rounded-xl text-sm font-medium capitalize whitespace-nowrap overflow-hidden h-[40px] ${
+                      isDarkMode
+                        ? "bg-gradient-to-br from-white/10 to-white/20 text-white/90 border border-white/20"
+                        : "bg-white text-slate-700 border border-slate-200"
+                    } shadow-sm`}
                   >
                     {game.version.name.replace(/-/g, " ")}
                   </span>
@@ -238,7 +332,7 @@ const AboutTab = ({ pokemon }) => {
           </div>
         ) : (
           <div className="text-center py-4">
-            <span className="text-gray-400 text-sm">
+            <span className={`text-sm ${secondaryTextClass}`}>
               No game data available
             </span>
           </div>

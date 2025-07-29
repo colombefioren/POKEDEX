@@ -30,17 +30,9 @@
   width: 8px;
 }
 
-::-webkit-scrollbar-track {
-  background: #1a1a1a;
-}
-
 ::-webkit-scrollbar-thumb {
-  background: #4b5563;
+  background: #590e0e;
   border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
 }
 
 .screen-texture {

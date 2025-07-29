@@ -3,6 +3,7 @@ import { usePokemonByName } from "../hooks/usePokemonByName";
 import { TYPE_ICONS, TYPE_STYLES } from "../constants/types";
 import { useState, useRef } from "react";
 import useTeamStore from "../store/teamStore";
+import { useThemeStore } from "../store/themeStore";
 import {
   FaVolumeUp,
   FaPlus,
@@ -25,20 +26,43 @@ const PokemonDetail = () => {
   const { pokemon, loading, error } = usePokemonByName(name);
   const [activeTab, setActiveTab] = useState("about");
   const { addToTeam } = useTeamStore();
+  const { isDarkMode } = useThemeStore();
   const tabContentRef = useRef(null);
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
+      <div
+        className={`flex justify-center items-center h-full ${
+          isDarkMode ? "bg-gray-900" : "bg-amber-50"
+        }`}
+      >
+        <div
+          className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 ${
+            isDarkMode ? "border-red-500" : "border-amber-500"
+          }`}
+        ></div>
       </div>
     );
 
   if (error)
-    return <div className="text-red-500 text-center py-10">Error: {error}</div>;
+    return (
+      <div
+        className={`text-center py-10 ${
+          isDarkMode ? "text-red-500" : "text-rose-600"
+        }`}
+      >
+        Error: {error}
+      </div>
+    );
   if (!pokemon)
     return (
-      <div className="text-gray-400 text-center py-10">Pokémon not found</div>
+      <div
+        className={`text-center py-10 ${
+          isDarkMode ? "text-gray-400" : "text-slate-500"
+        }`}
+      >
+        Pokémon not found
+      </div>
     );
 
   const primaryType = pokemon.types[0]?.toLowerCase() || "default";
@@ -53,7 +77,9 @@ const PokemonDetail = () => {
   ];
 
   return (
-    <div className="min-h-full px-4 pb-10 md:p-8 relative overflow-hidden">
+    <div
+      className={`min-h-full px-4 pb-10 md:p-8 relative overflow-hidden`}
+    >
       <div className="relative sm:mt-6 mt-10 z-10 flex flex-col md:flex-row gap-8">
         {/* Left panel */}
         <PokemonDetailLeftPanel
@@ -63,9 +89,21 @@ const PokemonDetail = () => {
         />
 
         {/* Right panel */}
-        <div className="w-full md:w-2/3 bg-gray-800/50 rounded-2xl h-[75vh] border border-gray-700/50 backdrop-blur-sm overflow-hidden">
+        <div
+          className={`w-full md:w-2/3 ${
+            isDarkMode
+              ? "bg-gray-800/50 border-gray-700/50"
+              : "bg-amber-50/90 border-slate-200/70"
+          } rounded-2xl h-[75vh] border backdrop-blur-sm overflow-hidden shadow-lg`}
+        >
           {/* Animated tab navigation */}
-          <div className="flex border-b border-gray-700/50 relative">
+          <div
+            className={`flex ${
+              isDarkMode
+                ? "border-b border-gray-700/50"
+                : "border-b border-slate-200/70"
+            } relative`}
+          >
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -77,8 +115,12 @@ const PokemonDetail = () => {
                 }}
                 className={`flex-1 py-3 cursor-pointer flex items-center justify-center gap-2 font-medium transition-colors relative z-10 ${
                   activeTab === tab.id
-                    ? "text-white"
-                    : "text-gray-400 hover:text-white"
+                    ? isDarkMode
+                      ? "text-white"
+                      : "text-slate-800"
+                    : isDarkMode
+                    ? "text-gray-400 hover:text-white"
+                    : "text-slate-500 hover:text-slate-700"
                 }`}
               >
                 <span className="text-lg">{tab.icon}</span>

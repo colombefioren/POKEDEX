@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import MoveModal from "../MoveModal";
 import MoveCard from "../MoveCard";
 import { fetchMoveDetails } from "../../helpers/moveDetails";
+import { useThemeStore } from "../../store/themeStore";
 
 const MovesTab = ({ pokemon, typeStyle }) => {
+  const { isDarkMode } = useThemeStore();
   const [moveModal, setMoveModal] = useState({
     isOpen: false,
     move: null,
@@ -96,21 +98,37 @@ const MovesTab = ({ pokemon, typeStyle }) => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="relative h-[66vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
+      className={`relative h-[66vh] overflow-y-auto ${
+        isDarkMode
+          ? "scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
+          : "scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
+      }`}
     >
       <motion.div
         variants={itemVariants}
-        className="sticky top-0 z-10 py-4 px-6 bg-gray-950/90 backdrop-blur-sm"
+        className={`sticky top-0 z-10 py-4 px-6 ${
+          isDarkMode ? "bg-gray-950/90" : "bg-white/90"
+        } backdrop-blur-sm border-b ${
+          isDarkMode ? "border-gray-700/50" : "border-slate-200/80"
+        }`}
       >
         <div className="relative max-w-md mx-auto">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <FiSearch className="h-4 w-4 text-gray-400" />
+            <FiSearch
+              className={`h-4 w-4 ${
+                isDarkMode ? "text-gray-400" : "text-slate-500"
+              }`}
+            />
           </div>
 
           <input
             type="text"
             placeholder="Search moves..."
-            className="block w-full pl-9 pr-8 py-2 text-sm bg-white/5 border border-white/10 rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-transparent transition-all"
+            className={`block w-full pl-9 pr-8 py-2 text-sm rounded-full ${
+              isDarkMode
+                ? "bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:ring-white/20"
+                : "bg-white border border-slate-200 text-slate-800 placeholder-slate-500 focus:ring-slate-300"
+            } focus:outline-none focus:ring-1 focus:border-transparent transition-all`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -120,7 +138,13 @@ const MovesTab = ({ pokemon, typeStyle }) => {
               onClick={() => setSearchQuery("")}
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
             >
-              <FiX className="h-4 w-4 text-gray-400 hover:text-white transition-colors" />
+              <FiX
+                className={`h-4 w-4 ${
+                  isDarkMode
+                    ? "text-gray-400 hover:text-white"
+                    : "text-slate-500 hover:text-slate-700"
+                } transition-colors`}
+              />
             </button>
           )}
         </div>
@@ -147,7 +171,9 @@ const MovesTab = ({ pokemon, typeStyle }) => {
         ) : (
           <motion.div
             variants={itemVariants}
-            className="col-span-full flex flex-col items-center justify-center py-12 text-gray-400"
+            className={`col-span-full flex flex-col items-center justify-center py-12 ${
+              isDarkMode ? "text-gray-400" : "text-slate-500"
+            }`}
           >
             <FiSearch className="h-8 w-8 mb-3" />
             <p className="text-sm">No moves found</p>

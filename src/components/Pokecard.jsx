@@ -8,6 +8,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const { isDarkMode } = useThemeStore();
+
   useEffect(() => {
     if (types.length > 0) {
       const firstType =
@@ -42,7 +43,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
               cy="50"
               r="48"
               fill="none"
-              stroke={isDarkMode ? "#6b7280" : "#d1d5db"}
+              stroke={isDarkMode ? "#6b7280" : "#cbd5e1"}
               strokeWidth="3"
             />
             <line
@@ -50,14 +51,14 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
               y1="50"
               x2="98"
               y2="50"
-              stroke={isDarkMode ? "#6b7280" : "#d1d5db"}
+              stroke={isDarkMode ? "#6b7280" : "#cbd5e1"}
               strokeWidth="3"
             />
             <circle
               cx="50"
               cy="50"
               r="15"
-              fill={isDarkMode ? "#6b7280" : "#d1d5db"}
+              fill={isDarkMode ? "#6b7280" : "#cbd5e1"}
             />
           </svg>
 
@@ -84,19 +85,19 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
         className={`relative cursor-pointer h-full ${
           isDarkMode
             ? "bg-gray-900 border-gray-800 hover:border-gray-700 hover:shadow-[rgba(0,0,0,0.3)]"
-            : "bg-stone-50 border-stone-200 hover:border-stone-300 hover:shadow-[rgba(149,157,165,0.15)]"
-        } rounded-xl border-[1.5px] overflow-hidden group transition-all duration-300 hover:shadow-xl`}
+            : "bg-blue-200/30 border-blue-200 hover:border-slate-300 hover:shadow-[rgba(100,116,139,0.1)]"
+        } rounded-xl border-[1.5px] overflow-hidden group transition-all duration-300 hover:shadow-lg`}
       >
         <div className="absolute inset-0 overflow-hidden">
           <div
             className={`absolute -top-8 -left-5 w-32 h-32 rounded-full ${
-              isDarkMode ? "bg-white opacity-4" : "bg-stone-200 opacity-40"
-            } group-hover:opacity-10 transition-opacity duration-500`}
+              isDarkMode ? "bg-white opacity-4" : "bg-blue-300/60 opacity-30"
+            } group-hover:opacity-20 transition-opacity duration-500`}
           ></div>
           <div
             className={`absolute -bottom-6 -right-6 w-40 h-40 rounded-full ${
-              isDarkMode ? "bg-white opacity-4" : "bg-stone-200 opacity-40"
-            } group-hover:opacity-10 transition-opacity duration-700`}
+              isDarkMode ? "bg-white opacity-4" : "bg-blue-300/60 opacity-30"
+            } group-hover:opacity-20 transition-opacity duration-700`}
           ></div>
         </div>
 
@@ -113,7 +114,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
             <div className="flex justify-between items-center mb-1">
               <span
                 className={`text-xs font-medium ${
-                  isDarkMode ? "text-gray-400" : "text-stone-500"
+                  isDarkMode ? "text-gray-400" : "text-slate-500"
                 }`}
               >
                 {renderId()}
@@ -123,7 +124,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
             <div className="relative mb-2">
               <h3
                 className={`text-center ${
-                  isDarkMode ? "text-white" : "text-stone-800"
+                  isDarkMode ? "text-white" : "text-slate-700"
                 } mb-1 font-medium tracking-wide transform group-hover:scale-105 transition-transform duration-300`}
               >
                 {name.split("-").join(" ").toUpperCase()}
@@ -136,9 +137,9 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
               className={`absolute inset-2 left-1/2 -translate-x-1/2 w-[55%] bg-gradient-to-b ${
                 typeStyle.glow
               } ${
-                isDarkMode ? "opacity-20 blur-3xl" : "opacity-20 blur-xl"
+                isDarkMode ? "opacity-20 blur-3xl" : "opacity-15 blur-xl"
               } group-hover:${
-                isDarkMode ? "opacity-30" : "opacity-30"
+                isDarkMode ? "opacity-30" : "opacity-25"
               } group-hover:blur-2xl transition-all duration-500`}
             ></div>
 
@@ -156,7 +157,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
               ) : (
                 <div
                   className={`flex flex-col items-center justify-center ${
-                    isDarkMode ? "text-gray-400" : "text-stone-400"
+                    isDarkMode ? "text-gray-400" : "text-slate-400"
                   }`}
                 >
                   <svg
@@ -185,7 +186,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
                     className={`w-10 h-10 border-3 border-dashed rounded-full animate-spin ${
                       isDarkMode
                         ? "border-stone-600 border-t-stone-400"
-                        : "border-stone-300 border-t-stone-500"
+                        : "border-slate-300 border-t-slate-500"
                     }`}
                   ></div>
                 </div>

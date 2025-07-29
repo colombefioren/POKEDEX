@@ -5,12 +5,14 @@ import { FaArrowRight, FaQuestionCircle } from "react-icons/fa";
 import { GiSpinningBlades } from "react-icons/gi";
 import { RiSwordFill } from "react-icons/ri";
 import { useState } from "react";
+import { useThemeStore } from "../../store/themeStore";
 
 const EvolutionTab = ({ pokemon, typeStyle }) => {
   const evolutions = pokemon.species.evolution_chain
     ? evolutionChain(pokemon.species.evolution_chain)
     : [];
   const [loading, setLoading] = useState(true);
+  const { isDarkMode } = useThemeStore();
 
   const groupEvolutions = (evolutions) => {
     if (window.innerWidth < 640) {
@@ -221,7 +223,9 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="relative h-full w-full flex flex-col items-center justify-center px-4 py-8"
+      className={`relative h-full w-full flex flex-col items-center justify-center px-4 py-8 ${
+        isDarkMode ? "bg-gray-900" : "bg-gray-100"
+      }`}
     >
       {evolutions.length > 0 ? (
         <div
@@ -255,7 +259,11 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
                         } 0%, transparent 70%)`,
                       }}
                     >
-                      <div className="absolute inset-0 rounded-full bg-gray-800/10 backdrop-blur-md"></div>
+                      <div
+                        className={`absolute inset-0 rounded-full ${
+                          isDarkMode ? "bg-gray-800/10" : "bg-white/30"
+                        } backdrop-blur-md`}
+                      ></div>
 
                       <motion.div
                         className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
@@ -292,20 +300,32 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
                       </div>
 
                       <motion.div
-                        className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-2 rounded-full border border-gray-700 shadow-xl"
+                        className={`absolute -bottom-5 left-1/2 transform -translate-x-1/2 ${
+                          isDarkMode
+                            ? "bg-gradient-to-r from-gray-900 to-gray-800 border-gray-700"
+                            : "bg-gradient-to-r from-gray-100 to-gray-200 border-gray-300"
+                        } px-4 py-2 rounded-full border shadow-xl`}
                         style={{
                           boxShadow: `0 4px 15px ${
                             typeStyle.glow || "#3B82F6"
                           }40`,
                         }}
                       >
-                        <span className="text-white font-bold capitalize text-sm whitespace-nowrap tracking-wide">
+                        <span
+                          className={`font-bold capitalize text-sm whitespace-nowrap tracking-wide ${
+                            isDarkMode ? "text-white" : "text-gray-800"
+                          }`}
+                        >
                           {evolution.name}
                         </span>
                       </motion.div>
 
                       <motion.div
-                        className="absolute -top-1 -right-1 bg-gray-900 border border-gray-700 rounded-full w-10 h-10 flex items-center justify-center shadow-lg"
+                        className={`absolute -top-1 -right-1 ${
+                          isDarkMode ? "bg-gray-900" : "bg-gray-100"
+                        } ${
+                          isDarkMode ? "border-gray-700" : "border-gray-300"
+                        } rounded-full w-10 h-10 flex items-center justify-center shadow-lg`}
                         style={{
                           boxShadow: `0 0 10px ${typeStyle.glow || "#3B82F6"}`,
                         }}
@@ -315,11 +335,19 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
 
                       {evolution.min_level && (
                         <motion.div
-                          className="absolute -top-3 -left-3 bg-gray-800 border border-gray-600 rounded-xl px-2 py-1 flex items-center shadow-md"
+                          className={`absolute -top-3 -left-3 ${
+                            isDarkMode ? "bg-gray-800" : "bg-gray-200"
+                          } ${
+                            isDarkMode ? "border-gray-600" : "border-gray-400"
+                          } rounded-xl px-2 py-1 flex items-center shadow-md`}
                           whileHover={{ scale: 1.1 }}
                         >
                           <RiSwordFill className="text-yellow-400 mr-1" />
-                          <span className="text-xs font-bold text-white">
+                          <span
+                            className={`text-xs font-bold ${
+                              isDarkMode ? "text-white" : "text-gray-800"
+                            }`}
+                          >
                             Lv.{evolution.min_level}
                           </span>
                         </motion.div>
@@ -357,7 +385,11 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
                             } 0%, transparent 70%)`,
                           }}
                         >
-                          <div className="absolute inset-0 rounded-full bg-gray-800/10 backdrop-blur-md"></div>
+                          <div
+                            className={`absolute inset-0 rounded-full ${
+                              isDarkMode ? "bg-gray-800/10" : "bg-white/30"
+                            } backdrop-blur-md`}
+                          ></div>
 
                           <motion.div
                             className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
@@ -394,20 +426,32 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
                           </div>
 
                           <motion.div
-                            className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-2 rounded-full border border-gray-700 shadow-xl"
+                            className={`absolute -bottom-5 left-1/2 transform -translate-x-1/2 ${
+                              isDarkMode
+                                ? "bg-gradient-to-r from-gray-900 to-gray-800 border-gray-700"
+                                : "bg-gradient-to-r from-gray-100 to-gray-200 border-gray-300"
+                            } px-4 py-2 rounded-full border shadow-xl`}
                             style={{
                               boxShadow: `0 4px 15px ${
                                 typeStyle.glow || "#3B82F6"
                               }40`,
                             }}
                           >
-                            <span className="text-white font-bold capitalize text-sm whitespace-nowrap tracking-wide">
+                            <span
+                              className={`font-bold capitalize text-sm whitespace-nowrap tracking-wide ${
+                                isDarkMode ? "text-white" : "text-gray-800"
+                              }`}
+                            >
                               {evolution.name}
                             </span>
                           </motion.div>
 
                           <motion.div
-                            className="absolute -top-1 -right-1 bg-gray-900 border border-gray-700 rounded-full w-10 h-10 flex items-center justify-center shadow-lg"
+                            className={`absolute -top-1 -right-1 ${
+                              isDarkMode ? "bg-gray-900" : "bg-gray-100"
+                            } ${
+                              isDarkMode ? "border-gray-700" : "border-gray-300"
+                            } rounded-full w-10 h-10 flex items-center justify-center shadow-lg`}
                             style={{
                               boxShadow: `0 0 10px ${
                                 typeStyle.glow || "#3B82F6"
@@ -419,11 +463,21 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
 
                           {evolution.min_level && (
                             <motion.div
-                              className="absolute -top-3 -left-3 bg-gray-800 border border-gray-600 rounded-xl px-2 py-1 flex items-center shadow-md"
+                              className={`absolute -top-3 -left-3 ${
+                                isDarkMode ? "bg-gray-800" : "bg-gray-200"
+                              } ${
+                                isDarkMode
+                                  ? "border-gray-600"
+                                  : "border-gray-400"
+                              } rounded-xl px-2 py-1 flex items-center shadow-md`}
                               whileHover={{ scale: 1.1 }}
                             >
                               <RiSwordFill className="text-yellow-400 mr-1" />
-                              <span className="text-xs font-bold text-white">
+                              <span
+                                className={`text-xs font-bold ${
+                                  isDarkMode ? "text-white" : "text-gray-800"
+                                }`}
+                              >
                                 Lv.{evolution.min_level}
                               </span>
                             </motion.div>
@@ -446,7 +500,11 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
           whileHover={{ scale: 1.02 }}
         >
           <motion.div
-            className="inline-block bg-gradient-to-br from-gray-800/70 to-gray-900/70 rounded-3xl p-10 border-2 border-gray-700/60 shadow-2xl backdrop-blur-lg"
+            className={`inline-block ${
+              isDarkMode
+                ? "bg-gradient-to-br from-gray-800/70 to-gray-900/70 border-gray-700/60"
+                : "bg-gradient-to-br from-gray-100/70 to-gray-200/70 border-gray-300/60"
+            } rounded-3xl p-10 border-2 shadow-2xl backdrop-blur-lg`}
             style={{
               boxShadow: `0 10px 30px ${typeStyle.glow || "#3B82F6"}20`,
             }}
@@ -462,10 +520,16 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
                 },
               }}
             >
-              <FaQuestionCircle className="w-20 h-20 mx-auto text-gray-400/80 drop-shadow-md" />
+              <FaQuestionCircle
+                className={`w-20 h-20 mx-auto drop-shadow-md ${
+                  isDarkMode ? "text-gray-400/80" : "text-gray-600/80"
+                }`}
+              />
             </motion.div>
             <motion.p
-              className="mt-6 text-gray-300 text-xl font-bold tracking-wide"
+              className={`mt-6 text-xl font-bold tracking-wide ${
+                isDarkMode ? "text-gray-300" : "text-gray-700"
+              }`}
               animate={{
                 opacity: [0.9, 1, 0.9],
                 textShadow: [
