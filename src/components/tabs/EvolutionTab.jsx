@@ -223,9 +223,7 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className={`relative h-full w-full flex flex-col items-center justify-center px-4 py-8 ${
-        isDarkMode ? "bg-gray-900" : "bg-gray-100"
-      }`}
+      className={`relative h-full w-full flex flex-col items-center justify-center px-4 py-8`}
     >
       {evolutions.length > 0 ? (
         <div

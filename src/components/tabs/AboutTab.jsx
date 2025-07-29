@@ -38,7 +38,7 @@ const AboutTab = ({ pokemon }) => {
   const bgClass = isDarkMode
     ? "bg-gradient-to-br from-gray-900/70 to-gray-800/60 border-gray-700/40"
     : "bg-white/90 border-slate-200/80";
-  const textClass = isDarkMode ? "text-white" : "text-slate-800";
+  const textClass = isDarkMode ? "text-white" : "text-slate-600";
   const secondaryTextClass = isDarkMode ? "text-gray-300" : "text-slate-600";
 
   return (

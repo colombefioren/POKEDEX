@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { fetchAbilityDetails } from "../../helpers/abilityDetails";
 import AbilityModal from "../AbilityModal";
 import AbilityCard from "../AbilityCard";
-import { useThemeStore } from "../../store/themeStore";
 
 const AbilitiesTab = ({ pokemon, typeStyle }) => {
   const [abilityModal, setAbilityModal] = useState({
@@ -13,7 +12,6 @@ const AbilitiesTab = ({ pokemon, typeStyle }) => {
     isLoading: false,
     isHidden: false,
   });
-  const { isDarkMode } = useThemeStore();
 
   const handleOpenAbilityModal = async (ability) => {
     setAbilityModal({
@@ -58,9 +56,7 @@ const AbilitiesTab = ({ pokemon, typeStyle }) => {
 
   return (
     <div
-      className={`relative px-4 pb-4 pt-8 ${
-        isDarkMode ? "bg-gray-900/50" : "bg-amber-50/50"
-      }`}
+      className={`relative px-4 pb-4 pt-8`}
     >
       <motion.div
         initial={{ opacity: 0 }}

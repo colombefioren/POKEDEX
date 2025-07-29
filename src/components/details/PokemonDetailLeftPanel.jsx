@@ -106,7 +106,7 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
             className={`text-5xl font-bold capitalize text-center pb-2 bg-gradient-to-r from-transparent ${
               isDarkMode ? "via-white/30" : "via-slate-300"
             } to-transparent bg-no-repeat bg-bottom bg-[length:80%_2px] ${
-              isDarkMode ? "text-white" : "text-slate-800"
+              isDarkMode ? "text-white" : "text-slate-600"
             }`}
           >
             {pokemon.name.split("-").join(" ")}

@@ -44,7 +44,7 @@ const AbilityCard = ({ ability = {}, typeStyle = {}, onClick = () => {} }) => {
         <div className="flex-grow flex items-center justify-center">
           <h4
             className={`text-lg font-bold ${
-              isDarkMode ? "text-white/90" : "text-gray-800"
+              isDarkMode ? "text-white/90" : "text-gray-600"
             } text-center group-hover:text-${
               isDarkMode ? "white" : "gray-900"
             } transition-colors capitalize tracking-wide`}

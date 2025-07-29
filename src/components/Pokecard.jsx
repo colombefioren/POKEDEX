@@ -85,18 +85,18 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
         className={`relative cursor-pointer h-full ${
           isDarkMode
             ? "bg-gray-900 border-gray-800 hover:border-gray-700 hover:shadow-[rgba(0,0,0,0.3)]"
-            : "bg-blue-200/30 border-blue-200 hover:border-slate-300 hover:shadow-[rgba(100,116,139,0.1)]"
+            : "bg-white border-blue-200 hover:border-slate-300 hover:shadow-[rgba(100,116,139,0.1)]"
         } rounded-xl border-[1.5px] overflow-hidden group transition-all duration-300 hover:shadow-lg`}
       >
         <div className="absolute inset-0 overflow-hidden">
           <div
             className={`absolute -top-8 -left-5 w-32 h-32 rounded-full ${
-              isDarkMode ? "bg-white opacity-4" : "bg-blue-300/60 opacity-30"
+              isDarkMode ? "bg-white opacity-4" : "bg-blue-300/40 opacity-30"
             } group-hover:opacity-20 transition-opacity duration-500`}
           ></div>
           <div
             className={`absolute -bottom-6 -right-6 w-40 h-40 rounded-full ${
-              isDarkMode ? "bg-white opacity-4" : "bg-blue-300/60 opacity-30"
+              isDarkMode ? "bg-white opacity-4" : "bg-blue-300/40 opacity-30"
             } group-hover:opacity-20 transition-opacity duration-700`}
           ></div>
         </div>

@@ -32,14 +32,10 @@ const PokemonDetail = () => {
   if (loading)
     return (
       <div
-        className={`flex justify-center items-center h-full ${
-          isDarkMode ? "bg-gray-900" : "bg-amber-50"
-        }`}
+        className={`flex justify-center items-center h-full`}
       >
         <div
-          className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 ${
-            isDarkMode ? "border-red-500" : "border-amber-500"
-          }`}
+          className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2`}
         ></div>
       </div>
     );
@@ -93,7 +89,7 @@ const PokemonDetail = () => {
           className={`w-full md:w-2/3 ${
             isDarkMode
               ? "bg-gray-800/50 border-gray-700/50"
-              : "bg-amber-50/90 border-slate-200/70"
+              : "bg-white/90 border-slate-200/70"
           } rounded-2xl h-[75vh] border backdrop-blur-sm overflow-hidden shadow-lg`}
         >
           {/* Animated tab navigation */}
@@ -117,7 +113,7 @@ const PokemonDetail = () => {
                   activeTab === tab.id
                     ? isDarkMode
                       ? "text-white"
-                      : "text-slate-800"
+                      : "text-slate-600"
                     : isDarkMode
                     ? "text-gray-400 hover:text-white"
                     : "text-slate-500 hover:text-slate-700"

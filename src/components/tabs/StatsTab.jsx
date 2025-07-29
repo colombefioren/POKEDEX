@@ -30,7 +30,7 @@ const StatsTab = ({ pokemon, typeStyle, isActive }) => {
     }
   }, [isActive]);
 
-  const textClass = isDarkMode ? "text-white" : "text-slate-800";
+  const textClass = isDarkMode ? "text-white" : "text-slate-600";
   const secondaryTextClass = isDarkMode ? "text-gray-300" : "text-slate-600";
   const bgClass = isDarkMode ? "bg-gray-800" : "bg-slate-200";
 
