@@ -4,22 +4,26 @@ import { motion, AnimatePresence } from "framer-motion";
 const Pokemons = ({ data }) => {
   if (!data) {
     return (
-      <div className="col-span-full text-center py-20">
-        <div className="text-white/70 text-lg font-mono">NO POKéMON DATA</div>
-        <div className="mt-2 text-red-400/70 text-sm font-mono">
-          CHECK CONNECTION...
-        </div>
+      <div className="col-span-full flex flex-col items-center justify-center py-20 px-4">
+        <h3 className="text-xl font-medium text-slate-400 mb-2">
+          Connection Lost
+        </h3>
+        <p className="text-slate-500 text-center max-w-md">
+          Unable to reach the Pokémon server. Please check your connection.
+        </p>
       </div>
     );
   }
 
   if (Array.isArray(data) && data.length === 0) {
     return (
-      <div className="col-span-full text-center py-20">
-        <div className="text-white/70 text-lg font-mono">NO POKéMON FOUND</div>
-        <div className="mt-2 text-red-400/70 text-sm font-mono">
-          TRY DIFFERENT SEARCH
-        </div>
+      <div className="col-span-full flex flex-col items-center justify-center py-20 px-4">
+        <h3 className="text-xl font-medium text-slate-400 mb-2">
+          No Pokémon Found
+        </h3>
+        <p className="text-slate-500 text-center max-w-md">
+          Your search didn't match any Pokémon. Try a different name or number.
+        </p>
       </div>
     );
   }

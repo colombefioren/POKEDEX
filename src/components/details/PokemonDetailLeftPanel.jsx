@@ -68,10 +68,10 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
               dragElastic={0.1}
             >
               <div
-                className={`w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 border-3 ${typeStyle.border} rounded-3xl overflow-hidden shadow-2xl p-1`}
+                className={`w-full h-full bg-gray-900 border-3 ${typeStyle.border} rounded-3xl overflow-hidden shadow-2xl p-1`}
               >
                 <div className="relative w-full h-full overflow-hidden rounded-2xl">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent z-10"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent z-10"></div>
                   <img
                     src={
                       image.url ||

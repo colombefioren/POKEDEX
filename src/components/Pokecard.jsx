@@ -27,8 +27,6 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
 
   const typeStyle = TYPE_STYLES[primaryType] || TYPE_STYLES.default;
 
-
-
   const [isHovered, setIsHovered] = useState(false);
 
   const renderId = () => {
@@ -76,8 +74,8 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
   };
 
   return (
-   <Link 
-      to={`/pokemon/${name.toLowerCase()}`} 
+    <Link
+      to={`/pokemon/${name.toLowerCase()}`}
       className="h-full block group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -111,27 +109,27 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
         ></div>
 
         <div className="px-4 pb-8 pt-5 flex flex-col h-full relative z-10">
-       <div className="flex justify-between items-center">
-          <div className="flex justify-between items-center mb-1">
-            <span
-              className={`text-xs font-medium ${
-                isDarkMode ? "text-gray-400" : "text-stone-500"
-              }`}
-            >
-              {renderId()}
-            </span>
-          </div>
+          <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mb-1">
+              <span
+                className={`text-xs font-medium ${
+                  isDarkMode ? "text-gray-400" : "text-stone-500"
+                }`}
+              >
+                {renderId()}
+              </span>
+            </div>
 
-          <div className="relative mb-2">
-            <h3
-              className={`text-center ${
-                isDarkMode ? "text-white" : "text-stone-800"
-              } mb-1 font-medium tracking-wide transform group-hover:scale-105 transition-transform duration-300`}
-            >
-              {name.toUpperCase()}
-            </h3>
+            <div className="relative mb-2">
+              <h3
+                className={`text-center ${
+                  isDarkMode ? "text-white" : "text-stone-800"
+                } mb-1 font-medium tracking-wide transform group-hover:scale-105 transition-transform duration-300`}
+              >
+                {name.split("-").join(" ").toUpperCase()}
+              </h3>
+            </div>
           </div>
-       </div>
 
           <div className="relative flex-1 flex items-center justify-center my-1">
             <div
