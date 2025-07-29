@@ -69,18 +69,63 @@ const PokedexShell = ({ children, loading, active }) => {
         isDarkMode ? "bg-black" : "bg-stone-100"
       } overflow-hidden`}
     >
-      <ThemeToggle />
-      {/*top*/}
-      <div className="absolute inset-0 z-10 pointer-events-none">
-        <div
-          className={`absolute top-0 left-0 right-0 h-16 ${
-            isDarkMode
-              ? "bg-gray-900 border-gray-700"
-              : "bg-red-700 border-red-800"
-          } border-b-2`}
-        >
-        </div>
-      </div>
+<ThemeToggle />
+
+{/* Top Bezel */}
+<div className="absolute inset-0 z-10 pointer-events-none">
+  <div className="relative w-full" style={{ height: "80px" }}>
+    
+    <div
+      className={`absolute top-0 left-0 border-b-2 ${
+        isDarkMode ? "border-gray-700 bg-gray-900" : "border-red-800 bg-red-700"
+      }`}
+      style={{
+        width: "80%",
+        height: "30px",
+      }}
+    />
+
+    <div
+      className={`absolute bottom-3 ${
+        isDarkMode ? "bg-gray-900" : "bg-red-700"
+      }`}
+      style={{
+        left: "33%",
+        width: "50%",
+        height: "500px",
+        clipPath: "polygon(0 0%, 100% 0, 100% 100%, 80% 100%)",
+      }}
+    >
+       <div
+        className={`absolute bottom-0 left-0 w-full ${
+          isDarkMode ? "border-gray-700" : "border-red-800"
+        }`}
+        style={{
+          height: "2px",
+          transformOrigin: "bottom left",
+          transform: "rotate(-29deg)",
+          borderBottom: `2px solid ${isDarkMode ? "#374151" : "#991b1b"}`,
+        }}
+      />
+    </div>
+
+    <div
+      className={`absolute top-0 border-b-2 ${
+        isDarkMode ? "border-gray-700 bg-gray-900" : "border-red-800 bg-red-700"
+      }`}
+      style={{
+        left: "73%",
+        width: "35%",
+        height: "70px",
+      }}
+    />
+  </div>
+</div>
+
+
+
+
+
 
       {/* nav */}
       <div
@@ -190,7 +235,7 @@ const PokedexShell = ({ children, loading, active }) => {
       </div>
 
       {/* Content Area */}
-      <div className="absolute inset-0 z-0 pt-16 pb-14 flex flex-col">
+      <div className="absolute inset-0 z-0 pt-8 pb-14 flex flex-col">
         <AnimatePresence>
           {animationState.showContent && (
             <motion.div
@@ -223,7 +268,7 @@ const PokedexShell = ({ children, loading, active }) => {
             isDarkMode
               ? "bg-gray-900 border-gray-700"
               : "bg-red-700 border-red-800"
-          } top-16 bottom-14 border-r-2`}
+          } top-8 bottom-14 border-r-2`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
           }}
@@ -250,7 +295,7 @@ const PokedexShell = ({ children, loading, active }) => {
             isDarkMode
               ? "bg-gray-900 border-gray-700"
               : "bg-red-700 border-red-800"
-          } top-16 bottom-14 border-l-2`}
+          } top-8 bottom-14 border-l-2`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
           }}

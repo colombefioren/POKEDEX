@@ -8,7 +8,7 @@ const ThemeToggle = () => {
   return (
     <motion.button
       onClick={toggleTheme}
-      className="absolute top-4 right-4 z-30"
+      className="absolute top-4 right-10 z-30"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
