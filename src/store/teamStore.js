@@ -6,7 +6,7 @@ const useTeamStore = create((set) => ({
   addToTeam: (pokemon) =>
     set((state) => {
       // Check if pokemon is already in team
-      if (state.team.some((p) => p.pokedexId === pokemon.pokedexId)) {
+      if (state.team.some((p) => p.id === pokemon.id)) {
         return {
           notification: {
             message: `${pokemon.name} is already in your team!`,
@@ -31,17 +31,17 @@ const useTeamStore = create((set) => ({
         },
       };
     }),
-  removeFromTeam: (pokedexId) =>
+  removeFromTeam: (id) =>
     set((state) => ({
-      team: state.team.filter((p) => p.pokedexId !== pokedexId),
+      team: state.team.filter((p) => p.id !== id),
       notification: {
         message: "Pokémon removed from team",
         type: "success",
       },
     })),
-clearNotification: () => {
-  setTimeout(() => set({ notification: null }), 100);
-},
+  clearNotification: () => {
+    setTimeout(() => set({ notification: null }), 100);
+  },
   clearTeam: () => set({ team: [] }),
 }));
 

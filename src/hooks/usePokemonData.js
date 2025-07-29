@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { getPokemonList } from "../lib/api/pokemonApi";
 
-export const usePokemonData = () => {
+export const usePokemonData = (limit = 800, offset = 0) => {
   const [pokeData, setPokeData] = useState([]);
-  const [allPokeData, setAllPokeData] = useState([]);
+  const [allPokemon, setAllPokemon] = useState([]); 
+  const [allPokeCount, setAllPokeCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -11,12 +12,15 @@ export const usePokemonData = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [initialData, allData] = await Promise.all([
-          getPokemonList(15),
-          getPokemonList(),
-        ]);
-        setPokeData(initialData);
-        setAllPokeData(allData);
+
+        const { results, count } = await getPokemonList(limit, offset);
+        setPokeData(results);
+        setAllPokeCount(count);
+
+        if (allPokemon.length === 0) {
+          const allResults = await getPokemonList(count, 0);
+          setAllPokemon(allResults.results);
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -25,7 +29,14 @@ export const usePokemonData = () => {
     };
 
     fetchData();
-  }, []);
+  }, [allPokemon.length, limit, offset]);
 
-  return { pokeData, allPokeData, loading, error };
+  return {
+    pokeData,
+    allPokemon, 
+    allPokeCount,
+    loading,
+    error,
+    hasMore: pokeData.length < allPokeCount,
+  };
 };
