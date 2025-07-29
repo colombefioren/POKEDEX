@@ -1,10 +1,14 @@
 import useTeamStore from "../store/teamStore";
+import { useThemeStore } from "../store/themeStore";
 import Pokecard from "./Pokecard";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FaSearch } from "react-icons/fa";
 
 const PokemonTeam = () => {
   const { team, removeFromTeam } = useTeamStore();
   const navigate = useNavigate();
+  const { isDarkMode } = useThemeStore(); 
 
   const handleRemove = (e, id) => {
     e.stopPropagation();
@@ -12,23 +16,41 @@ const PokemonTeam = () => {
     removeFromTeam(id);
   };
 
+  const handleBrowseClick = (e) => {
+    e.preventDefault();
+    navigate("/");
+  };
+
   if (team.length === 0) {
     return (
       <div className="col-span-full flex flex-col items-center justify-center py-20 px-4">
-        <div className="relative max-w-md w-full">
-          <div className="relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 text-center">
-            <h3 className="text-2xl font-bold text-white/90 mb-2">
-              Your Team is Empty
-            </h3>
-            <p className="text-gray-400 mb-6">
-              Build your dream Pokémon team by adding your favorites
-            </p>
-            <button
-              onClick={() => navigate("/")}
-              className="bg-gradient-to-r cursor-pointer from-red-500 hover:scale-105 to-red-800 text-white px-6 py-3 rounded-full transition-all"
+        <div className="relative w-full">
+          <div className="relative flex flex-col gap-2 items-center justify-center">
+            <h3 className="text-xl font-medium text-slate-400">
+         Your Team is empty
+        </h3>
+        <p className="text-slate-500 text-center mb-5">
+          Build your dream pokemon team by adding pokemons.
+        </p>
+            <motion.button
+              onClick={handleBrowseClick} 
+              whileHover={{
+                y: -2,
+                transition: { duration: 0.2 },
+              }}
+              whileTap={{
+                scale: 0.98,
+                transition: { duration: 0.1 },
+              }}
+              className={`py-3 px-5 cursor-pointer rounded-full flex items-center gap-2 border mx-auto ${
+                isDarkMode
+                  ? "bg-red-900/20 border-red-800 hover:bg-red-900/30 text-red-100"
+                  : "bg-red-50 border-red-200 hover:bg-red-100 text-red-800"
+              } transition-colors duration-200 shadow-sm text-sm font-medium`}
             >
-              Browse Pokémon Now
-            </button>
+              <FaSearch className="text-sm" />
+              Browse Pokémon
+            </motion.button>
           </div>
         </div>
       </div>
@@ -71,4 +93,5 @@ const PokemonTeam = () => {
     </div>
   );
 };
+motion;
 export default PokemonTeam;
