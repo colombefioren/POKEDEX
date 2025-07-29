@@ -54,8 +54,8 @@ const PokemonDetail = () => {
   ];
 
   return (
-    <div className="min-h-full px-4 mt-8 md:p-8 relative overflow-hidden">
-      <div className="relative z-10 flex flex-col md:flex-row gap-8">
+    <div className="min-h-full px-4 md:p-8 relative overflow-hidden">
+      <div className="relative mt-8 z-10 flex flex-col md:flex-row gap-8">
         {/* Left panel */}
      <PokemonDetailLeftPanel pokemon={pokemon} typeStyle={typeStyle} addToTeam={addToTeam} />
 

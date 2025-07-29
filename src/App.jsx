@@ -61,7 +61,7 @@ const App = () => {
           element={
             <PokedexShell active="search" loading={loading}>
               <div className="h-full flex flex-col">
-                <div className="pt-6 pb-8 flex justify-center gap-3 items-center">
+                <div className="pt-16 sm:pt-6 pb-8 flex justify-center gap-3 items-center">
                   <Search handleInput={handleInput} value={input} />
 
                   <motion.button

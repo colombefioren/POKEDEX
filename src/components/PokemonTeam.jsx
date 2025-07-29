@@ -8,7 +8,7 @@ import { FaSearch } from "react-icons/fa";
 const PokemonTeam = () => {
   const { team, removeFromTeam } = useTeamStore();
   const navigate = useNavigate();
-  const { isDarkMode } = useThemeStore(); 
+  const { isDarkMode } = useThemeStore();
 
   const handleRemove = (e, id) => {
     e.stopPropagation();
@@ -27,13 +27,13 @@ const PokemonTeam = () => {
         <div className="relative w-full">
           <div className="relative flex flex-col gap-2 items-center justify-center">
             <h3 className="text-xl font-medium text-slate-400">
-         Your Team is empty
-        </h3>
-        <p className="text-slate-500 text-center mb-5">
-          Build your dream pokemon team by adding pokemons.
-        </p>
+              Your Team is empty
+            </h3>
+            <p className="text-slate-500 text-center mb-5">
+              Build your dream pokemon team by adding pokemons.
+            </p>
             <motion.button
-              onClick={handleBrowseClick} 
+              onClick={handleBrowseClick}
               whileHover={{
                 y: -2,
                 transition: { duration: 0.2 },
@@ -68,13 +68,25 @@ const PokemonTeam = () => {
               image={pokemon.sprites.other["official-artwork"]}
               types={pokemon.types}
             />
-            <button
+            <motion.button
               onClick={(e) => handleRemove(e, pokemon.id)}
-              className="absolute -top-1 -right-2 z-10 bg-red-800 hover:scale-105 cursor-pointer transition-all text-white rounded-full p-1 opacity-0 group-hover:opacity-100"
+              whileHover={{
+                y: -2,
+                transition: { duration: 0.2 },
+              }}
+              whileTap={{
+                scale: 0.98,
+                transition: { duration: 0.1 },
+              }}
+              className={`absolute -top-1 -right-2 z-10 rounded-full p-2 cursor-pointer flex items-center justify-center border ${
+                isDarkMode
+                  ? "bg-red-900/20 border-red-800 hover:bg-red-900/30 text-red-100"
+                  : "bg-red-50 border-red-200 hover:bg-red-100 text-red-800"
+              } transition-colors duration-200 shadow-sm opacity-0 group-hover:opacity-100`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
+                className="h-3 w-3"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -86,7 +98,7 @@ const PokemonTeam = () => {
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
-            </button>
+            </motion.button>
           </div>
         ))}
       </div>

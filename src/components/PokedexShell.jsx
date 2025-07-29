@@ -69,63 +69,56 @@ const PokedexShell = ({ children, loading, active }) => {
         isDarkMode ? "bg-black" : "bg-stone-100"
       } overflow-hidden`}
     >
-<ThemeToggle />
+      <ThemeToggle />
 
-{/* Top Bezel */}
-<div className="absolute inset-0 z-10 pointer-events-none">
-  <div className="relative w-full" style={{ height: "80px" }}>
-    
-    <div
-      className={`absolute top-0 left-0 border-b-2 ${
-        isDarkMode ? "border-gray-700 bg-gray-900" : "border-red-800 bg-red-700"
-      }`}
-      style={{
-        width: "80%",
-        height: "30px",
-      }}
-    />
+        
 
-    <div
-      className={`absolute bottom-3 ${
-        isDarkMode ? "bg-gray-900" : "bg-red-700"
-      }`}
-      style={{
-        left: "33%",
-        width: "50%",
-        height: "500px",
-        clipPath: "polygon(0 0%, 100% 0, 100% 100%, 80% 100%)",
-      }}
-    >
-       <div
-        className={`absolute bottom-0 left-0 w-full ${
-          isDarkMode ? "border-gray-700" : "border-red-800"
-        }`}
-        style={{
-          height: "2px",
-          transformOrigin: "bottom left",
-          transform: "rotate(-29deg)",
-          borderBottom: `2px solid ${isDarkMode ? "#374151" : "#991b1b"}`,
-        }}
-      />
-    </div>
+      {/* top */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        <div className="relative w-full" style={{ height: "80px" }}>
+           
+          {/*short left rec */}
+          <div
+            className={`absolute top-0 left-0 border-b-2 ${
+              isDarkMode
+                ? "border-gray-700 bg-gray-900"
+                : "border-red-800 bg-red-700"
+            }`}
+            style={{
+              width: "80%",
+              height: "30px",
+            }}
+          />
 
-    <div
-      className={`absolute top-0 border-b-2 ${
-        isDarkMode ? "border-gray-700 bg-gray-900" : "border-red-800 bg-red-700"
-      }`}
-      style={{
-        left: "73%",
-        width: "35%",
-        height: "70px",
-      }}
-    />
-  </div>
-</div>
+          {/* diagonal slope*/}
+          <div
+            className={`absolute bottom-3 ${
+              isDarkMode ? "bg-gray-900" : "bg-red-700"
+            }`}
+            style={{
+              left: "33%",
+              width: "50%",
+              height: "500px",
+              clipPath: "polygon(0 0%, 100% 0, 100% 100%, 80% 100%)",
+            }}
+          >
+          </div>
 
-
-
-
-
+          {/* taller right rec */}
+          <div
+            className={`absolute top-0 border-b-2 ${
+              isDarkMode
+                ? "border-gray-700 bg-gray-900"
+                : "border-red-800 bg-red-700"
+            }`}
+            style={{
+              left: "73%",
+              width: "35%",
+              height: "70px",
+            }}
+          />
+        </div>
+      </div>
 
       {/* nav */}
       <div
