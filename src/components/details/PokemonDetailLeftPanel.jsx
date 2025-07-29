@@ -95,7 +95,7 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
             transition={{ delay: 0.2 }}
             className="text-5xl font-bold text-white capitalize text-center pb-2 bg-gradient-to-r from-transparent via-white/30 to-transparent bg-no-repeat bg-bottom bg-[length:80%_2px]"
           >
-            {pokemon.name}
+            {pokemon.name.split("-").join(" ")}
           </motion.h1>
           {pokemon.cries?.latest && (
             <motion.button

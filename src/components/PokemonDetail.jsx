@@ -27,7 +27,6 @@ const PokemonDetail = () => {
   const { addToTeam } = useTeamStore();
   const tabContentRef = useRef(null);
 
-
   if (loading)
     return (
       <div className="flex justify-center items-center h-full">
@@ -54,10 +53,14 @@ const PokemonDetail = () => {
   ];
 
   return (
-    <div className="min-h-full px-4 md:p-8 relative overflow-hidden">
-      <div className="relative mt-8 z-10 flex flex-col md:flex-row gap-8">
+    <div className="min-h-full px-4 pb-10 md:p-8 relative overflow-hidden">
+      <div className="relative sm:mt-6 mt-10 z-10 flex flex-col md:flex-row gap-8">
         {/* Left panel */}
-     <PokemonDetailLeftPanel pokemon={pokemon} typeStyle={typeStyle} addToTeam={addToTeam} />
+        <PokemonDetailLeftPanel
+          pokemon={pokemon}
+          typeStyle={typeStyle}
+          addToTeam={addToTeam}
+        />
 
         {/* Right panel */}
         <div className="w-full md:w-2/3 bg-gray-800/50 rounded-2xl h-[75vh] border border-gray-700/50 backdrop-blur-sm overflow-hidden">
@@ -78,7 +81,8 @@ const PokemonDetail = () => {
                     : "text-gray-400 hover:text-white"
                 }`}
               >
-                {tab.icon} {tab.name}
+                <span className="text-lg">{tab.icon}</span>
+                <span className="hidden sm:inline">{tab.name}</span>
               </button>
             ))}
             <motion.div
@@ -100,7 +104,11 @@ const PokemonDetail = () => {
               <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
             )}
             {activeTab === "stats" && (
-              <StatsTab pokemon={pokemon} isActive={true} typeStyle={typeStyle} />
+              <StatsTab
+                pokemon={pokemon}
+                isActive={true}
+                typeStyle={typeStyle}
+              />
             )}
             {activeTab === "moves" && (
               <MovesTab pokemon={pokemon} typeStyle={typeStyle} />

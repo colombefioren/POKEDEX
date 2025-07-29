@@ -100,7 +100,7 @@ const MovesTab = ({ pokemon, typeStyle }) => {
     >
       <motion.div
         variants={itemVariants}
-        className="sticky top-0 z-10 py-4 bg-gray-950/90 backdrop-blur-sm"
+        className="sticky top-0 z-10 py-4 px-6 bg-gray-950/90 backdrop-blur-sm"
       >
         <div className="relative max-w-md mx-auto">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

@@ -261,7 +261,7 @@ const PokedexShell = ({ children, loading, active }) => {
             isDarkMode
               ? "bg-gray-900 border-gray-700"
               : "bg-red-700 border-red-800"
-          } top-8 bottom-14 border-r-2`}
+          } top-7 bottom-14 border-r-2`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
           }}
@@ -288,7 +288,7 @@ const PokedexShell = ({ children, loading, active }) => {
             isDarkMode
               ? "bg-gray-900 border-gray-700"
               : "bg-red-700 border-red-800"
-          } top-8 bottom-14 border-l-2`}
+          } top-7 bottom-14 border-l-2`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
           }}
