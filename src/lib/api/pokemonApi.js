@@ -108,7 +108,7 @@ export const getCompletePokemonData = async (identifier) => {
   }
 };
 
-export const getPokemonList = async (limit = 800, offset = 0) => {
+export const getPokemonList = async (limit = 20, offset = 0) => {
   try {
     const data = await fetchApiData(
       `${POKE_API.BASE_URL}${POKE_API.ENDPOINTS.POKEMON_LIMIT(limit, offset)}`
