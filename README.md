@@ -21,7 +21,7 @@
 
 ---
 
-## ✨ **Features That Make This Pokédex Stand Out**
+## ✨ **Some Cool Features**
 
 > A beautiful blend of speed, interactivity, and style — here's what you can do:
 
