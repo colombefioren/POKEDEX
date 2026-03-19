@@ -10,6 +10,7 @@ import PokemonDetail from "./components/PokemonDetail";
 import { FaRandom, FaChevronDown, FaSpinner } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useThemeStore } from "./store/themeStore";
+import PokemonCreate from "./components/PokemonCreate";
 
 const App = () => {
   const [input, setInput] = useState("");
@@ -187,6 +188,14 @@ const App = () => {
           element={
             <PokedexShell active="team" loading={false}>
               <PokemonTeam />
+            </PokedexShell>
+          }
+        />
+          <Route
+          path="/create-pokemon"
+          element={
+            <PokedexShell active="add" loading={false}>
+              <PokemonCreate/>
             </PokedexShell>
           }
         />
