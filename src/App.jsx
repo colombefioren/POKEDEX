@@ -30,6 +30,7 @@ const App = () => {
   } = usePokemonData(15);
 
   const { isDarkMode } = useThemeStore();
+
   const filteredPokemon = useMemo(() => {
     if (!input) {
       return isShuffled ? shuffledData : pokeData;
