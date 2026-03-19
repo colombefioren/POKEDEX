@@ -44,8 +44,8 @@ const MovesTab = ({ pokemon, typeStyle }) => {
     } else {
       setFilteredMoves(
         pokemon.moves.filter((move) =>
-          move.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+          move.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        ),
       );
     }
   }, [searchQuery, pokemon.moves]);
@@ -94,16 +94,7 @@ const MovesTab = ({ pokemon, typeStyle }) => {
   };
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className={`relative h-[66vh] overflow-y-auto ${
-        isDarkMode
-          ? "scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
-          : "scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
-      }`}
-    >
+    <div>
       <motion.div
         variants={itemVariants}
         className={`sticky top-0 z-10 py-4 px-6 ${
@@ -151,8 +142,10 @@ const MovesTab = ({ pokemon, typeStyle }) => {
       </motion.div>
 
       <motion.div
+        initial="hidden"
+        animate="visible"
         variants={containerVariants}
-        className="grid px-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 max-h-[70vh] py-1"
+        className="grid px-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 py-1"
       >
         {filteredMoves.length > 0 ? (
           filteredMoves.map((move, index) => (
@@ -189,8 +182,8 @@ const MovesTab = ({ pokemon, typeStyle }) => {
           typeStyle={typeStyle}
         />
       )}
-    </motion.div>
+    </div>
   );
 };
-motion;
+
 export default MovesTab;

@@ -341,5 +341,5 @@ const AboutTab = ({ pokemon }) => {
     </div>
   );
 };
-motion;
+
 export default AboutTab;

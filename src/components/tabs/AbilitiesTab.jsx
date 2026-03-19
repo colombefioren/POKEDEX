@@ -55,9 +55,7 @@ const AbilitiesTab = ({ pokemon, typeStyle }) => {
   };
 
   return (
-    <div
-      className={`relative px-4 pb-4 pt-8`}
-    >
+    <div className="relative px-4 pb-4 pt-8">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -86,5 +84,5 @@ const AbilitiesTab = ({ pokemon, typeStyle }) => {
     </div>
   );
 };
-motion;
+
 export default AbilitiesTab;
