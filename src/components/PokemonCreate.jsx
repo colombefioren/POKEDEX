@@ -15,8 +15,6 @@ const PokemonCreate = () => {
     deleteCustomPokemon,
     updateCustomPokemon,
     setSelectedPokemon,
-    notification,
-    clearNotification,
   } = useCreateStore();
   const [showForm, setShowForm] = useState(false);
   const [editingPokemon, setEditingPokemon] = useState(null);
@@ -45,10 +43,7 @@ const PokemonCreate = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <Notification
-        notification={notification}
-        clearNotification={clearNotification}
-      />
+      <Notification />
 
       <div className="px-8 sm:px-12 md:px-16 py-6 md:py-8">
         <motion.div
