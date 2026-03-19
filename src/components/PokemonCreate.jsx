@@ -114,7 +114,7 @@ const PokemonCreate = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="h-full flex items-center justify-center py-20"
+              className="mt-25 flex items-center justify-center py-20"
             >
               <div className="text-center">
                 <h3
