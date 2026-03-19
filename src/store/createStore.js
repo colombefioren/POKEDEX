@@ -13,7 +13,7 @@ const useCreateStore = create(
         const { customPokemon } = get();
         if (customPokemon.length === 0) return 2000;
         const maxId = Math.max(...customPokemon.map((p) => p.id));
-        return maxId + 1;
+        return maxId === 10000 ? 2000 + 1 : maxId + 1;
       },
 
       setMaxRealPokemonId: (maxId) => {
