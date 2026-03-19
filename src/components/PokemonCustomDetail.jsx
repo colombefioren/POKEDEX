@@ -149,7 +149,6 @@ const PokemonCustomDetail = () => {
       exit={{ opacity: 0 }}
       className="h-full overflow-y-auto"
     >
-
       {renderCustomBadge()}
 
       <div className="max-w-6xl mx-auto p-8 pt-24">
@@ -160,22 +159,22 @@ const PokemonCustomDetail = () => {
           className="flex flex-col md:flex-row gap-12 items-start"
         >
           <div className="w-full md:w-1/3 flex flex-col items-center relative">
-            <div className="absolute top-4 -left-4 z-50 transform -translate-y-1/4">
-              <motion.div
-                onClick={handleAddToTeam}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                className={`${typeStyle.bg} w-12 h-12 items-center justify-center cursor-pointer hover:scale-105 rounded-full shadow-lg flex`}
-              >
-                <FaPlus className="text-white transition-transform transform group-hover:rotate-90" />
-              </motion.div>
-            </div>
-
             <div
               className="relative w-full max-w-xs h-[45vh] flex items-center justify-center overflow-visible mt-8"
               ref={constraintsRef}
             >
+              {" "}
+              <div className="absolute -top-2 -left-6 z-50 transform -translate-y-1/4">
+                <motion.div
+                  onClick={handleAddToTeam}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  className={`${typeStyle.bg} w-12 h-12 items-center justify-center cursor-pointer hover:scale-105 rounded-full shadow-lg flex`}
+                >
+                  <FaPlus className="text-white transition-transform transform group-hover:rotate-90" />
+                </motion.div>
+              </div>
               <motion.div
                 className="absolute w-full h-full cursor-grab"
                 style={{

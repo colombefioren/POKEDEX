@@ -92,7 +92,7 @@ const PokemonDetail = () => {
   ];
 
   return (
-    <div className={`min-h-full px-4 pb-10 md:p-8 relative overflow-hidden`}>
+    <div className={`min-h-full mx-6 pb-10 md:p-8 relative overflow`}>
       <div className="relative sm:mt-6 mt-10 z-10 flex flex-col md:flex-row gap-8">
         <PokemonDetailLeftPanel
           pokemon={pokemon}
@@ -151,8 +151,8 @@ const PokemonDetail = () => {
             />
           </div>
 
-          <div
-            ref={tabContentRef}
+          <div 
+            ref={tabContentRef} 
             className="h-[calc(75vh-48px)] overflow-y-auto pr-1"
           >
             {activeTab === "about" && (
