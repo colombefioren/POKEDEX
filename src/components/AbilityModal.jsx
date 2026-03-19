@@ -45,7 +45,7 @@ const AbilityModal = ({
           <motion.button
             onClick={onClose}
             whileHover={{ scale: 1.1 }}
-            className={`absolute top-4 right-4 z-10 ${
+            className={`absolute cursor-pointer top-4 right-4 z-10 ${
               isDarkMode ? "text-gray-300" : "text-gray-500"
             } hover:text-${
               isDarkMode ? "white" : "gray-700"
@@ -91,7 +91,7 @@ const AbilityModal = ({
                     <motion.h3
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className={`text-3xl font-extrabold ${
+                      className={`text-2xl font-extrabold ${
                         isDarkMode ? "text-white" : "text-gray-800"
                       } capitalize mb-2 tracking-tight`}
                     >

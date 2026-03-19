@@ -55,7 +55,7 @@ const MoveModal = ({
           <motion.button
             onClick={onClose}
             whileHover={{ scale: 1.1 }}
-            className={`absolute top-3 right-3 z-10 p-2 rounded-full ${
+            className={`absolute top-3 right-3 cursor-pointer z-10 p-2 rounded-full ${
               isDarkMode ? "bg-black/30" : "bg-white/30"
             } backdrop-blur-sm ${
               isDarkMode ? "text-gray-300" : "text-gray-500"
@@ -95,7 +95,7 @@ const MoveModal = ({
                     className="flex justify-between items-start mb-4"
                   >
                     <h3
-                      className={`text-3xl font-extrabold ${
+                      className={`text-2xl font-extrabold ${
                         isDarkMode ? "text-white" : "text-gray-800"
                       } capitalize tracking-tight`}
                     >
