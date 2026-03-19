@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useThemeStore } from "../store/themeStore";
 import useCreateStore from "../store/createStore";
@@ -16,11 +16,9 @@ import {
   FaQuoteRight,
   FaPlus,
 } from "react-icons/fa";
-import Notification from "./Notification";
 
 const PokemonCustomDetail = () => {
   const { name } = useParams();
-  const navigate = useNavigate();
   const { isDarkMode } = useThemeStore();
   const { customPokemon } = useCreateStore();
   const { addToTeam } = useTeamStore();
@@ -60,6 +58,40 @@ const PokemonCustomDetail = () => {
       addToTeam(teamPokemon);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <div
+          className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 ${
+            isDarkMode
+              ? "border-stone-600 border-t-stone-400"
+              : "border-slate-300 border-t-slate-500"
+          }`}
+        />
+      </div>
+    );
+  }
+
+  if (!pokemon) {
+    return (
+      <div
+        className={`text-center py-10 ${
+          isDarkMode ? "text-gray-400" : "text-slate-500"
+        }`}
+      >
+        Pokémon not found
+      </div>
+    );
+  }
+
+  const primaryType = pokemon.types[0] || "default";
+  const typeStyle = TYPE_STYLES[primaryType] || TYPE_STYLES.default;
+  const bgClass = isDarkMode
+    ? "bg-gradient-to-br from-gray-900/70 to-gray-800/60 border-gray-700/40"
+    : "bg-white/90 border-slate-200/80";
+  const textClass = isDarkMode ? "text-white" : "text-slate-600";
+  const secondaryTextClass = isDarkMode ? "text-gray-300" : "text-slate-600";
 
   const renderCustomBadge = () => {
     return (
@@ -110,39 +142,6 @@ const PokemonCustomDetail = () => {
     visible: { y: 0, opacity: 1 },
   };
 
-  if (loading) {
-    return (
-      <div className="h-full flex items-center justify-center">
-        <div
-          className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 ${
-            isDarkMode
-              ? "border-stone-600 border-t-stone-400"
-              : "border-slate-300 border-t-slate-500"
-          }`}
-        />
-      </div>
-    );
-  }
-
-  if (!pokemon) {
-    return (
-      <div
-        className={`text-center py-10 ${
-          isDarkMode ? "text-gray-400" : "text-slate-500"
-        }`}
-      >
-        Pokémon not found
-      </div>
-    );
-  }
-  const primaryType = pokemon.types[0] || "default";
-  const typeStyle = TYPE_STYLES[primaryType] || TYPE_STYLES.default;
-  const bgClass = isDarkMode
-    ? "bg-gradient-to-br from-gray-900/70 to-gray-800/60 border-gray-700/40"
-    : "bg-white/90 border-slate-200/80";
-  const textClass = isDarkMode ? "text-white" : "text-slate-600";
-  const secondaryTextClass = isDarkMode ? "text-gray-300" : "text-slate-600";
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -150,7 +149,6 @@ const PokemonCustomDetail = () => {
       exit={{ opacity: 0 }}
       className="h-full overflow-y-auto"
     >
-      <Notification />
 
       {renderCustomBadge()}
 

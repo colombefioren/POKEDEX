@@ -4,7 +4,6 @@ import { useThemeStore } from "../store/themeStore";
 import useCreateStore from "../store/createStore";
 import PokemonCreateForm from "./PokemonCreateForm";
 import CustomPokemonCard from "./CustomPokemonCard";
-import Notification from "./Notification";
 import { FaPlus } from "react-icons/fa";
 
 const PokemonCreate = () => {
@@ -43,7 +42,7 @@ const PokemonCreate = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <Notification />
+      
 
       <div className="px-8 sm:px-12 md:px-16 py-6 md:py-8">
         <motion.div
@@ -57,6 +56,7 @@ const PokemonCreate = () => {
                 setEditingPokemon(null);
                 setShowForm(true);
               }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`
               px-6 py-3 rounded-full text-sm font-medium cursor-pointer flex items-center gap-2
@@ -96,7 +96,7 @@ const PokemonCreate = () => {
         </motion.div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-8 sm:px-12 md:px-16 pb-8 pt-10">
+      <div className="flex-1 overflow-y-auto px-8 sm:px-12 md:px-16 pb-8">
         <AnimatePresence mode="wait">
           {showForm ? (
             <PokemonCreateForm
@@ -111,26 +111,31 @@ const PokemonCreate = () => {
               initialData={editingPokemon}
             />
           ) : customPokemon.length === 0 ? (
-            <div className="h-full flex items-center pb-40 justify-center py-20 px-4">
-              <div className="relative w-full max-w-md mx-auto">
-                <div className="relative flex flex-col gap-4 items-center justify-center text-center">
-                  <h3
-                    className={`text-xl font-semibold ${
-                      isDarkMode ? "text-white" : "text-slate-800"
-                    }`}
-                  >
-                    No Custom Pokemon Yet
-                  </h3>
-                  <p
-                    className={`text-sm max-w-xs ${
-                      isDarkMode ? "text-slate-400" : "text-slate-500"
-                    }`}
-                  >
-                    Start creating your own pokemon!
-                  </p>
-                </div>
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="h-full flex items-center justify-center py-20"
+            >
+              <div className="text-center">
+                <h3
+                  className={`text-xl font-semibold mb-2 ${
+                    isDarkMode ? "text-white" : "text-slate-800"
+                  }`}
+                >
+                  No Custom Pokemon Yet
+                </h3>
+                <p
+                  className={`text-sm ${
+                    isDarkMode ? "text-slate-400" : "text-slate-500"
+                  }`}
+                >
+                  Click the "New Creation" button to create your first custom
+                  Pokémon!
+                </p>
               </div>
-            </div>
+            </motion.div>
           ) : (
             <motion.div
               key="gallery"

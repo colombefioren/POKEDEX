@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Pokemons from "./components/Pokemons";
 import Search from "./components/Search";
 import { usePokemonData } from "./hooks/usePokemonData";
