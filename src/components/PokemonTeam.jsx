@@ -68,7 +68,7 @@ const PokemonTeam = () => {
   return (
     <div className="flex-1 overflow-y-auto h-full pr-1">
       <div className="px- sm:px-12 md:px-16 py-6 md:py-8">
-        <div className="flex items-center justify-between mb-6 md:mb-8">
+        <div className="flex items-center justify-between mb-12 md:mb-14">
           <div
             className={`text-sm px-3 py-1 rounded-full ${
               isDarkMode
