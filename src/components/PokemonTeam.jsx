@@ -99,6 +99,7 @@ const PokemonTeam = () => {
                     pokemon.image || pokemon.sprites.other["official-artwork"] 
                   }
                   types={pokemon.types}
+                  isCustom={pokemon.isCustom}
                 />
 
                 <motion.button
