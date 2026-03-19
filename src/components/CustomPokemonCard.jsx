@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useThemeStore } from "../store/themeStore";
 import { TYPE_ICONS, TYPE_STYLES } from "../constants/types";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const CustomPokemonCard = ({ pokemon, onEdit, onDelete, onClick }) => {
   const { isDarkMode } = useThemeStore();
@@ -71,6 +72,7 @@ const CustomPokemonCard = ({ pokemon, onEdit, onDelete, onClick }) => {
 
  
   return (
+   <Link to={`/pokemon/custom/${pokemon.name}`}>
     <motion.div
       layout
       initial={{ opacity: 0, scale: 0.9 }}
@@ -260,6 +262,7 @@ const CustomPokemonCard = ({ pokemon, onEdit, onDelete, onClick }) => {
         </div>
       </div>
     </motion.div>
+   </Link>
   );
 };
 
