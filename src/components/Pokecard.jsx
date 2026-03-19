@@ -3,7 +3,13 @@ import { TYPE_ICONS, TYPE_STYLES } from "../constants/types";
 import { Link } from "react-router-dom";
 import { useThemeStore } from "../store/themeStore";
 
-const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
+const Pokecard = ({
+  id = 0,
+  name = "Unknown",
+  image,
+  types = [],
+  isCustom,
+}) => {
   const [primaryType, setPrimaryType] = useState("default");
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -34,9 +40,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
     const paddedId = id.toString().padStart(3, "0");
     return (
       <div className="relative group/id">
-        {/* Pokéball base */}
         <div className="relative z-0 w-14 h-14 flex items-center justify-center">
-          {/* Pokéball outline */}
           <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
             <circle
               cx="50"
@@ -74,21 +78,50 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
     );
   };
 
+const renderCustomBadge = () => {
+  if (!isCustom) return null;
+
+  return (
+    <div
+      className={`
+        absolute -top-7 left-1/2 -translate-x-1/2 z-[9999]
+        py-3 px-5 rounded-full whitespace-nowrap
+        flex items-center gap-2 border
+        ${
+          isDarkMode
+            ? "bg-green-900/50 border-green-800 hover:bg-green-900/30 text-green-100"
+            : "bg-green-200/50 border-green-200 hover:bg-green-100 text-green-800"
+        }
+        transition-colors duration-200 shadow-sm
+        text-[10px] font-black tracking-wider
+      `}
+      style={{
+        textShadow: "0 1px 2px rgba(0,0,0,0.2)",
+      }}
+    >
+      <span className="font-extrabold">CUSTOM</span>
+    </div>
+  );
+};
   return (
     <Link
-      to={`/pokemon/${name.toLowerCase()}`}
-      className="h-full block group"
+      to={
+        isCustom ? `/pokemon/custom/${name}` : `/pokemon/${name.toLowerCase()}`
+      }
+      className="h-full block group relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`relative cursor-pointer h-full ${
+        className={`relative cursor-pointer h-full min-h-[320px] w-full ${
           isDarkMode
             ? "bg-gray-900 border-gray-800 hover:border-gray-700 hover:shadow-[rgba(0,0,0,0.3)]"
             : "bg-white border-blue-200 hover:border-slate-300 hover:shadow-[rgba(100,116,139,0.1)]"
-        } rounded-xl border-[1.5px] overflow-hidden group transition-all duration-300 hover:shadow-lg`}
+        } rounded-xl border-[1.5px] overflow-visible group transition-all duration-300 hover:shadow-lg`}
       >
-        <div className="absolute inset-0 overflow-hidden">
+        {renderCustomBadge()}
+
+        <div className="absolute inset-0 overflow-hidden rounded-xl">
           <div
             className={`absolute -top-8 -left-5 w-32 h-32 rounded-full ${
               isDarkMode ? "bg-white opacity-4" : "bg-blue-300/40 opacity-30"
@@ -106,11 +139,11 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
             isDarkMode
               ? "opacity-0 group-hover:opacity-5"
               : "opacity-0 group-hover:opacity-5"
-          } transition-opacity duration-300 blur-[20px]`}
+          } transition-opacity duration-300 blur-[20px] rounded-xl`}
         ></div>
 
         <div className="px-4 pb-8 pt-5 flex flex-col h-full relative z-10">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-start min-h-[70px]">
             <div className="flex justify-between items-center mb-1">
               <span
                 className={`text-xs font-medium ${
@@ -121,20 +154,21 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
               </span>
             </div>
 
-            <div className="relative mb-2">
+            <div className="relative mb-2 flex-1 text-right">
               <h3
-                className={`text-center ${
+                className={`text-center text-sm font-bold uppercase tracking-wide truncate max-w-[120px] ml-auto ${
                   isDarkMode ? "text-white" : "text-slate-700"
-                } mb-1 font-medium tracking-wide transform group-hover:scale-105 transition-transform duration-300`}
+                } transform group-hover:scale-105 transition-transform duration-300`}
+                title={name.split("-").join(" ")}
               >
-                {name.split("-").join(" ").toUpperCase()}
+                {name.split("-").join(" ")}
               </h3>
             </div>
           </div>
 
-          <div className="relative flex-1 flex items-center justify-center my-1">
+          <div className="relative h-50 flex items-center justify-center my-2">
             <div
-              className={`absolute inset-2 left-1/2 -translate-x-1/2 w-[55%] bg-linear-to-b ${
+              className={`absolute inset-0 left-1/2 -translate-x-1/2 w-[70%] h-full bg-linear-to-b ${
                 typeStyle.glow
               } ${
                 isDarkMode ? "opacity-20 blur-3xl" : "opacity-15 blur-xl"
@@ -145,15 +179,17 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
 
             <div className="relative z-10 w-full h-full flex items-center justify-center">
               {!hasError ? (
-                <img
-                  src={image}
-                  alt={name}
-                  className={`w-full h-full object-contain transition-all duration-500 ${
-                    isLoaded ? "opacity-100" : "opacity-0"
-                  } group-hover:scale-110`}
-                  onLoad={() => setIsLoaded(true)}
-                  onError={() => setHasError(true)}
-                />
+                <div className="w-full h-full flex items-center justify-center">
+                  <img
+                    src={image}
+                    alt={name}
+                    className={`max-w-full max-h-full w-auto h-auto object-contain transition-all duration-500 ${
+                      isLoaded ? "opacity-100" : "opacity-0"
+                    } group-hover:scale-110`}
+                    onLoad={() => setIsLoaded(true)}
+                    onError={() => setHasError(true)}
+                  />
+                </div>
               ) : (
                 <div
                   className={`flex flex-col items-center justify-center ${
@@ -194,7 +230,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
             </div>
           </div>
 
-          <div className="flex justify-center gap-2 mt-3">
+          <div className="flex justify-center gap-2 mt-3 min-h-[32px] flex-wrap">
             {types.map((type, index) => {
               const typeName =
                 typeof type === "string"

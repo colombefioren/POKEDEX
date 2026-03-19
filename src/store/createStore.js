@@ -8,17 +8,35 @@ const useCreateStore = create(
       selectedPokemon: null,
       notification: null,
 
-      addCustomPokemon: (pokemon) => {
+      getNextId: () => {
         const { customPokemon } = get();
+        if (customPokemon.length === 0) return 10000;
+        const maxId = Math.max(...customPokemon.map(p => p.id));
+        return maxId + 1;
+      },
+
+      setMaxRealPokemonId: (maxId) => {
+        set({ maxRealPokemonId: maxId });
+      },
+
+      addCustomPokemon: (pokemon) => {
+        const { customPokemon, maxRealPokemonId = 0 } = get();
         
-        if (customPokemon.some(p => p.id === pokemon.id)) {
-          set({
-            notification: {
-              message: `Pokémon ID ${pokemon.id} already exists!`,
-              type: "error",
-            },
-          });
-          return false;
+        let newId = pokemon.id;
+        
+        const isIdTaken = (id) => {
+          return (
+            (maxRealPokemonId && id <= maxRealPokemonId) || 
+            customPokemon.some(p => p.id === id) 
+          );
+        };
+
+        if (!newId || isIdTaken(newId)) {
+          let nextId = (maxRealPokemonId || 10000) + 1;
+          while (customPokemon.some(p => p.id === nextId)) {
+            nextId++;
+          }
+          newId = nextId;
         }
 
         if (customPokemon.some(p => p.name.toLowerCase() === pokemon.name.toLowerCase())) {
@@ -33,14 +51,16 @@ const useCreateStore = create(
 
         const newPokemon = {
           ...pokemon,
+          id: newId,
           createdAt: new Date().toISOString(),
           isCustom: true,
+          displayName: pokemon.displayName || pokemon.name,
         };
 
         set({
           customPokemon: [...customPokemon, newPokemon],
           notification: {
-            message: `${pokemon.name} was created successfully!`,
+            message: ` ${pokemon.displayName || pokemon.name} was created successfully!`,
             type: "success",
           },
         });
@@ -51,10 +71,14 @@ const useCreateStore = create(
         const { customPokemon } = get();
         set({
           customPokemon: customPokemon.map(p => 
-            p.id === id ? { ...p, ...updatedData } : p
+            p.id === id ? { 
+              ...p, 
+              ...updatedData,
+              displayName: updatedData.displayName || updatedData.name,
+            } : p
           ),
           notification: {
-            message: `Pokémon updated successfully!`,
+            message: ` Pokémon updated successfully!`,
             type: "success",
           },
         });
@@ -66,7 +90,7 @@ const useCreateStore = create(
         set({
           customPokemon: customPokemon.filter(p => p.id !== id),
           notification: {
-            message: pokemon ? `${pokemon.name} was deleted` : "Pokémon deleted",
+            message: pokemon ? `${pokemon.displayName || pokemon.name} was deleted` : "Pokémon deleted",
             type: "success",
           },
         });
@@ -76,6 +100,21 @@ const useCreateStore = create(
       
       clearNotification: () => {
         setTimeout(() => set({ notification: null }), 100);
+      },
+
+      getAllPokemonForSearch: (realPokemon = []) => {
+        const { customPokemon } = get();
+        return [
+          ...realPokemon,
+          ...customPokemon.map(p => ({
+            id: p.id,
+            name: p.name,
+            displayName: p.displayName,
+            image: p.image || null,
+            types: p.types,
+            isCustom: true,
+          }))
+        ];
       },
     }),
     {

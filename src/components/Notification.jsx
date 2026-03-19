@@ -67,4 +67,5 @@ const Notification = () => {
     </AnimatePresence>
   );
 };
+motion;
 export default Notification;

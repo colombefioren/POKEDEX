@@ -11,6 +11,7 @@ import { FaRandom, FaChevronDown, FaSpinner } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useThemeStore } from "./store/themeStore";
 import PokemonCreate from "./components/PokemonCreate";
+import PokemonCustomDetail from "./components/PokemonCustomDetail";
 
 const App = () => {
   const [input, setInput] = useState("");
@@ -29,13 +30,15 @@ const App = () => {
   } = usePokemonData(15);
 
   const { isDarkMode } = useThemeStore();
-
   const filteredPokemon = useMemo(() => {
     if (!input) {
       return isShuffled ? shuffledData : pokeData;
     }
-    return allPokemon.filter((poke) =>
-      poke.name.toLowerCase().includes(input.toLowerCase()),
+    return allPokemon.filter(
+      (poke) =>
+        poke.name.toLowerCase().includes(input.toLowerCase()) ||
+        (poke.displayName &&
+          poke.displayName.toLowerCase().includes(input.toLowerCase())),
     );
   }, [input, pokeData, allPokemon, shuffledData, isShuffled]);
 
@@ -97,7 +100,7 @@ const App = () => {
           element={
             <PokedexShell active="search" loading={loading}>
               <div className="h-full flex flex-col">
-                <div className="pt-16 sm:pt-6 pb-8 flex justify-center gap-3 items-center">
+                <div className="pt-16 sm:pt-6 pb-4 flex justify-center gap-3 items-center">
                   <Search handleInput={handleInput} value={input} />
 
                   <motion.button
@@ -120,57 +123,57 @@ const App = () => {
                   </motion.button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto px-10 pb-8 sm:px-20 sm:pb-8">
-               
-                    <>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-                        <Pokemons data={displayedPokemon} />
-                      </div>
+             <div className="flex-1 px-10 pb-8 sm:px-20 sm:pb-8 overflow-visible">
+  <div className="h-full overflow-y-auto">
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 pt-4">
+        <Pokemons data={displayedPokemon} />
+      </div>
 
-                      <AnimatePresence>
-                        {showLoadMore && (
-                          <div className="text-center mt-8">
-                            <motion.button
-                              onClick={handleLoadMore}
-                              disabled={loadingMore}
-                              initial={{ opacity: 0, y: 10 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: 10 }}
-                              whileHover={{
-                                y: -2,
-                                backgroundColor: isDarkMode
-                                  ? "rgba(185, 28, 28, 0.3)"
-                                  : "rgba(254, 226, 226, 1)",
-                                transition: { duration: 0.2 },
-                              }}
-                              whileTap={{
-                                scale: 0.98,
-                                transition: { duration: 0.1 },
-                              }}
-                              className={`px-6 py-3 rounded-3xl cursor-pointer border flex items-center gap-2 mx-auto ${
-                                isDarkMode
-                                  ? "bg-red-900/20 border-red-800 text-red-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                                  : "bg-red-50 border-red-200 text-red-800 disabled:opacity-50 disabled:cursor-not-allowed"
-                              } transition-colors duration-200 shadow-sm text-sm font-medium`}
-                            >
-                              {loadingMore ? (
-                                <>
-                                  <FaSpinner className="text-xs animate-spin" />
-                                  Loading...
-                                </>
-                              ) : (
-                                <>
-                                  <FaChevronDown className="text-xs" />
-                                  Load More
-                                </>
-                              )}
-                            </motion.button>
-                          </div>
-                        )}
-                      </AnimatePresence>
-                    </>
-                  
-                </div>
+      <AnimatePresence>
+        {showLoadMore && (
+          <div className="text-center mt-8">
+            <motion.button
+              onClick={handleLoadMore}
+              disabled={loadingMore}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              whileHover={{
+                y: -2,
+                backgroundColor: isDarkMode
+                  ? "rgba(185, 28, 28, 0.3)"
+                  : "rgba(254, 226, 226, 1)",
+                transition: { duration: 0.2 },
+              }}
+              whileTap={{
+                scale: 0.98,
+                transition: { duration: 0.1 },
+              }}
+              className={`px-6 py-3 rounded-3xl cursor-pointer border flex items-center gap-2 mx-auto ${
+                isDarkMode
+                  ? "bg-red-900/20 border-red-800 text-red-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  : "bg-red-50 border-red-200 text-red-800 disabled:opacity-50 disabled:cursor-not-allowed"
+              } transition-colors duration-200 shadow-sm text-sm font-medium`}
+            >
+              {loadingMore ? (
+                <>
+                  <FaSpinner className="text-xs animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                <>
+                  <FaChevronDown className="text-xs" />
+                  Load More
+                </>
+              )}
+            </motion.button>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
+  </div>
+</div>
               </div>
             </PokedexShell>
           }
@@ -191,11 +194,19 @@ const App = () => {
             </PokedexShell>
           }
         />
-          <Route
+        <Route
           path="/create-pokemon"
           element={
             <PokedexShell active="add" loading={false}>
-              <PokemonCreate/>
+              <PokemonCreate />
+            </PokedexShell>
+          }
+        />
+        <Route
+          path="/pokemon/custom/:name"
+          element={
+            <PokedexShell active="pokemon" loading={false}>
+              <PokemonCustomDetail />
             </PokedexShell>
           }
         />

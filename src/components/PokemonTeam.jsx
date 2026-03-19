@@ -21,12 +21,12 @@ const PokemonTeam = () => {
     navigate("/");
   };
 
+
   if (team.length === 0) {
     return (
       <div className="h-full flex items-center pb-40 justify-center py-20 px-4">
         <div className="relative w-full max-w-md mx-auto">
           <div className="relative flex flex-col gap-4 items-center justify-center text-center">
-    
             <h3
               className={`text-xl font-semibold ${
                 isDarkMode ? "text-white" : "text-slate-800"
@@ -68,9 +68,8 @@ const PokemonTeam = () => {
 
   return (
     <div className="flex-1 overflow-y-auto h-full">
-      <div className="px-8 sm:px-12 md:px-16 py-6 md:py-8">
+      <div className="px- sm:px-12 md:px-16 py-6 md:py-8">
         <div className="flex items-center justify-between mb-6 md:mb-8">
-       
           <div
             className={`text-sm px-3 py-1 rounded-full ${
               isDarkMode
@@ -96,7 +95,9 @@ const PokemonTeam = () => {
                 <Pokecard
                   id={pokemon.id}
                   name={pokemon.name}
-                  image={pokemon.sprites.other["official-artwork"]}
+                  image={
+                    pokemon.image || pokemon.sprites.other["official-artwork"] 
+                  }
                   types={pokemon.types}
                 />
 
@@ -154,8 +155,6 @@ const PokemonTeam = () => {
                   </svg>
                 </button>
               </div>
-
-          
             </motion.div>
           ))}
         </div>
