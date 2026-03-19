@@ -51,5 +51,4 @@ const MoveCard = ({ move = {}, onClick = () => {}, searchQuery = "" }) => {
     </motion.div>
   );
 };
-motion;
 export default MoveCard;

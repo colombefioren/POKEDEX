@@ -159,5 +159,4 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
     </div>
   );
 };
-motion;
 export default PokemonDetailLeftPanel;

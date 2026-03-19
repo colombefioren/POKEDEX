@@ -30,5 +30,4 @@ const Search = ({ handleInput, value }) => {
     </div>
   );
 };
-motion;
 export default Search;

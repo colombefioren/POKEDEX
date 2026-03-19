@@ -37,8 +37,8 @@ const MoveModal = ({
           exit={{ scale: 0.95, opacity: 0 }}
           className={`relative ${
             isDarkMode
-              ? "bg-gradient-to-br from-gray-900/95 to-gray-800/90"
-              : "bg-gradient-to-br from-gray-100/95 to-gray-50/90"
+              ? "bg-linear-to-br from-gray-900/95 to-gray-800/90"
+              : "bg-linear-to-br from-gray-100/95 to-gray-50/90"
           } rounded-2xl border ${
             isDarkMode ? "border-gray-700/30" : "border-gray-300/30"
           } shadow-2xl w-full max-w-md h-[50vh] overflow-hidden flex flex-col`}
@@ -49,7 +49,7 @@ const MoveModal = ({
           }}
         >
           <div
-            className={`h-1 w-full bg-gradient-to-r from-transparent via-${moveTypeStyle.text} to-transparent`}
+            className={`h-1 w-full bg-linear-to-r from-transparent via-${moveTypeStyle.text} to-transparent`}
           />
 
           <motion.button
@@ -232,5 +232,4 @@ const MoveModal = ({
     </AnimatePresence>
   );
 };
-motion;
 export default MoveModal;

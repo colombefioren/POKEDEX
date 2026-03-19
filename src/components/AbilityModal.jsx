@@ -221,5 +221,4 @@ const AbilityModal = ({
     </AnimatePresence>
   );
 };
-motion;
 export default AbilityModal;

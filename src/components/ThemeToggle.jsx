@@ -58,5 +58,4 @@ const ThemeToggle = () => {
     </motion.button>
   );
 };
-motion;
 export default ThemeToggle;

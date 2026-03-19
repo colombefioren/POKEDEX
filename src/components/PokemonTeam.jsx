@@ -105,5 +105,4 @@ const PokemonTeam = () => {
     </div>
   );
 };
-motion;
 export default PokemonTeam;

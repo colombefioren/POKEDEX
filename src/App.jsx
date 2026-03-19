@@ -140,5 +140,4 @@ const App = () => {
     </>
   );
 };
-motion;
 export default App;
