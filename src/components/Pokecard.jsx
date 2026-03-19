@@ -102,7 +102,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
         </div>
 
         <div
-          className={`absolute inset-0 bg-gradient-to-br ${typeStyle.glow} ${
+          className={`absolute inset-0 bg-linear-to-br ${typeStyle.glow} ${
             isDarkMode
               ? "opacity-0 group-hover:opacity-5"
               : "opacity-0 group-hover:opacity-5"
@@ -134,7 +134,7 @@ const Pokecard = ({ id = 0, name = "Unknown", image, types = [] }) => {
 
           <div className="relative flex-1 flex items-center justify-center my-1">
             <div
-              className={`absolute inset-2 left-1/2 -translate-x-1/2 w-[55%] bg-gradient-to-b ${
+              className={`absolute inset-2 left-1/2 -translate-x-1/2 w-[55%] bg-linear-to-b ${
                 typeStyle.glow
               } ${
                 isDarkMode ? "opacity-20 blur-3xl" : "opacity-15 blur-xl"

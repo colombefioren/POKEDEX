@@ -23,7 +23,7 @@ const AbilityModal = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4"
+        className={`fixed inset-0 ${ isDarkMode ? "bg-black/80" : "bg-black/10" } backdrop-blur-sm flex items-center justify-center z-50 p-4`}
       >
         <motion.div
           initial={{ scale: 0.9, y: 20 }}
@@ -45,7 +45,7 @@ const AbilityModal = ({
           <motion.button
             onClick={onClose}
             whileHover={{ scale: 1.1 }}
-            className={`absolute top-4 right-4 z-10 ${
+            className={`absolute cursor-pointer top-4 right-4 z-10 ${
               isDarkMode ? "text-gray-300" : "text-gray-500"
             } hover:text-${
               isDarkMode ? "white" : "gray-700"
@@ -91,7 +91,7 @@ const AbilityModal = ({
                     <motion.h3
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className={`text-3xl font-extrabold ${
+                      className={`text-2xl font-extrabold ${
                         isDarkMode ? "text-white" : "text-gray-800"
                       } capitalize mb-2 tracking-tight`}
                     >
@@ -221,5 +221,4 @@ const AbilityModal = ({
     </AnimatePresence>
   );
 };
-motion;
 export default AbilityModal;

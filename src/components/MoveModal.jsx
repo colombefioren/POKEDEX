@@ -29,7 +29,7 @@ const MoveModal = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+        className={`fixed inset-0 ${ isDarkMode ? "bg-black/80" : "bg-black/10" } backdrop-blur-sm flex items-center justify-center z-50 p-4`}
       >
         <motion.div
           initial={{ scale: 0.95, y: 20 }}
@@ -37,8 +37,8 @@ const MoveModal = ({
           exit={{ scale: 0.95, opacity: 0 }}
           className={`relative ${
             isDarkMode
-              ? "bg-gradient-to-br from-gray-900/95 to-gray-800/90"
-              : "bg-gradient-to-br from-gray-100/95 to-gray-50/90"
+              ? "bg-linear-to-br from-gray-900/95 to-gray-800/90"
+              : "bg-linear-to-br from-gray-100/95 to-gray-50/90"
           } rounded-2xl border ${
             isDarkMode ? "border-gray-700/30" : "border-gray-300/30"
           } shadow-2xl w-full max-w-md h-[50vh] overflow-hidden flex flex-col`}
@@ -49,13 +49,13 @@ const MoveModal = ({
           }}
         >
           <div
-            className={`h-1 w-full bg-gradient-to-r from-transparent via-${moveTypeStyle.text} to-transparent`}
+            className={`h-1 w-full bg-linear-to-r from-transparent via-${moveTypeStyle.text} to-transparent`}
           />
 
           <motion.button
             onClick={onClose}
             whileHover={{ scale: 1.1 }}
-            className={`absolute top-3 right-3 z-10 p-2 rounded-full ${
+            className={`absolute top-3 right-3 cursor-pointer z-10 p-2 rounded-full ${
               isDarkMode ? "bg-black/30" : "bg-white/30"
             } backdrop-blur-sm ${
               isDarkMode ? "text-gray-300" : "text-gray-500"
@@ -95,7 +95,7 @@ const MoveModal = ({
                     className="flex justify-between items-start mb-4"
                   >
                     <h3
-                      className={`text-3xl font-extrabold ${
+                      className={`text-2xl font-extrabold ${
                         isDarkMode ? "text-white" : "text-gray-800"
                       } capitalize tracking-tight`}
                     >
@@ -232,5 +232,4 @@ const MoveModal = ({
     </AnimatePresence>
   );
 };
-motion;
 export default MoveModal;

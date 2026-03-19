@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaVolumeUp, FaPlus } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { TYPE_ICONS, TYPE_STYLES } from "../../constants/types";
@@ -13,6 +13,45 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
   const allImages = getAllPokemonImages(pokemon);
   const constraintsRef = useRef(null);
   const { isDarkMode } = useThemeStore();
+  const autoPlayRef = useRef(null);
+  const isDraggingRef = useRef(false);
+
+  useEffect(() => {
+    startAutoPlay();
+
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
+  }, [activeIndex]);
+
+  const startAutoPlay = () => {
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+    }
+
+    autoPlayRef.current = setInterval(() => {
+      if (!isDraggingRef.current) {
+        setActiveIndex((prev) => (prev + 1) % allImages.length);
+      }
+    }, 3000); 
+  };
+
+  const handleDragStart = () => {
+    isDraggingRef.current = true;
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+    }
+  };
+
+  const handleDragEndCustom = (info, index, totalLength) => {
+    handleDragEnd(info, index, setActiveIndex, totalLength);
+    
+    isDraggingRef.current = false;
+    
+    startAutoPlay();
+  };
 
   return (
     <div className="w-full md:w-1/3 flex flex-col items-center relative">
@@ -59,13 +98,9 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
               }}
               drag={isActive ? "x" : false}
               dragConstraints={constraintsRef}
+              onDragStart={handleDragStart}
               onDragEnd={(e, info) =>
-                handleDragEnd(
-                  info,
-                  activeIndex,
-                  setActiveIndex,
-                  allImages.length
-                )
+                handleDragEndCustom(info, activeIndex, allImages.length)
               }
               dragElastic={0.1}
             >
@@ -97,7 +132,9 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
         })}
       </div>
 
-      <div className="relative mt-15 w-full max-w-md">
+   
+
+      <div className="relative mt-8 w-full max-w-md">
         <div className="flex gap-8 items-center justify-center w-full">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -159,5 +196,5 @@ const PokemonDetailLeftPanel = ({ pokemon, typeStyle, addToTeam }) => {
     </div>
   );
 };
-motion;
+
 export default PokemonDetailLeftPanel;

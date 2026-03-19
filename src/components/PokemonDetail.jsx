@@ -33,7 +33,9 @@ const PokemonDetail = () => {
     return (
       <div className={`flex justify-center items-center h-full`}>
         <div
-          className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2`}
+          className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 ${isDarkMode
+                        ? "border-stone-600 border-t-stone-400"
+                        : "border-slate-300 border-t-slate-500"}`}
         ></div>
       </div>
     );
@@ -161,5 +163,4 @@ const PokemonDetail = () => {
     </div>
   );
 };
-motion;
 export default PokemonDetail;
