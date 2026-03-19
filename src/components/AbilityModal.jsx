@@ -23,7 +23,7 @@ const AbilityModal = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4"
+        className={`fixed inset-0 ${ isDarkMode ? "bg-black/80" : "bg-black/10" } backdrop-blur-sm flex items-center justify-center z-50 p-4`}
       >
         <motion.div
           initial={{ scale: 0.9, y: 20 }}
