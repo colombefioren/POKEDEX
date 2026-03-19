@@ -223,10 +223,18 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="relative w-full flex flex-col items-center justify-center px-4 py-8"
+      className={`relative h-full w-full flex flex-col items-center justify-center px-4 py-8`}
     >
       {evolutions.length > 0 ? (
-        <div className="w-full max-w-4xl">
+        <div
+          className={`w-full ${
+            evolutions.length > 8
+              ? "mb-9 overflow-y-auto"
+              : evolutions.length > 3
+                ? "mb-15"
+                : "mb-10"
+          } max-w-4xl`}
+        >
           <div className="lg:hidden mt-40">
             {evolutions.map((evolution, index) => (
               <div key={evolution.name} className="flex flex-col items-center">
@@ -553,5 +561,5 @@ const EvolutionTab = ({ pokemon, typeStyle }) => {
     </motion.div>
   );
 };
-
+motion;
 export default EvolutionTab;
