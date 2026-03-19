@@ -39,11 +39,11 @@ const Pokemons = ({ data }) => {
   }
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="popLayout">
       {data.map((pokemon) => (
         <motion.div
           key={`${pokemon.id}-${pokemon.name}`}
-          className="h-full"
+          className="relative h-full pt-4" 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
@@ -54,17 +54,19 @@ const Pokemons = ({ data }) => {
             duration: 0.5,
           }}
           layout
+          style={{ overflow: "visible" }}
         >
           <Pokecard
             id={pokemon.id}
             name={pokemon.name}
             image={pokemon.image}
             types={pokemon.types}
+            isCustom={pokemon.isCustom}
           />
         </motion.div>
       ))}
     </AnimatePresence>
   );
 };
-motion;
+
 export default Pokemons;

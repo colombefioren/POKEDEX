@@ -1,46 +1,58 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { usePokemonByName } from "../hooks/usePokemonByName";
 import { TYPE_ICONS, TYPE_STYLES } from "../constants/types";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import useTeamStore from "../store/teamStore";
 import { useThemeStore } from "../store/themeStore";
 import {
-  FaVolumeUp,
-  FaPlus,
   FaChartBar,
   FaInfoCircle,
   FaLeaf,
   FaRunning,
   FaShieldAlt,
 } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import AboutTab from "./tabs/AboutTab";
 import StatsTab from "./tabs/StatsTab";
 import MovesTab from "./tabs/MovesTab";
 import AbilitiesTab from "./tabs/AbilitiesTab";
 import EvolutionTab from "./tabs/EvolutionTab";
 import PokemonDetailLeftPanel from "./details/PokemonDetailLeftPanel";
+import { useNavigate } from "react-router-dom";
 
 const PokemonDetail = () => {
   const { name } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { pokemon, loading, error } = usePokemonByName(name);
   const [activeTab, setActiveTab] = useState("about");
   const { addToTeam } = useTeamStore();
   const { isDarkMode } = useThemeStore();
   const tabContentRef = useRef(null);
 
-  if (loading)
+  const isCustomRoute = location.pathname.includes("/custom/");
+
+  useEffect(() => {
+    if (isCustomRoute && pokemon) {
+      navigate(`/pokemon/custom/${pokemon.name}`, { replace: true });
+    }
+  }, [isCustomRoute, pokemon, navigate]);
+
+  if (loading) {
     return (
       <div className={`flex justify-center items-center h-full`}>
         <div
-          className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 ${isDarkMode
-                        ? "border-stone-600 border-t-stone-400"
-                        : "border-slate-300 border-t-slate-500"}`}
+          className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 ${
+            isDarkMode
+              ? "border-stone-600 border-t-stone-400"
+              : "border-slate-300 border-t-slate-500"
+          }`}
         ></div>
       </div>
     );
+  }
 
-  if (error)
+  if (error) {
     return (
       <div
         className={`text-center py-10 ${
@@ -50,7 +62,9 @@ const PokemonDetail = () => {
         Error: {error}
       </div>
     );
-  if (!pokemon)
+  }
+
+  if (!pokemon) {
     return (
       <div
         className={`text-center py-10 ${
@@ -60,6 +74,11 @@ const PokemonDetail = () => {
         Pokémon not found
       </div>
     );
+  }
+
+  if (pokemon.isCustom) {
+    return null;
+  }
 
   const primaryType = pokemon.types[0]?.toLowerCase() || "default";
   const typeStyle = TYPE_STYLES[primaryType] || TYPE_STYLES.default;
@@ -73,16 +92,14 @@ const PokemonDetail = () => {
   ];
 
   return (
-    <div className={`min-h-full px-4 pb-10 md:p-8 relative overflow-hidden`}>
+    <div className={`min-h-full mx-6 pb-10 md:p-8 relative overflow`}>
       <div className="relative sm:mt-6 mt-10 z-10 flex flex-col md:flex-row gap-8">
-        {/* Left panel */}
         <PokemonDetailLeftPanel
           pokemon={pokemon}
           typeStyle={typeStyle}
           addToTeam={addToTeam}
         />
 
-        {/* Right panel */}
         <div
           className={`w-full md:w-2/3 ${
             isDarkMode
@@ -90,7 +107,6 @@ const PokemonDetail = () => {
               : "bg-white/90 border-slate-200/70"
           } rounded-2xl h-[75vh] border backdrop-blur-sm overflow-hidden shadow-lg`}
         >
-          {/* Animated tab navigation */}
           <div
             className={`flex ${
               isDarkMode
@@ -113,8 +129,8 @@ const PokemonDetail = () => {
                       ? "text-white"
                       : "text-slate-600"
                     : isDarkMode
-                    ? "text-gray-400 hover:text-white"
-                    : "text-slate-500 hover:text-slate-700"
+                      ? "text-gray-400 hover:text-white"
+                      : "text-slate-500 hover:text-slate-700"
                 }`}
               >
                 <span className="text-lg">{tab.icon}</span>
@@ -135,12 +151,13 @@ const PokemonDetail = () => {
             />
           </div>
 
-          {activeTab === "about" && (
-            <div ref={tabContentRef} className="h-[66vh] overflow-y-auto my-auto flex items-center">
+          <div 
+            ref={tabContentRef} 
+            className="h-[calc(75vh-48px)] overflow-y-auto pr-1"
+          >
+            {activeTab === "about" && (
               <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
-            </div>
-          )}
-          <div ref={tabContentRef} className="h-[66vh] overflow-y-auto">
+            )}
             {activeTab === "stats" && (
               <StatsTab
                 pokemon={pokemon}
@@ -163,4 +180,5 @@ const PokemonDetail = () => {
     </div>
   );
 };
+
 export default PokemonDetail;

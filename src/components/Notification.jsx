@@ -2,9 +2,22 @@ import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCheckCircle, FaTimesCircle, FaTimes } from "react-icons/fa";
 import useTeamStore from "../store/teamStore";
+import useCreateStore from "../store/createStore";
 
 const Notification = () => {
-  const { notification, clearNotification } = useTeamStore();
+  const {
+    notification: teamNotification,
+    clearNotification: clearTeamNotification,
+  } = useTeamStore();
+  const {
+    notification: createNotification,
+    clearNotification: clearCreateNotification,
+  } = useCreateStore();
+
+  const notification = teamNotification || createNotification;
+  const clearNotification = teamNotification
+    ? clearTeamNotification
+    : clearCreateNotification;
 
   useEffect(() => {
     if (notification) {
@@ -67,4 +80,5 @@ const Notification = () => {
     </AnimatePresence>
   );
 };
+
 export default Notification;

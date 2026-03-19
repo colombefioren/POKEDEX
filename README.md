@@ -23,17 +23,18 @@
 
 ## ✨ **Some Cool Features**
 
-> A beautiful blend of speed, interactivity, and style — here's what you can do:
+> A beautiful blend of speed, interactivity, and style!  Here's what you can do:
 
 | 🌈 Feature                    | ⚡ Description                                                                   |
 | ----------------------------- | ------------------------------------------------------------------------------- |
 | 🔍 **Real-Time Search**       | Instantly find any Pokémon by name, no lag, no fuss.                            |
 | 🧩 **Custom Pokémon Team**    | Create your perfect squad of 6 — save, edit, and swap anytime.                  |
+| 🎨 **Create Custom Pokémon**  | Design your own Pokémon from scratch! Upload sprites, choose types, and give them unique names and descriptions. |
 | 🎨 **Immersive Detail Pages** | Dive into rich data: high-res sprites, base stats, evolution chains, and types. |
 | ⚡ **Super Smooth Experience** | Snappy performance with lazy loading and slick Framer Motion transitions.       |
 | 📱 **Responsive Design**      | Optimized for desktops, tablets, and mobile phones alike.                       |
 | 🌘 **Dark & Light Mode**      | Seamless toggle for your visual comfort.                                        |
-| 🧠 **Smart State Management** | Zustand keeps state management clean, minimal, and efficient.                   |
+| 🧠 **Smart State Management** | Zustand keeps state management clean, minimal, and efficient with localStorage persistence. |
 | 🕹️ **Interactive UI**        | Hover effects, animations, and delightful micro-interactions throughout.        |
 
 ---
@@ -49,4 +50,3 @@ npm install
 
 # 3. Run the development server
 npm run dev
-```
