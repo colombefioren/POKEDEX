@@ -11,7 +11,7 @@ const useCreateStore = create(
 
       getNextId: () => {
         const { customPokemon } = get();
-        if (customPokemon.length === 0) return 10000;
+        if (customPokemon.length === 0) return 2000;
         const maxId = Math.max(...customPokemon.map((p) => p.id));
         return maxId + 1;
       },
