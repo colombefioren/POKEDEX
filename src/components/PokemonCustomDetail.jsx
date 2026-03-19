@@ -23,7 +23,7 @@ const PokemonCustomDetail = () => {
   const navigate = useNavigate();
   const { isDarkMode } = useThemeStore();
   const { customPokemon } = useCreateStore();
-  const { addToTeam, notification, clearNotification } = useTeamStore();
+  const { addToTeam } = useTeamStore();
   const [pokemon, setPokemon] = useState(null);
   const [loading, setLoading] = useState(true);
   const constraintsRef = useRef(null);
@@ -124,7 +124,7 @@ const PokemonCustomDetail = () => {
     );
   }
 
-    if (!pokemon) {
+  if (!pokemon) {
     return (
       <div
         className={`text-center py-10 ${
@@ -150,10 +150,7 @@ const PokemonCustomDetail = () => {
       exit={{ opacity: 0 }}
       className="h-full overflow-y-auto"
     >
-      <Notification
-        notification={notification}
-        clearNotification={clearNotification}
-      />
+      <Notification />
 
       {renderCustomBadge()}
 
