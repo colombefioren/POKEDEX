@@ -125,12 +125,11 @@ const PokemonCreate = () => {
                   No Custom Pokemon Yet
                 </h3>
                 <p
-                  className={`text-sm ${
-                    isDarkMode ? "text-slate-400" : "text-slate-500"
+                  className={`text-sm w-96 ${
+                    isDarkMode ? "text-slate-400" : "text-slate-500 "
                   }`}
                 >
-                  Click the "New Creation" button to create your first custom
-                  Pokémon!
+                  Click the "New Creation" button to create your first Pokémon. You can then search your custom pokemon in the pokedex and add it in your team!
                 </p>
               </div>
             </motion.div>
