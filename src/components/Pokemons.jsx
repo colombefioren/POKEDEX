@@ -22,7 +22,7 @@ const Pokemons = ({ data }) => {
           No Pokémon Found
         </h3>
         <p className="text-slate-500 text-center max-w-md">
-          Your search didn't match any Pokémon. Try a different name or number.
+          Your search didn't match any Pokémon. Try a different name.
         </p>
       </div>
     );

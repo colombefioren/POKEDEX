@@ -7,29 +7,43 @@ import PokedexShell from "./components/PokedexShell";
 import PokemonTeam from "./components/PokemonTeam";
 import Notification from "./components/Notification";
 import PokemonDetail from "./components/PokemonDetail";
-import { FaRandom, FaChevronDown } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { FaRandom, FaChevronDown, FaSpinner } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 import { useThemeStore } from "./store/themeStore";
 
 const App = () => {
   const [input, setInput] = useState("");
   const [displayCount, setDisplayCount] = useState(15);
   const [shuffledData, setShuffledData] = useState([]);
-  const { pokeData, allPokemon, loading, error } = usePokemonData();
+  const [isShuffled, setIsShuffled] = useState(false);
+
+  const {
+    pokeData,
+    allPokemon,
+    loading,
+    loadingMore,
+    error,
+    hasMore,
+    loadMore,
+  } = usePokemonData(15);
+
   const { isDarkMode } = useThemeStore();
+
   const filteredPokemon = useMemo(() => {
-    if (!input) return pokeData;
+    if (!input) {
+      return isShuffled ? shuffledData : pokeData;
+    }
     return allPokemon.filter((poke) =>
-      poke.name.toLowerCase().includes(input.toLowerCase())
+      poke.name.toLowerCase().includes(input.toLowerCase()),
     );
-  }, [input, pokeData, allPokemon]);
+  }, [input, pokeData, allPokemon, shuffledData, isShuffled]);
 
   const displayedPokemon = useMemo(() => {
-    if (shuffledData.length > 0 && !input) {
+    if (shuffledData.length > 0 && !input && isShuffled) {
       return shuffledData.slice(0, displayCount);
     }
-    return filteredPokemon.slice(0, displayCount);
-  }, [filteredPokemon, displayCount, shuffledData, input]);
+    return filteredPokemon;
+  }, [filteredPokemon, displayCount, shuffledData, input, isShuffled]);
 
   const shufflePokemon = () => {
     if (allPokemon.length === 0) return;
@@ -40,18 +54,39 @@ const App = () => {
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
-    setShuffledData(shuffled);
+    setShuffledData(shuffled.slice(0, 30));
+    setIsShuffled(true);
     setInput("");
-    setDisplayCount(10);
+    setDisplayCount(15);
   };
 
   const handleInput = (e) => {
     setInput(e.target.value);
-    setDisplayCount(10);
+    setIsShuffled(false);
     setShuffledData([]);
+    setDisplayCount(15);
   };
 
+  const handleLoadMore = () => {
+    if (!input && !isShuffled) {
+      loadMore();
+    } else if (isShuffled && shuffledData.length > displayCount) {
+      setDisplayCount((prev) => prev + 15);
+    }
+  };
+
+  const showLoadMore = useMemo(() => {
+    if (input) return false;
+
+    if (isShuffled) {
+      return displayCount < shuffledData.length;
+    }
+
+    return hasMore;
+  }, [input, isShuffled, hasMore, displayCount, shuffledData.length]);
+
   if (error) return <div className="error-message">Error: {error}</div>;
+
   return (
     <>
       <Notification />
@@ -85,36 +120,55 @@ const App = () => {
                 </div>
 
                 <div className="flex-1 overflow-y-auto px-10 pb-8 sm:px-20 sm:pb-8">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-                    <Pokemons data={displayedPokemon} />
-                  </div>
+               
+                    <>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+                        <Pokemons data={displayedPokemon} />
+                      </div>
 
-                  {filteredPokemon.length > displayCount && (
-                    <div className="text-center mt-8">
-                      <motion.button
-                        onClick={() => setDisplayCount((prev) => prev + 10)}
-                        whileHover={{
-                          y: -2,
-                          backgroundColor: isDarkMode
-                            ? "rgba(185, 28, 28, 0.3)"
-                            : "rgba(254, 226, 226, 1)",
-                          transition: { duration: 0.2 },
-                        }}
-                        whileTap={{
-                          scale: 0.98,
-                          transition: { duration: 0.1 },
-                        }}
-                        className={`px-6 py-3 rounded-3xl cursor-pointer border flex items-center gap-2 mx-auto ${
-                          isDarkMode
-                            ? "bg-red-900/20 border-red-800 text-red-100"
-                            : "bg-red-50 border-red-200 text-red-800"
-                        } transition-colors duration-200 shadow-sm text-sm font-medium`}
-                      >
-                        <FaChevronDown className="text-xs" />
-                        Load More
-                      </motion.button>
-                    </div>
-                  )}
+                      <AnimatePresence>
+                        {showLoadMore && (
+                          <div className="text-center mt-8">
+                            <motion.button
+                              onClick={handleLoadMore}
+                              disabled={loadingMore}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: 10 }}
+                              whileHover={{
+                                y: -2,
+                                backgroundColor: isDarkMode
+                                  ? "rgba(185, 28, 28, 0.3)"
+                                  : "rgba(254, 226, 226, 1)",
+                                transition: { duration: 0.2 },
+                              }}
+                              whileTap={{
+                                scale: 0.98,
+                                transition: { duration: 0.1 },
+                              }}
+                              className={`px-6 py-3 rounded-3xl cursor-pointer border flex items-center gap-2 mx-auto ${
+                                isDarkMode
+                                  ? "bg-red-900/20 border-red-800 text-red-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                  : "bg-red-50 border-red-200 text-red-800 disabled:opacity-50 disabled:cursor-not-allowed"
+                              } transition-colors duration-200 shadow-sm text-sm font-medium`}
+                            >
+                              {loadingMore ? (
+                                <>
+                                  <FaSpinner className="text-xs animate-spin" />
+                                  Loading...
+                                </>
+                              ) : (
+                                <>
+                                  <FaChevronDown className="text-xs" />
+                                  Load More
+                                </>
+                              )}
+                            </motion.button>
+                          </div>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  
                 </div>
               </div>
             </PokedexShell>
@@ -140,4 +194,5 @@ const App = () => {
     </>
   );
 };
+
 export default App;
