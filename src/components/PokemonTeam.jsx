@@ -21,7 +21,6 @@ const PokemonTeam = () => {
     navigate("/");
   };
 
-
   if (team.length === 0) {
     return (
       <div className="h-full flex items-center pb-40 justify-center py-20 px-4">
@@ -67,7 +66,7 @@ const PokemonTeam = () => {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto h-full">
+    <div className="flex-1 overflow-y-auto h-full pr-1">
       <div className="px- sm:px-12 md:px-16 py-6 md:py-8">
         <div className="flex items-center justify-between mb-6 md:mb-8">
           <div
@@ -96,7 +95,7 @@ const PokemonTeam = () => {
                   id={pokemon.id}
                   name={pokemon.name}
                   image={
-                    pokemon.image || pokemon.sprites.other["official-artwork"] 
+                    pokemon.image || pokemon.sprites.other["official-artwork"]
                   }
                   types={pokemon.types}
                   isCustom={pokemon.isCustom}

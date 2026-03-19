@@ -25,9 +25,13 @@
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - positioned at the edge */
 ::-webkit-scrollbar {
   width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -35,8 +39,25 @@
   border-radius: 4px;
 }
 
+::-webkit-scrollbar-thumb:hover {
+  background: #96969699;
+}
+
+/* Ensure scrollable containers have proper padding for scrollbar */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #96969656 transparent;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #96969656 transparent;
+}
+
 .screen-texture {
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       circle at center,
       rgba(255, 255, 255, 0.02) 0%,
       transparent 70%
@@ -48,25 +69,27 @@
       transparent 90%,
       rgba(0, 0, 0, 0.1) 100%
     );
+}
 
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
   }
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+  50% {
+    transform: translateY(-10px);
   }
-  @keyframes fillWidth {
-    from {
-      width: 0%;
-    }
-    to {
-      width: var(--width);
-    }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes fillWidth {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--width);
   }
 }

@@ -151,7 +151,10 @@ const PokemonDetail = () => {
             />
           </div>
 
-          <div ref={tabContentRef} className="h-[66vh] overflow-y-auto">
+          <div
+            ref={tabContentRef}
+            className="h-[calc(75vh-48px)] overflow-y-auto pr-1"
+          >
             {activeTab === "about" && (
               <AboutTab pokemon={pokemon} typeStyle={typeStyle} />
             )}

@@ -42,8 +42,6 @@ const PokemonCreate = () => {
 
   return (
     <div className="h-full flex flex-col">
-      
-
       <div className="px-8 sm:px-12 md:px-16 py-6 md:py-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -96,7 +94,7 @@ const PokemonCreate = () => {
         </motion.div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-8 sm:px-12 md:px-16 pt-6">
+      <div className="flex-1 overflow-y-auto px-8 sm:px-12 md:px-16 pb-8 pr-1">
         <AnimatePresence mode="wait">
           {showForm ? (
             <PokemonCreateForm
