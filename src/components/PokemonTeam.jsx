@@ -26,7 +26,9 @@ const PokemonTeam = () => {
       <div className="col-span-full flex flex-col items-center justify-center py-20 px-4">
         <div className="relative w-full">
           <div className="relative flex flex-col gap-2 items-center justify-center">
-            <h3 className="text-xl font-medium text-slate-400">
+            <h3 className={`text-xl font-medium ${isDarkMode
+                      ? "text-white"
+                      : "text-slate-600"}`}>
               Your Team is empty
             </h3>
             <p className="text-slate-500 text-center mb-5">
