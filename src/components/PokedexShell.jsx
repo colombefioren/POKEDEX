@@ -57,8 +57,8 @@ const PokedexShell = ({ children, loading, active }) => {
       return windowSize.width < 1000 && windowSize.width > 640
         ? "5%"
         : windowSize.width < 640
-        ? "9%"
-        : "3%";
+          ? "9%"
+          : "3%";
     }
     return "50%";
   };
@@ -71,12 +71,9 @@ const PokedexShell = ({ children, loading, active }) => {
     >
       <ThemeToggle />
 
-        
-
       {/* top */}
       <div className="absolute inset-0 z-10 pointer-events-none">
         <div className="relative w-full" style={{ height: "80px" }}>
-           
           {/*short left rec */}
           <div
             className={`absolute top-0 left-0 border-b-2 ${
@@ -101,8 +98,7 @@ const PokedexShell = ({ children, loading, active }) => {
               height: "500px",
               clipPath: "polygon(0 0%, 100% 0, 100% 100%, 80% 100%)",
             }}
-          >
-          </div>
+          ></div>
 
           {/* taller right rec */}
           <div
@@ -138,8 +134,8 @@ const PokedexShell = ({ children, loading, active }) => {
                     ? "text-yellow-400"
                     : "text-yellow-500"
                   : isDarkMode
-                  ? "text-gray-400 hover:text-gray-300"
-                  : "text-white hover:text-yellow-500"
+                    ? "text-gray-400 hover:text-gray-300"
+                    : "text-white hover:text-yellow-500"
               }`}
               onClick={() => setActiveTab("search")}
             >
@@ -170,8 +166,8 @@ const PokedexShell = ({ children, loading, active }) => {
                     ? "text-yellow-400"
                     : "text-yellow-500"
                   : isDarkMode
-                  ? "text-gray-400 hover:text-gray-300"
-                  : "text-white hover:text-yellow-500"
+                    ? "text-gray-400 hover:text-gray-300"
+                    : "text-white hover:text-yellow-500"
               }`}
               onClick={() => setActiveTab("pokemon")}
             >
@@ -202,8 +198,8 @@ const PokedexShell = ({ children, loading, active }) => {
                     ? "text-yellow-400"
                     : "text-yellow-500"
                   : isDarkMode
-                  ? "text-gray-400 hover:text-gray-300"
-                  : "text-white hover:text-yellow-500"
+                    ? "text-gray-400 hover:text-gray-300"
+                    : "text-white hover:text-yellow-500"
               }`}
               onClick={() => setActiveTab("team")}
             >
@@ -222,6 +218,52 @@ const PokedexShell = ({ children, loading, active }) => {
                 />
               </svg>
               <span className="text-xs mt-1">Team</span>
+            </button>
+          </Link>
+          <Link to="/create-pokemon">
+            <button
+              className={`flex flex-col items-center justify-center h-full px-4 cursor-pointer transition-colors ${
+                activeTab === "add"
+                  ? isDarkMode
+                    ? "text-yellow-400"
+                    : "text-yellow-500"
+                  : isDarkMode
+                    ? "text-gray-400 hover:text-gray-300"
+                    : "text-white hover:text-yellow-500"
+              }`}
+              onClick={() => setActiveTab("add")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="12" r="9" strokeWidth={1.8} />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.8}
+                  d="M12 3v18M3 12h18"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="2.5"
+                  strokeWidth={1.5}
+                  fill="currentColor"
+                  fillOpacity="0.2"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v8M8 12h8"
+                  className="opacity-90"
+                />
+              </svg>
+              <span className="text-xs mt-1">Add Pokemon</span>
             </button>
           </Link>
         </div>
